@@ -1,0 +1,33 @@
+{
+  "name": "lead-extractor-pro",
+  "version": "4.0.0",
+  "description": "Tool Quét Data Khách Hàng Tiềm Năng B2B & MKT Chuyên Nghiệp (100% Real Data)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.9",
+    "express": "^4.19.2",
+    "puppeteer-core": "^25.16.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "zca-js": "^2.2.0"
+  },
+  "keywords": [
+    "lead-generation",
+    "saas",
+    "b2b",
+    "vietnam",
+    "crawler",
+    "crm"
+  ],
+  "author": "Antigravity SaaS Team",
+  "license": "ISC"
+}

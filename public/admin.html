@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Cổng Quản Trị Hệ Thống & License Key - 5S DEV.TOOL</title>
+
+  <!-- Favicon 5S DEV.TOOL -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/logo.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    ::-webkit-scrollbar { height: 6px; width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 80%);
+      transform: rotate(30deg);
+      animation: shimmerLoop 3s infinite;
+    }
+    @keyframes shimmerLoop {
+      0% { transform: translateX(-150%) rotate(30deg); }
+      100% { transform: translateX(150%) rotate(30deg); }
+    }
+  
+    /* ANIMATED ICONS CHO DROPDOWNS */
+    @keyframes anim-glow-pulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.4)); }
+      50% { transform: scale(1.25); filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.95)); }
+    }
+    @keyframes anim-float-box {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.1); filter: drop-shadow(0 3px 6px rgba(99, 102, 241, 0.4)); }
+    }
+    @keyframes anim-rocket-flight {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-2px) rotate(-6deg); }
+      75% { transform: translateY(-4px) rotate(6deg) scale(1.15); filter: drop-shadow(0 4px 8px rgba(14, 165, 233, 0.5)); }
+    }
+    @keyframes anim-crown-shine {
+      0%, 100% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 3px rgba(234, 179, 8, 0.5)); }
+      50% { transform: rotate(-8deg) scale(1.18); filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.95)); }
+    }
+    @keyframes anim-trophy-bounce {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.5)); }
+      50% { transform: scale(1.18) rotate(6deg); filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.95)); }
+    }
+    @keyframes anim-diamond-sparkle {
+      0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.6)); }
+      50% { transform: scale(1.22) rotate(14deg); filter: drop-shadow(0 0 14px rgba(59, 130, 246, 0.95)); }
+    }
+
+    .anim-lightning { display: inline-block; animation: anim-glow-pulse 1.3s ease-in-out infinite; }
+    .anim-box       { display: inline-block; animation: anim-float-box 1.9s ease-in-out infinite; }
+    .anim-rocket    { display: inline-block; animation: anim-rocket-flight 1.5s ease-in-out infinite; }
+    .anim-crown     { display: inline-block; animation: anim-crown-shine 2s ease-in-out infinite; }
+    .anim-trophy    { display: inline-block; animation: anim-trophy-bounce 1.8s ease-in-out infinite; }
+    .anim-diamond   { display: inline-block; animation: anim-diamond-sparkle 2.2s ease-in-out infinite; }
+
+  
+    
+    /* ======================================================== */
+    /* TRUE MOBILE RESPONSIVE & ANTI-ZOOM CSS                   */
+    /* ======================================================== */
+    .touch-scroll {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+      height: 0;
+      width: 0;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @media screen and (max-width: 768px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+      input::placeholder, textarea::placeholder {
+        font-size: 13px !important;
+      }
+      html, body {
+        touch-action: pan-x pan-y;
+        -webkit-text-size-adjust: 100%;
+      }
+      main {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+        space-y: 1rem !important;
+      }
+    }
+
+  </style>
+</head>
+<body class="h-full bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" class="fixed top-3 right-3 sm:top-5 sm:right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-[90vw]"></div>
+
+  <!-- ============================================================== -->
+  <!-- LOGIN FORM (HIỂN THỊ KHI CHƯA XÁC THỰC ADMIN) -->
+  <!-- ============================================================== -->
+  <div id="adminLoginScreen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl p-7 text-center space-y-5 animate-in fade-in zoom-in duration-200">
+      <div class="w-14 h-14 mx-auto rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-inner">
+        <i data-lucide="shield" class="w-7 h-7"></i>
+      </div>
+      <div>
+        <h2 class="text-lg font-black text-slate-900 tracking-tight">Cổng Quản Trị License Key</h2>
+        <p class="text-xs text-slate-500 mt-1">Nhập mật khẩu Admin để vào trang quản lý và cấp key cho khách</p>
+      </div>
+
+      <form onsubmit="submitAdminLogin(event)" class="space-y-3.5">
+        <div>
+          <input 
+            id="adminPasswordInput" 
+            type="password" 
+            placeholder="Nhập mật khẩu quản trị viên" 
+            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
+            autofocus
+          />
+        </div>
+        <button 
+          type="submit" 
+          class="btn-shimmer w-full py-3 rounded-xl text-white bg-slate-900 hover:bg-slate-800 font-extrabold text-xs tracking-wider uppercase transition-all shadow-md shadow-slate-900/20"
+        >
+          Xác Thực Đăng Nhập
+        </button>
+      </form>
+
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-center">
+        <a href="/" class="text-xs text-indigo-600 hover:underline font-semibold flex items-center gap-1.5">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Quay lại trang cào Lead</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- MAIN ADMIN DASHBOARD (HIỂN THỊ KHI ĐÃ ĐĂNG NHẬP / DÙNG KEY ADMIN) -->
+  <!-- MAIN ADMIN DASHBOARD (HIỂN THỊ KHI ĐÃ ĐĂNG NHẬP / DÙNG KEY ADMIN) -->
+  <!-- ============================================================== -->
+  <div id="adminDashboardScreen" class="hidden min-h-screen flex flex-col">
+
+    <!-- TOP HEADER (GỌN GÀNG, SANG TRỌNG) -->
+    <header class="bg-slate-900 border-b border-slate-800 text-white sticky top-0 z-30 shadow-md px-3 sm:px-6">
+      <div class="w-full max-w-[1560px] mx-auto h-14 flex items-center justify-between gap-2">
+        
+        <!-- Left: Brand -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <img src="/logo.jpg" alt="5S DEV.TOOL" class="w-8 h-8 rounded-lg object-cover shadow-sm ring-1 ring-cyan-500/40 shrink-0" />
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <h1 class="text-xs sm:text-sm font-black tracking-tight whitespace-nowrap">5S <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">DEV.TOOL</span></h1>
+            <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-black bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase tracking-wide whitespace-nowrap shrink-0">
+              Admin
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: Actions -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <div class="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs whitespace-nowrap">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-slate-300 font-medium">Quyền: <b class="text-indigo-400 font-bold">Admin Toàn Quyền</b></span>
+          </div>
+
+          <a 
+            href="/" 
+            class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm whitespace-nowrap shrink-0"
+          >
+            <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i>
+            <span class="hidden sm:inline">Mở Web Tool</span>
+            <span class="sm:hidden">Web</span>
+          </a>
+
+          <button 
+            onclick="logoutAdmin()" 
+            class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 bg-slate-800 hover:bg-rose-900/40 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-700/50 rounded-lg text-xs font-bold transition-all whitespace-nowrap shrink-0"
+            title="Đăng xuất phiên Admin"
+          >
+            <i data-lucide="log-out" class="w-3.5 h-3.5 shrink-0"></i>
+            <span class="hidden sm:inline">Đăng Xuất</span>
+            <span class="sm:hidden">Thoát</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <main class="flex-1 w-full max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+      <!-- QUICK STATS (GRID 2x2 GỌN GÀNG TRÊN MOBILE, KHÔNG RỚT DÒNG) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+        
+        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex items-center justify-between">
+          <div class="min-w-0">
+            <div class="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">Tổng Key Đã Cấp</div>
+            <div id="statTotalKeys" class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">0</div>
+            <div class="text-[10px] text-slate-500 mt-0.5 truncate">SQLite DB</div>
+          </div>
+          <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-inner shrink-0 ml-1">
+            <i data-lucide="key" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex items-center justify-between">
+          <div class="min-w-0">
+            <div class="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">Key Đang Chạy</div>
+            <div id="statActiveKeys" class="text-xl sm:text-2xl font-black text-emerald-600 mt-0.5">0</div>
+            <div class="text-[10px] text-emerald-600 font-semibold mt-0.5 truncate">Đang kích hoạt</div>
+          </div>
+          <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-inner shrink-0 ml-1">
+            <i data-lucide="check-circle-2" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex items-center justify-between">
+          <div class="min-w-0">
+            <div class="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">Khóa Thiết Bị</div>
+            <div id="statLockedDevices" class="text-xl sm:text-2xl font-black text-indigo-600 mt-0.5">0</div>
+            <div class="text-[10px] text-slate-500 mt-0.5 truncate">Chống share</div>
+          </div>
+          <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center shadow-inner shrink-0 ml-1">
+            <i data-lucide="laptop" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex items-center justify-between">
+          <div class="min-w-0">
+            <div class="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">Master Key</div>
+            <div class="text-xs sm:text-sm font-black font-mono text-purple-700 mt-1 truncate">DEV5S-2026</div>
+            <div class="text-[10px] text-purple-600 font-semibold mt-0.5 truncate">Vĩnh viễn</div>
+          </div>
+          <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shadow-inner shrink-0 ml-1">
+            <i data-lucide="crown" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TAB NAVIGATION (VUỐT NGANG MƯỢT MÀ TRÊN MOBILE) -->
+      <div class="flex items-center gap-2 border-b border-slate-200 pb-3 overflow-x-auto touch-scroll no-scrollbar flex-nowrap w-full">
+        <button 
+          id="adminTabBtn1" 
+          onclick="switchAdminTab(1)" 
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs bg-indigo-600 text-white shadow-sm transition-all whitespace-nowrap"
+        >
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Tạo Key Mới Cho Khách</span>
+        </button>
+
+        <button 
+          id="adminTabBtn2" 
+          onclick="switchAdminTab(2)" 
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all whitespace-nowrap"
+        >
+          <i data-lucide="list" class="w-4 h-4"></i>
+          <span>Danh Sách Key Đã Cấp (<span id="tabCountKeys">0</span>)</span>
+        </button>
+
+        <button 
+          id="adminTabBtn3" 
+          onclick="switchAdminTab(3)" 
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all whitespace-nowrap"
+        >
+          <i data-lucide="settings" class="w-4 h-4"></i>
+          <span>Cấu Hình Thanh Toán VietQR</span>
+        </button>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- TAB 1: TẠO KEY MỚI (BỐ CỤC GỌN GÀNG, 100% SINGLE LINE) -->
+      <!-- ============================================================== -->
+      <div id="adminTabContent1" class="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
+        
+        <!-- Cột Trái (7 Cột): Form Tạo Key -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/90 shadow-xs space-y-4 sm:space-y-5">
+          
+          <div class="flex items-center gap-3 pb-3 border-b border-slate-100 overflow-x-auto touch-scroll no-scrollbar">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-inner shrink-0">
+              <i data-lucide="key" class="w-5 h-5"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm sm:text-base font-black text-slate-900 whitespace-nowrap">Cấp Mã Bản Quyền Cho Khách Hàng</h3>
+              <p class="text-[11px] sm:text-xs text-slate-400 mt-0.5 whitespace-nowrap">Tự động sinh mã bảo mật cao và gán thời hạn sử dụng</p>
+            </div>
+          </div>
+
+          <!-- Thông tin khách hàng -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 flex items-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="user" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>Tên Khách Hàng (*)</span>
+              </label>
+              <input 
+                id="newClientName" 
+                type="text" 
+                placeholder="Ví dụ: Anh Tuấn - BĐS Sài Gòn" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-xs sm:text-sm text-slate-900 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" 
+              />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 flex items-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="phone" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>Số Điện Thoại Khách</span>
+              </label>
+              <input 
+                id="newClientPhone" 
+                type="text" 
+                placeholder="Ví dụ: 0912345678" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-xs sm:text-sm text-slate-900 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all" 
+              />
+            </div>
+          </div>
+
+          <!-- CUSTOM SELECT DROPDOWNS: GỌN GÀNG, 100% SINGLE LINE, ZERO TEXT-WRAP -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            
+            <!-- 1. CUSTOM SELECT: GÓI THỜI HẠN BẢN QUYỀN -->
+            <div class="relative">
+              <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between whitespace-nowrap">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>Gói Thời Hạn Bản Quyền (*)</span>
+                </span>
+                <span class="text-[10px] text-indigo-600 font-extrabold uppercase bg-indigo-50 px-2 py-0.5 rounded whitespace-nowrap">Thời Hạn</span>
+              </label>
+
+              <!-- Hidden native input to preserve all API scripts -->
+              <input type="hidden" id="newPlanType" value="trial_1d" />
+
+              <!-- Trigger Button (Gọn gàng 1 dòng, Animated Icon) -->
+              <button 
+                type="button" 
+                id="customPlanTrigger" 
+                onclick="toggleCustomDropdown('customPlanDropdown')" 
+                class="w-full flex items-center justify-between px-3.5 py-2.5 bg-white border border-slate-200 hover:border-indigo-400 rounded-xl font-bold text-slate-800 shadow-xs hover:bg-indigo-50/20 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              >
+                <div class="flex items-center gap-2 min-w-0" id="customPlanDisplay">
+                  <span class="text-base shrink-0 anim-lightning">⚡</span>
+                  <span class="font-bold text-slate-900 text-xs sm:text-sm whitespace-nowrap truncate">1 Ngày (Dùng thử 24h)</span>
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0 ml-1">
+                  <span id="customPlanBadge" class="px-2 py-0.5 rounded-md text-[10px] font-extrabold whitespace-nowrap bg-amber-100 text-amber-700">24 GIỜ</span>
+                  <i data-lucide="chevron-down" id="customPlanChevron" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0"></i>
+                </div>
+              </button>
+
+              <!-- Dropdown Menu (Single-line items, whitespace-nowrap) -->
+              <div 
+                id="customPlanDropdown" 
+                class="hidden absolute left-0 right-0 top-full mt-1.5 bg-white border border-slate-200 rounded-xl shadow-xl p-1.5 z-50 space-y-1 animate-in fade-in zoom-in-95 duration-150 min-w-[280px]"
+              >
+                <!-- Rendered dynamically by renderPlanOptions() -->
+              </div>
+            </div>
+
+            <!-- 2. CUSTOM SELECT: HẠN MỨC CÀO MỖI NGÀY -->
+            <div class="relative">
+              <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between whitespace-nowrap">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="gauge" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>Hạn Mức Cào Mỗi Ngày (*)</span>
+                </span>
+                <span class="text-[10px] text-slate-500 font-extrabold uppercase bg-slate-100 px-2 py-0.5 rounded font-mono whitespace-nowrap">Tự Động Seed</span>
+              </label>
+
+              <!-- Hidden native input to preserve all API scripts -->
+              <input type="hidden" id="newMaxDaily" value="200" />
+
+              <!-- Trigger Button (Gọn gàng 1 dòng, Animated Icon) -->
+              <button 
+                type="button" 
+                id="customDailyTrigger" 
+                onclick="toggleCustomDropdown('customDailyDropdown')" 
+                class="w-full flex items-center justify-between px-3.5 py-2.5 bg-white border border-slate-200 hover:border-amber-400 rounded-xl font-bold text-slate-800 shadow-xs hover:bg-amber-50/20 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              >
+                <div class="flex items-center gap-2 min-w-0" id="customDailyDisplay">
+                  <span class="text-base shrink-0 anim-lightning">⚡</span>
+                  <span class="font-bold text-slate-900 text-xs sm:text-sm whitespace-nowrap truncate">200 Leads / Ngày</span>
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0 ml-1">
+                  <span id="customDailyBadge" class="px-2 py-0.5 rounded-md text-[10px] font-extrabold whitespace-nowrap bg-amber-100 text-amber-700">200/NGÀY</span>
+                  <i data-lucide="chevron-down" id="customDailyChevron" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0"></i>
+                </div>
+              </button>
+
+              <!-- Dropdown Menu (Single-line items, whitespace-nowrap) -->
+              <div 
+                id="customDailyDropdown" 
+                class="hidden absolute left-0 right-0 top-full mt-1.5 bg-white border border-slate-200 rounded-xl shadow-xl p-1.5 z-50 space-y-1 animate-in fade-in zoom-in-95 duration-150 min-w-[280px]"
+              >
+                <!-- Rendered dynamically by renderDailyOptions() -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Nút Tạo Key & Ghi chú (Gọn gàng, thẳng hàng) -->
+          <div class="pt-2 space-y-2.5">
+            <button 
+              onclick="submitCreateLicense()" 
+              class="btn-shimmer w-full py-3 px-4 rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 font-extrabold text-xs sm:text-sm tracking-wider uppercase shadow-md shadow-indigo-600/25 transition-all flex items-center justify-center gap-2 whitespace-nowrap"
+            >
+              <i data-lucide="sparkles" class="w-4 h-4 shrink-0"></i>
+              <span class="whitespace-nowrap">🚀 Tạo License Key Mới Cho Khách</span>
+            </button>
+            <div class="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium overflow-x-auto touch-scroll no-scrollbar">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500 shrink-0"></i>
+              <span class="whitespace-nowrap">Khóa tự động: Key sẽ ghim chặt vào máy tính của khách hàng khi kích hoạt</span>
+            </div>
+          </div>
+
+          <!-- Kết Quả Key Vừa Tạo -->
+          <div id="newKeyResultBox" class="hidden p-5 rounded-2xl bg-emerald-50 border border-emerald-200/90 shadow-xs space-y-3 animate-in fade-in duration-200">
+            <div class="flex items-center gap-2 text-emerald-900 font-bold text-xs sm:text-sm">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+              <span class="whitespace-nowrap">Key mới tạo thành công! Hãy copy gửi trực tiếp cho khách hàng:</span>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+              <input 
+                id="newKeyResultInput" 
+                readonly 
+                class="flex-1 px-3.5 py-2.5 bg-white border border-emerald-300 rounded-xl font-mono font-black text-emerald-800 text-sm select-all tracking-wide shadow-inner" 
+              />
+              <button 
+                onclick="copyGeneratedKey()" 
+                class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all whitespace-nowrap"
+              >
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span>Copy Mã Key</span>
+              </button>
+              <button 
+                onclick="copyKeyForZalo()" 
+                class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all whitespace-nowrap"
+                title="Copy kèm cú pháp hướng dẫn kích hoạt gửi qua Zalo"
+              >
+                <i data-lucide="message-circle" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Copy Tin Nhắn Zalo</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Cột Phải (5 Cột): Bảng Gợi Ý Báo Giá & Quy Tắc Khóa Máy (GỌN GÀNG) -->
+        <div class="lg:col-span-5 flex flex-col gap-5">
+          
+          <!-- Card Bảng Giá Niêm Yết & Đặc Quyền Bản Quyền (100% GỌN GÀNG, KHÔNG RỚT CHỮ) -->
+          <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-xs space-y-3.5">
+            <div class="flex items-center justify-between pb-2.5 border-b border-slate-100 gap-2">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <i data-lucide="tag" class="w-4 h-4 text-indigo-600 shrink-0"></i>
+                <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider truncate">Bảng Giá Niêm Yết</h4>
+              </div>
+              <button 
+                type="button" 
+                id="btnSaveCustomPrices" 
+                onclick="saveCustomPrices()" 
+                class="btn-shimmer shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-extrabold shadow-sm transition-all cursor-pointer whitespace-nowrap"
+                title="Lưu lại bảng giá tùy chỉnh vào Database"
+              >
+                <i data-lucide="save" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
+                <span>Lưu Bảng Giá</span>
+              </button>
+            </div>
+
+            <div class="space-y-2 text-xs">
+              
+              <!-- 1. Gói 1 Ngày -->
+              <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-amber-300 transition-all flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
+                  <span class="text-base shrink-0 anim-lightning">⚡</span>
+                  <div class="min-w-0">
+                    <div class="font-bold text-slate-900 text-xs truncate">1 Ngày (Dùng thử)</div>
+                    <div class="text-[10px] text-slate-400 truncate">200 Leads • 24 Giờ</div>
+                  </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-1">
+                  <input 
+                    id="price_trial_1d" 
+                    type="text" 
+                    value="50.000đ" 
+                    placeholder="50k..." 
+                    class="w-24 text-right font-black text-amber-600 bg-white border border-slate-200 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 rounded-lg px-2 py-1 text-xs outline-none"
+                    title="Nhập giá bạn muốn bán cho gói này"
+                  />
+                </div>
+              </div>
+
+              <!-- 2. Gói 1 Tháng -->
+              <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition-all flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
+                  <span class="text-base shrink-0 anim-box">📦</span>
+                  <div class="min-w-0">
+                    <div class="font-bold text-slate-900 text-xs truncate">1 Tháng (Chuẩn)</div>
+                    <div class="text-[10px] text-slate-400 truncate">6.000 Leads • 30 Ngày</div>
+                  </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-1">
+                  <input 
+                    id="price_month_1m" 
+                    type="text" 
+                    value="499.000đ" 
+                    placeholder="499k..." 
+                    class="w-24 text-right font-black text-indigo-600 bg-white border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg px-2 py-1 text-xs outline-none"
+                    title="Nhập giá bạn muốn bán cho gói này"
+                  />
+                </div>
+              </div>
+
+              <!-- 3. Gói 3 Tháng -->
+              <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-cyan-300 transition-all flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
+                  <span class="text-base shrink-0 anim-rocket">🚀</span>
+                  <div class="min-w-0">
+                    <div class="font-bold text-slate-900 text-xs truncate">3 Tháng (Tiết Kiệm)</div>
+                    <div class="text-[10px] text-slate-400 truncate">18.000 Leads • 90 Ngày</div>
+                  </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-1">
+                  <input 
+                    id="price_month_3m" 
+                    type="text" 
+                    value="1.290.000đ" 
+                    placeholder="1.290k..." 
+                    class="w-24 text-right font-black text-cyan-600 bg-white border border-slate-200 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-lg px-2 py-1 text-xs outline-none"
+                    title="Nhập giá bạn muốn bán cho gói này"
+                  />
+                </div>
+              </div>
+
+              <!-- 4. Gói 1 Năm -->
+              <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-purple-300 transition-all flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
+                  <span class="text-base shrink-0 anim-crown">👑</span>
+                  <div class="min-w-0">
+                    <div class="font-bold text-slate-900 text-xs truncate">1 Năm (VIP Doanh Nghiệp)</div>
+                    <div class="text-[10px] text-slate-400 truncate">73.000 Leads • Tiết kiệm 40%</div>
+                  </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-1">
+                  <input 
+                    id="price_year_1y" 
+                    type="text" 
+                    value="2.990.000đ" 
+                    placeholder="2.990k..." 
+                    class="w-24 text-right font-black text-purple-600 bg-white border border-slate-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 rounded-lg px-2 py-1 text-xs outline-none"
+                    title="Nhập giá bạn muốn bán cho gói này"
+                  />
+                </div>
+              </div>
+
+              <!-- 5. Gói 3 Năm -->
+              <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-orange-300 transition-all flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
+                  <span class="text-base shrink-0 anim-trophy">🏆</span>
+                  <div class="min-w-0">
+                    <div class="font-bold text-slate-900 text-xs truncate">3 Năm (Super VIP)</div>
+                    <div class="text-[10px] text-slate-400 truncate">146.000 Leads • Đội nhóm</div>
+                  </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-1">
+                  <input 
+                    id="price_year_3y" 
+                    type="text" 
+                    value="5.990.000đ" 
+                    placeholder="5.990k..." 
+                    class="w-24 text-right font-black text-orange-600 bg-white border border-slate-200 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 rounded-lg px-2 py-1 text-xs outline-none"
+                    title="Nhập giá bạn muốn bán cho gói này"
+                  />
+                </div>
+              </div>
+
+              <!-- 6. Gói Vĩnh Viễn -->
+              <div class="p-2 sm:p-2.5 rounded-xl bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-200 hover:border-rose-400 transition-all flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
+                  <span class="text-base shrink-0 anim-diamond">💎</span>
+                  <div class="min-w-0">
+                    <div class="font-bold text-rose-950 text-xs truncate">Vĩnh Viễn (Lifetime)</div>
+                    <div class="text-[10px] text-rose-700 truncate">Max Speed • Trọn đời ∞</div>
+                  </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-1">
+                  <input 
+                    id="price_lifetime" 
+                    type="text" 
+                    value="9.990.000đ" 
+                    placeholder="9.990k..." 
+                    class="w-24 text-right font-black text-rose-700 bg-white border border-rose-300 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 rounded-lg px-2 py-1 text-xs outline-none"
+                    title="Nhập giá bạn muốn bán cho gói này"
+                  />
+                </div>
+              </div>
+
+            </div>
+
+            <div class="p-2 rounded-xl bg-slate-50 border border-slate-200 text-[10px] sm:text-[11px] text-slate-500 flex items-center gap-1.5">
+              <i data-lucide="info" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i>
+              <span>Gõ giá và bấm <b>"Lưu Bảng Giá"</b> để lưu vĩnh viễn vào hệ thống.</span>
+            </div>
+          </div>
+
+          <!-- Card Cơ Chế Khóa Máy (Anti-Share) -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs space-y-3">
+            <div class="flex items-center gap-2 pb-2.5 border-b border-slate-100">
+              <i data-lucide="lock" class="w-4 h-4 text-indigo-600 shrink-0"></i>
+              <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider whitespace-nowrap">Cơ Chế Bảo Vệ Doanh Thu (Anti-Share)</h4>
+            </div>
+
+            <ul class="space-y-2 text-xs text-slate-600">
+              <li class="flex items-start gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><b>Khóa tự động:</b> Ghim cố định vào máy tính khi khách kích hoạt lần đầu.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><b>Chống dùng lậu:</b> Nếu share key sang máy khác, hệ thống sẽ chặn truy cập.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><b>Đổi máy cho khách:</b> Bấm nút 🔄 <b>Reset Khóa Máy</b> ở tab danh sách khi khách cần đổi máy.</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        
+
+
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- TAB 2: DANH SÁCH KEY ĐÃ CẤP -->
+      <!-- ============================================================== -->
+      <div id="adminTabContent2" class="hidden space-y-5">
+        
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs space-y-4">
+          
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-slate-100">
+            <div>
+              <h3 class="text-base font-black text-slate-900 whitespace-nowrap">Danh Sách Toàn Bộ Key Đã Cấp Cho Khách Hàng</h3>
+              <p class="text-xs text-slate-400 mt-0.5 whitespace-nowrap">Xem hạn sử dụng, trạng thái khóa máy, lượt cào hôm nay và thao tác quản lý</p>
+            </div>
+
+            <!-- Tìm kiếm nhanh key -->
+            <div class="relative w-full sm:w-72">
+              <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input 
+                id="searchLicenseInput" 
+                type="text" 
+                placeholder="Tìm mã key, tên khách, số điện thoại..." 
+                class="w-full pl-9 pr-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 font-medium transition-all"
+                oninput="filterLicensesTable(this.value)"
+              />
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto border border-slate-200/90 rounded-xl touch-scroll custom-scrollbar">
+            <table class="w-full min-w-[920px] text-left text-xs border-collapse">
+              <thead class="bg-slate-50 border-b border-slate-200 font-extrabold text-slate-600 uppercase text-[11px] tracking-wider whitespace-nowrap">
+                <tr>
+                  <th class="py-3 px-3.5">Mã Bản Quyền</th>
+                  <th class="py-3 px-3.5">Khách Hàng & SĐT</th>
+                  <th class="py-3 px-3.5">Gói Bản Quyền</th>
+                  <th class="py-3 px-3.5">Hạn Sử Dụng</th>
+                  <th class="py-3 px-3.5">Thiết Bị Khóa & Lịch Sử Log</th>
+                  <th class="py-3 px-3.5">Lượt Hôm Nay</th>
+                  <th class="py-3 px-3.5 text-center">Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody id="adminLicensesTableBody" class="divide-y divide-slate-100 font-medium whitespace-nowrap">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+</div>
+
+      <!-- ============================================================== -->
+      <!-- TAB 3: CẤU HÌNH THANH TOÁN VIETQR -->
+      <!-- ============================================================== -->
+      <div id="adminTabContent3" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
+        
+        <!-- Cột Trái (7 Cột): Form Cấu Hình -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs space-y-5">
+          
+          <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-inner shrink-0">
+              <i data-lucide="qr-code" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-black text-slate-900 whitespace-nowrap">Cấu Hình Thông Tin Ngân Hàng VietQR</h3>
+              <p class="text-xs text-slate-400 mt-0.5 whitespace-nowrap">Mã VietQR sẽ tự động tạo chuẩn Napas247 theo thông tin này</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap">Mã Ngân Hàng (Bank Code)</label>
+              <input 
+                id="setBankCode" 
+                type="text" 
+                placeholder="MB, VCB, TCB, ACB..." 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-black uppercase text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
+                oninput="updateVietqrLivePreview()"
+              />
+              <span class="text-[10px] text-slate-400 mt-0.5 block whitespace-nowrap">MB, VCB, TCB, VPB...</span>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap">Số Tài Khoản</label>
+              <input 
+                id="setBankAccount" 
+                type="text" 
+                placeholder="0969999888" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
+                oninput="updateVietqrLivePreview()"
+              />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap">Tên Chủ Tài Khoản</label>
+              <input 
+                id="setBankName" 
+                type="text" 
+                placeholder="NGUYEN VAN A" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-black uppercase text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
+                oninput="updateVietqrLivePreview()"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap">Số Hotline Hỗ Trợ Khách</label>
+              <input 
+                id="setHotline" 
+                type="text" 
+                placeholder="0969.999.888" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
+                oninput="updateVietqrLivePreview()"
+              />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap">Mật Khẩu Admin Dự Phòng</label>
+              <input 
+                id="setAdminPassword" 
+                type="text" 
+                placeholder="admin888" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
+              />
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button 
+              onclick="saveAdminSettings()" 
+              class="btn-shimmer px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold text-xs tracking-wider uppercase transition-all shadow-sm flex items-center gap-2 whitespace-nowrap"
+            >
+              <i data-lucide="save" class="w-4 h-4"></i>
+              <span>Lưu Cấu Hình Ngân Hàng & Hệ Thống</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Cột Phải (5 Cột): Xem Trước Trực Quan Mã VietQR Khách Sẽ Nhận -->
+        <div class="lg:col-span-5 bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 text-white rounded-2xl p-6 border border-slate-800 shadow-xl flex flex-col items-center justify-center text-center space-y-3.5">
+          
+          <div class="flex items-center gap-1.5 text-cyan-400 font-extrabold text-xs uppercase tracking-wider whitespace-nowrap">
+            <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+            <span>Xem Trước Mã VietQR Tự Động</span>
+          </div>
+
+          <div class="p-2.5 bg-white rounded-xl shadow-2xl">
+            <img 
+              id="vietqrPreviewImg" 
+              src="https://img.vietqr.io/image/MB-0969999888-compact2.png?amount=0&addInfo=MUA%20KEY%20LEAD&accountName=NGUYEN%20VAN%20A" 
+              alt="Mã VietQR" 
+              class="w-48 h-48 object-contain rounded-lg"
+            />
+          </div>
+
+          <div class="space-y-0.5 text-xs">
+            <div class="font-extrabold text-sm text-white whitespace-nowrap" id="vietqrPreviewName">NGUYEN VAN A</div>
+            <div class="text-slate-400 font-mono whitespace-nowrap" id="vietqrPreviewBank">Ngân hàng: MB • STK: 0969999888</div>
+            <div class="text-[11px] text-cyan-400 font-semibold whitespace-nowrap" id="vietqrPreviewHotline">Hotline: 0969.999.888</div>
+          </div>
+
+          <p class="text-[11px] text-slate-400 max-w-xs whitespace-nowrap">
+            Khách chuyển khoản quét mã sẽ nhận thông tin tự động.
+          </p>
+
+        </div>
+</div>
+
+    </main>
+
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <!-- ============================================================== -->
+  <script>
+    let adminToken = null;
+    let allLicensesList = [];
+
+    // DATA CHO CUSTOM SELECT GÓI THỜI HẠN (THỨ TỰ CHUẨN KÈM SEED HẠN MỨC TỰ ĐỘNG & ANIMATED ICONS)
+    const PLAN_DATA = {
+      'trial_1d': { 
+        icon: '⚡', 
+        animClass: 'anim-lightning',
+        name: '1 Ngày (Dùng thử 24h)', 
+        badge: '24 GIỜ', 
+        badgeClass: 'bg-amber-100 text-amber-800 border border-amber-200',
+        seedLimit: '200'
+      },
+      'month_1m': { 
+        icon: '📦', 
+        animClass: 'anim-box',
+        name: '1 Tháng (30 ngày)', 
+        badge: '30 NGÀY', 
+        badgeClass: 'bg-indigo-100 text-indigo-800 border border-indigo-200',
+        seedLimit: '6000'
+      },
+      'month_3m': { 
+        icon: '🚀', 
+        animClass: 'anim-rocket',
+        name: '3 Tháng (90 ngày)', 
+        badge: '90 NGÀY', 
+        badgeClass: 'bg-cyan-100 text-cyan-800 border border-cyan-200',
+        seedLimit: '18000'
+      },
+      'year_1y': { 
+        icon: '👑', 
+        animClass: 'anim-crown',
+        name: '1 Năm (VIP 365 ngày)', 
+        badge: 'VIP 1 NĂM', 
+        badgeClass: 'bg-purple-100 text-purple-800 border border-purple-200',
+        seedLimit: '73000'
+      },
+      'year_3y': { 
+        icon: '🏆', 
+        animClass: 'anim-trophy',
+        name: '3 Năm (Super VIP 1095N)', 
+        badge: 'VIP 3 NĂM', 
+        badgeClass: 'bg-orange-100 text-orange-800 border border-orange-200',
+        seedLimit: '146000'
+      },
+      'lifetime': { 
+        icon: '💎', 
+        animClass: 'anim-diamond',
+        name: 'Vĩnh Viễn (Lifetime)', 
+        badge: 'TRỌN ĐỜI', 
+        badgeClass: 'bg-rose-100 text-rose-800 border border-rose-200',
+        seedLimit: '999999'
+      }
+    };
+
+    // DATA CHO CUSTOM SELECT HẠN MỨC (TƯƠNG ỨNG GÓI THỜI HẠN)
+    const DAILY_DATA = {
+      '200': { 
+        icon: '⚡', 
+        animClass: 'anim-lightning',
+        name: '200 Leads / Ngày', 
+        badge: '200/NGÀY', 
+        badgeClass: 'bg-amber-100 text-amber-800 border border-amber-200' 
+      },
+      '6000': { 
+        icon: '📦', 
+        animClass: 'anim-box',
+        name: '6.000 Leads / Tháng', 
+        badge: '6.000/THÁNG', 
+        badgeClass: 'bg-indigo-100 text-indigo-800 border border-indigo-200' 
+      },
+      '18000': { 
+        icon: '🚀', 
+        animClass: 'anim-rocket',
+        name: '18.000 Leads / 3 Tháng', 
+        badge: '18.000/3THÁNG', 
+        badgeClass: 'bg-cyan-100 text-cyan-800 border border-cyan-200' 
+      },
+      '73000': { 
+        icon: '👑', 
+        animClass: 'anim-crown',
+        name: '73.000 Leads / Năm', 
+        badge: '73.000/NĂM', 
+        badgeClass: 'bg-purple-100 text-purple-800 border border-purple-200' 
+      },
+      '146000': { 
+        icon: '🏆', 
+        animClass: 'anim-trophy',
+        name: '146.000 Leads / 3 Năm', 
+        badge: '146.000/3NĂM', 
+        badgeClass: 'bg-orange-100 text-orange-800 border border-orange-200' 
+      },
+      '999999': { 
+        icon: '💎', 
+        animClass: 'anim-diamond',
+        name: 'Max Speed (Không Giới Hạn)', 
+        badge: 'VÔ CỰC ∞', 
+        badgeClass: 'bg-rose-100 text-rose-800 border border-rose-200' 
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      lucide.createIcons();
+      selectPlanOption('trial_1d', true);
+      checkAdminAuth();
+    });
+
+    // Toggle custom dropdown
+    function toggleCustomDropdown(id) {
+      const dropdown = document.getElementById(id);
+      const isHidden = dropdown.classList.contains('hidden');
+      closeAllCustomDropdowns();
+      if (isHidden) {
+        dropdown.classList.remove('hidden');
+        const chevron = document.getElementById(id.replace('Dropdown', 'Chevron'));
+        if (chevron) chevron.classList.add('rotate-180');
+      }
+    }
+
+    function closeAllCustomDropdowns() {
+      ['customPlanDropdown', 'customDailyDropdown'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+        const ch = document.getElementById(id.replace('Dropdown', 'Chevron'));
+        if (ch) ch.classList.remove('rotate-180');
+      });
+    }
+
+    // Click outside to close custom dropdowns
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#customPlanTrigger') && !e.target.closest('#customPlanDropdown') &&
+          !e.target.closest('#customDailyTrigger') && !e.target.closest('#customDailyDropdown')) {
+        closeAllCustomDropdowns();
+      }
+    });
+
+    // CHỌN GÓI THỜI HẠN -> TỰ ĐỘNG SEED HẠN MỨC TƯƠNG ỨNG
+    function selectPlanOption(val, autoSeed = true) {
+      document.getElementById('newPlanType').value = val;
+      const item = PLAN_DATA[val];
+      if (item) {
+        document.getElementById('customPlanDisplay').innerHTML = `
+          <span class="text-base shrink-0 ${item.animClass}">${item.icon}</span>
+          <span class="font-bold text-slate-900 text-xs sm:text-sm whitespace-nowrap truncate">${item.name}</span>
+        `;
+        document.getElementById('customPlanBadge').className = `px-2 py-0.5 rounded-md text-[10px] font-extrabold whitespace-nowrap ${item.badgeClass}`;
+        document.getElementById('customPlanBadge').innerText = item.badge;
+
+        // Tự động seed sang ô Hạn Mức tương ứng theo yêu cầu
+        if (autoSeed && item.seedLimit) {
+          selectDailyOption(item.seedLimit);
+        }
+      }
+      renderPlanOptions();
+      closeAllCustomDropdowns();
+    }
+
+    function selectDailyOption(val) {
+      document.getElementById('newMaxDaily').value = val;
+      const item = DAILY_DATA[val];
+      if (item) {
+        document.getElementById('customDailyDisplay').innerHTML = `
+          <span class="text-base shrink-0 ${item.animClass}">${item.icon}</span>
+          <span class="font-bold text-slate-900 text-xs sm:text-sm whitespace-nowrap truncate">${item.name}</span>
+        `;
+        document.getElementById('customDailyBadge').className = `px-2 py-0.5 rounded-md text-[10px] font-extrabold whitespace-nowrap ${item.badgeClass}`;
+        document.getElementById('customDailyBadge').innerText = item.badge;
+      }
+      renderDailyOptions();
+      closeAllCustomDropdowns();
+    }
+
+    function renderPlanOptions() {
+      const current = document.getElementById('newPlanType').value;
+      const container = document.getElementById('customPlanDropdown');
+      if (!container) return;
+      container.innerHTML = Object.keys(PLAN_DATA).map(key => {
+        const item = PLAN_DATA[key];
+        const isSelected = key === current;
+        return `
+          <div 
+            onclick="selectPlanOption('${key}', true)" 
+            class="flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer transition-all whitespace-nowrap ${
+              isSelected ? 'bg-indigo-50 border border-indigo-200 shadow-2xs' : 'hover:bg-slate-50 border border-transparent'
+            }"
+          >
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-base shrink-0 ${item.animClass}">${item.icon}</span>
+              <span class="font-bold text-xs sm:text-sm text-slate-900 whitespace-nowrap">${item.name}</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0 ml-2">
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold whitespace-nowrap ${item.badgeClass}">${item.badge}</span>
+              ${isSelected ? '<i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 stroke-[3] shrink-0"></i>' : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons({ root: container });
+    }
+
+    function renderDailyOptions() {
+      const current = document.getElementById('newMaxDaily').value;
+      const container = document.getElementById('customDailyDropdown');
+      if (!container) return;
+      container.innerHTML = Object.keys(DAILY_DATA).map(key => {
+        const item = DAILY_DATA[key];
+        const isSelected = key === current;
+        return `
+          <div 
+            onclick="selectDailyOption('${key}')" 
+            class="flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer transition-all whitespace-nowrap ${
+              isSelected ? 'bg-rose-50 border border-rose-200 shadow-2xs' : 'hover:bg-slate-50 border border-transparent'
+            }"
+          >
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-base shrink-0 ${item.animClass}">${item.icon}</span>
+              <span class="font-bold text-xs sm:text-sm text-slate-900 whitespace-nowrap">${item.name}</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0 ml-2">
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold whitespace-nowrap ${item.badgeClass}">${item.badge}</span>
+              ${isSelected ? '<i data-lucide="check" class="w-3.5 h-3.5 text-rose-600 stroke-[3] shrink-0"></i>' : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons({ root: container });
+    }
+
+    function checkAdminAuth() {
+      const savedAdminToken = localStorage.getItem('lead_extractor_admin_token');
+
+      // Nếu đã có token đăng nhập hợp lệ trước đó -> Vào Dashboard
+      if (savedAdminToken) {
+        adminToken = savedAdminToken;
+        showAdminDashboard();
+      } else {
+        const loginScr = document.getElementById('adminLoginScreen');
+        const dashScr = document.getElementById('adminDashboardScreen');
+        if (loginScr) {
+          loginScr.classList.remove('hidden');
+          loginScr.classList.add('flex');
+          loginScr.style.display = 'flex';
+        }
+        if (dashScr) {
+          dashScr.classList.add('hidden');
+          dashScr.style.display = 'none';
+        }
+      }
+    }
+
+    async function submitAdminLogin(e) {
+      if (e) e.preventDefault();
+      const password = document.getElementById('adminPasswordInput').value.trim();
+      if (!password) return alert("Vui lòng nhập mật khẩu!");
+
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        adminToken = data.token || password;
+        localStorage.setItem('lead_extractor_admin_token', adminToken);
+        showAdminDashboard();
+        showToast("Đăng nhập Admin thành công!", "success");
+      } else {
+        alert(data.message || "Mật khẩu không đúng!");
+      }
+    }
+
+    function logoutAdmin() {
+      if (confirm("Bạn có chắc muốn đăng xuất khỏi Cổng Quản Trị?")) {
+        localStorage.removeItem('lead_extractor_admin_token');
+        adminToken = null;
+        window.location.reload();
+      }
+    }
+
+    function showAdminDashboard() {
+      const loginScr = document.getElementById('adminLoginScreen');
+      const dashScr = document.getElementById('adminDashboardScreen');
+      if (loginScr) {
+        loginScr.classList.add('hidden');
+        loginScr.classList.remove('flex');
+        loginScr.style.display = 'none';
+      }
+      if (dashScr) {
+        dashScr.classList.remove('hidden');
+        dashScr.style.display = 'flex';
+      }
+      loadAdminLicenses();
+      loadAdminSettings();
+      lucide.createIcons();
+    }
+
+    function switchAdminTab(idx) {
+      [1, 2, 3].forEach(i => {
+        document.getElementById(`adminTabContent${i}`).classList.toggle('hidden', i !== idx);
+        const btn = document.getElementById(`adminTabBtn${i}`);
+        if (i === idx) {
+          btn.className = "inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs bg-indigo-600 text-white shadow-sm transition-all whitespace-nowrap";
+        } else {
+          btn.className = "inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all whitespace-nowrap";
+        }
+      });
+      if (idx === 2) loadAdminLicenses();
+      loadAdminSettings();
+    }
+
+    async function loadAdminLicenses() {
+      if (!adminToken) return;
+      try {
+        const res = await fetch('/api/admin/licenses', {
+          headers: { 
+            'X-Admin-Password': adminToken,
+            'X-License-Key': adminToken
+          }
+        });
+        const data = await res.json();
+        if (data.success && data.licenses) {
+          allLicensesList = data.licenses;
+          renderLicensesTable(allLicensesList);
+
+          // Update stats
+          document.getElementById('statTotalKeys').innerText = allLicensesList.length;
+          document.getElementById('tabCountKeys').innerText = allLicensesList.length;
+          
+          const activeCount = allLicensesList.filter(l => l.isActive && (!l.expiresAt || new Date(l.expiresAt) > new Date())).length;
+          document.getElementById('statActiveKeys').innerText = activeCount;
+
+          const lockedDevicesCount = allLicensesList.filter(l => l.deviceId).length;
+          document.getElementById('statLockedDevices').innerText = lockedDevicesCount;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function formatLogTime(timeStr) {
+      if (!timeStr) return 'Chưa có';
+      const d = new Date(timeStr);
+      if (isNaN(d.getTime())) return timeStr;
+      return d.toLocaleString('vi-VN', {
+        hour: '2-digit', minute: '2-digit',
+        day: '2-digit', month: '2-digit', year: 'numeric'
+      });
+    }
+
+    function renderLicensesTable(list) {
+      const tbody = document.getElementById('adminLicensesTableBody');
+      if (!tbody) return;
+
+      if (!list || list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400">Không tìm thấy mã key nào!</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(lic => {
+        const isExpired = lic.expiresAt && new Date(lic.expiresAt) < new Date();
+        const expText = lic.expiresAt ? new Date(lic.expiresAt).toLocaleDateString('vi-VN') : 'Vĩnh viễn';
+        const isMasterKey = (lic.key === 'ADMIN-DEV5S-2026');
+
+        let devHtml = '';
+        if (isMasterKey) {
+          devHtml = `
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 whitespace-nowrap">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <span>ĐA THIẾT BỊ (ADMIN)</span>
+            </div>
+          `;
+        } else if (lic.deviceId) {
+          const shortId = lic.deviceId.length > 15 ? lic.deviceId.substring(0, 14) + '...' : lic.deviceId;
+          const timeText = lic.lastAccessedAt ? formatLogTime(lic.lastAccessedAt) : 'Chưa ghi nhận';
+          devHtml = `
+            <div class="flex flex-col gap-1 min-w-[220px] max-w-[270px] text-left p-2 rounded-xl bg-slate-50/90 border border-slate-200/90 hover:border-indigo-300 transition-all">
+              <div class="flex items-center justify-between gap-1">
+                <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                  <i data-lucide="lock" class="w-2.5 h-2.5 text-emerald-700"></i>
+                  <span>Đã Khóa Máy</span>
+                </span>
+                <button onclick="openDeviceDetailModal('${lic.key}')" class="text-[10px] font-bold text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-0.5" title="Xem chi tiết thiết bị & nhật ký log đối chứng">
+                  <i data-lucide="history" class="w-3 h-3"></i>
+                  <span>Xem Log</span>
+                </button>
+              </div>
+              <div class="text-[11px] font-bold text-slate-800 truncate" title="${lic.deviceInfo || 'Thiết bị người dùng'}">
+                💻 ${lic.deviceInfo || 'Máy tính người dùng'}
+              </div>
+              <div class="text-[10px] text-slate-500 font-mono flex items-center gap-1 flex-wrap">
+                <span title="${lic.deviceId}">ID: ${shortId}</span>
+                ${lic.deviceIp ? `<span class="text-slate-300">•</span><span class="text-slate-600 font-sans" title="Địa chỉ IP">IP: ${lic.deviceIp}</span>` : ''}
+              </div>
+              <div class="text-[9.5px] text-slate-400 flex items-center gap-1">
+                <i data-lucide="clock" class="w-2.5 h-2.5"></i>
+                <span>Gần nhất: ${timeText}</span>
+              </div>
+            </div>
+          `;
+        } else {
+          devHtml = `
+            <div class="flex flex-col gap-0.5 text-left">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-500 border border-slate-200 w-fit">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                <span>Chưa Kích Hoạt Máy</span>
+              </span>
+              <span class="text-[10px] text-slate-400 italic">Chờ khách mở tool đăng nhập</span>
+            </div>
+          `;
+        }
+
+        return `
+          <tr class="hover:bg-slate-50 transition-colors whitespace-nowrap">
+            <td class="py-2.5 px-3.5 font-mono font-bold text-indigo-700 select-all whitespace-nowrap">${lic.key}</td>
+            <td class="py-2.5 px-3.5 font-semibold text-slate-900 whitespace-nowrap">${lic.clientName} ${lic.clientPhone ? `<span class="text-slate-400 text-[11px] block font-normal">SĐT: ${lic.clientPhone}</span>` : ''}</td>
+            <td class="py-2.5 px-3.5 whitespace-nowrap">
+              ${
+                lic.planType === 'trial_1d' ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800"><span class="anim-lightning">⚡</span> 1 Ngày</span>' :
+                lic.planType === 'month_1m' ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800"><span class="anim-box">📦</span> 1 Tháng</span>' :
+                lic.planType === 'month_3m' ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-100 text-cyan-800"><span class="anim-rocket">🚀</span> 3 Tháng</span>' :
+                lic.planType === 'year_1y' ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800"><span class="anim-crown">👑</span> 1 Năm</span>' :
+                lic.planType === 'year_3y' ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-800"><span class="anim-trophy">🏆</span> 3 Năm</span>' :
+                '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800"><span class="anim-diamond">💎</span> Vĩnh Viễn</span>'
+              }
+            </td>
+            <td class="py-2.5 px-3.5 font-semibold text-slate-700 whitespace-nowrap">${expText}</td>
+            <td class="py-2.5 px-3.5 text-[11px] whitespace-nowrap">${devHtml}</td>
+            <td class="py-2.5 px-3.5 font-mono font-semibold text-slate-800 whitespace-nowrap">${lic.usedToday} / ${lic.maxDailyScrapes}</td>
+            <td class="py-2.5 px-3.5 text-center whitespace-nowrap">
+              <div class="flex items-center justify-center gap-1">
+                <button onclick="copyText('${lic.key}', 'Đã copy Key!')" class="p-1.5 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-all" title="Copy Key">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="openDeviceDetailModal('${lic.key}')" class="p-1.5 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-all" title="Xem Chi Tiết Thiết Bị & Đối Chứng Log">
+                  <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+                </button>
+                ${!isMasterKey ? `
+                  <button onclick="adminToggleActive('${lic.key}', ${lic.isActive ? 0 : 1})" class="p-1.5 ${lic.isActive ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-emerald-600 bg-emerald-50 hover:bg-emerald-100'} rounded-lg transition-all" title="${lic.isActive ? 'Khóa Key' : 'Mở Khóa Key'}">
+                    <i data-lucide="${lic.isActive ? 'lock' : 'unlock'}" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button onclick="adminResetDevice('${lic.key}')" class="p-1.5 text-cyan-600 bg-cyan-50 hover:bg-cyan-100 rounded-lg transition-all" title="Reset Khóa Máy (Đổi máy cho khách)">
+                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button onclick="adminDeleteLicense('${lic.key}')" class="p-1.5 text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg transition-all" title="Xóa Key vĩnh viễn">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                ` : '<span class="text-[10px] font-bold text-slate-400 italic">Chủ Tool</span>'}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      lucide.createIcons({ root: tbody });
+    }
+
+    function filterLicensesTable(query) {
+      if (!query || !query.trim()) {
+        renderLicensesTable(allLicensesList);
+        return;
+      }
+      const q = query.trim().toLowerCase();
+      const filtered = allLicensesList.filter(l => 
+        l.key.toLowerCase().includes(q) ||
+        (l.clientName && l.clientName.toLowerCase().includes(q)) ||
+        (l.clientPhone && l.clientPhone.toLowerCase().includes(q))
+      );
+      renderLicensesTable(filtered);
+    }
+
+    async function submitCreateLicense() {
+      const clientName = document.getElementById('newClientName').value.trim();
+      const clientPhone = document.getElementById('newClientPhone').value.trim();
+      const planType = document.getElementById('newPlanType').value;
+      const maxDailyScrapes = document.getElementById('newMaxDaily').value;
+
+      if (!clientName) return alert("Vui lòng nhập tên khách hàng!");
+
+      const res = await fetch('/api/admin/licenses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Password': adminToken,
+          'X-License-Key': adminToken
+        },
+        body: JSON.stringify({ clientName, clientPhone, planType, maxDailyScrapes })
+      });
+      const data = await res.json();
+      if (data.success && data.license) {
+        document.getElementById('newKeyResultBox').classList.remove('hidden');
+        document.getElementById('newKeyResultInput').value = data.license.key;
+        showToast("Tạo Key mới thành công!", "success");
+        loadAdminLicenses();
+      }
+    }
+
+    function copyGeneratedKey() {
+      const key = document.getElementById('newKeyResultInput').value;
+      copyText(key, "Đã copy Key để gửi cho khách!");
+    }
+
+    function copyKeyForZalo() {
+      const key = document.getElementById('newKeyResultInput').value;
+      const clientName = document.getElementById('newClientName').value.trim() || 'Quý khách';
+      const planVal = document.getElementById('newPlanType').value;
+      const planText = PLAN_DATA[planVal] ? PLAN_DATA[planVal].name : 'Bản quyền 5S DEV.TOOL';
+      
+      const msg = `Kính gửi ${clientName},\n5S DEV.TOOL xin gửi bạn mã kích hoạt bản quyền:\n\n🔑 Mã License Key: ${key}\n📦 Gói dịch vụ: ${planText}\n\n👉 Hướng dẫn: Bạn mở website tool, dán mã Key này vào ô "Mã Bản Quyền (License Key)" rồi bấm Xác Nhận Kích Hoạt là sử dụng được ngay!\nChúc bạn khai thác data hiệu quả!`;
+      
+      copyText(msg, "Đã copy tin nhắn kèm hướng dẫn gửi Zalo!");
+    }
+
+    async function adminToggleActive(key, newState) {
+      await fetch(`/api/admin/licenses/${key}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Password': adminToken,
+          'X-License-Key': adminToken
+        },
+        body: JSON.stringify({ isActive: newState })
+      });
+      loadAdminLicenses();
+    }
+
+    async function adminResetDevice(key) {
+      if (!confirm(`Reset khóa thiết bị cho Key ${key}? Khách sẽ có thể kích hoạt trên máy tính mới.`)) return;
+      await fetch(`/api/admin/licenses/${key}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Password': adminToken,
+          'X-License-Key': adminToken
+        },
+        body: JSON.stringify({ resetDevice: true })
+      });
+      showToast("Đã reset khóa thiết bị thành công!", "success");
+      loadAdminLicenses();
+    }
+
+    async function adminDeleteLicense(key) {
+      if (!confirm(`Bạn có chắc muốn xóa Key ${key}?`)) return;
+      await fetch(`/api/admin/licenses/${key}`, {
+        method: 'DELETE',
+        headers: { 
+          'X-Admin-Password': adminToken,
+          'X-License-Key': adminToken
+        }
+      });
+      showToast("Đã xóa Key!", "success");
+      loadAdminLicenses();
+    }
+
+    async function loadAdminSettings() {
+      if (!adminToken) return;
+      try {
+        const res = await fetch('/api/admin/settings', {
+          headers: { 
+            'X-Admin-Password': adminToken,
+            'X-License-Key': adminToken
+          }
+        });
+        const data = await res.json();
+        if (data.success && data.settings) {
+          const s = data.settings;
+          if (document.getElementById('setBankCode')) document.getElementById('setBankCode').value = s.bankCode || 'MB';
+          if (document.getElementById('setBankAccount')) document.getElementById('setBankAccount').value = s.bankAccount || '0969999888';
+          if (document.getElementById('setBankName')) document.getElementById('setBankName').value = s.bankName || 'NGUYEN VAN A';
+          if (document.getElementById('setHotline')) document.getElementById('setHotline').value = s.hotline || '0969.999.888';
+          if (document.getElementById('setAdminPassword')) document.getElementById('setAdminPassword').value = s.adminPassword || 'admin888';
+          
+          // Điền giá tiền tùy chỉnh đã lưu trong Database
+          if (s.price_trial_1d && document.getElementById('price_trial_1d')) document.getElementById('price_trial_1d').value = s.price_trial_1d;
+          if (s.price_month_1m && document.getElementById('price_month_1m')) document.getElementById('price_month_1m').value = s.price_month_1m;
+          if (s.price_month_3m && document.getElementById('price_month_3m')) document.getElementById('price_month_3m').value = s.price_month_3m;
+          if (s.price_year_1y && document.getElementById('price_year_1y')) document.getElementById('price_year_1y').value = s.price_year_1y;
+          if (s.price_year_3y && document.getElementById('price_year_3y')) document.getElementById('price_year_3y').value = s.price_year_3y;
+          if (s.price_lifetime && document.getElementById('price_lifetime')) document.getElementById('price_lifetime').value = s.price_lifetime;
+          
+          const zaloCookieVal = s.zaloCookie || '';
+          const zaloApiKeyVal = s.zaloApiKey || '';
+          const zaloApiUrlVal = s.zaloApiUrl || '';
+
+          document.querySelectorAll('.zalo-cookie-input, #setZaloCookie').forEach(el => el.value = zaloCookieVal);
+          document.querySelectorAll('.zalo-apikey-input, #setZaloApiKey').forEach(el => el.value = zaloApiKeyVal);
+          document.querySelectorAll('.zalo-apiurl-input, #setZaloApiUrl').forEach(el => el.value = zaloApiUrlVal);
+          
+          updateVietqrLivePreview();
+          checkZaloSessionStatus();
+        }
+      } catch (e) {
+        console.error('Error loading admin settings:', e);
+      }
+    }
+
+    async function checkZaloSessionStatus() {
+      if (!adminToken) return;
+      try {
+        const res = await fetch('/api/admin/zalo/session-status', {
+          headers: {
+            'X-Admin-Password': adminToken,
+            'X-License-Key': adminToken
+          }
+        });
+        const data = await res.json();
+        document.querySelectorAll('.zalo-cookie-status-badge').forEach(badge => {
+          if (data.status === 'LIVE') {
+            badge.className = 'zalo-cookie-status-badge text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300';
+            badge.innerText = '🟢 Cookie Live (Đang hoạt động)';
+          } else if (data.status === 'EXPIRED') {
+            badge.className = 'zalo-cookie-status-badge text-[10px] font-extrabold px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300';
+            badge.innerText = '🔴 Cookie Hết Hạn (Lỗi 102 - Cần F5 lấy lại)';
+          } else if (data.status === 'EMPTY') {
+            badge.className = 'zalo-cookie-status-badge text-[10px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700';
+            badge.innerText = '⚪ Chưa có Cookie';
+          } else {
+            badge.className = 'zalo-cookie-status-badge text-[10px] font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-700 border border-rose-300';
+            badge.innerText = '⚠️ Lỗi Cookie';
+          }
+        });
+      } catch (e) {}
+    }
+
+    
+    // LƯU BẢNG GIÁ NIÊM YẾT VÀO DATABASE
+    async function saveCustomPrices() {
+      const token = adminToken || localStorage.getItem('lead_extractor_admin_token') || 'ADMIN-DEV5S-2026';
+
+      const payload = {
+        price_trial_1d: document.getElementById('price_trial_1d')?.value.trim() || '50.000đ',
+        price_month_1m: document.getElementById('price_month_1m')?.value.trim() || '499.000đ',
+        price_month_3m: document.getElementById('price_month_3m')?.value.trim() || '1.290.000đ',
+        price_year_1y: document.getElementById('price_year_1y')?.value.trim() || '2.990.000đ',
+        price_year_3y: document.getElementById('price_year_3y')?.value.trim() || '5.990.000đ',
+        price_lifetime: document.getElementById('price_lifetime')?.value.trim() || '9.990.000đ'
+      };
+
+      const saveBtn = document.getElementById('btnSaveCustomPrices');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i><span>Đang Lưu...</span>';
+        if (window.lucide) lucide.createIcons();
+      }
+
+      try {
+        const res = await fetch('/api/admin/settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Password': token,
+            'X-License-Key': token
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Đã lưu bảng giá niêm yết thành công!', 'success');
+          if (saveBtn) {
+            saveBtn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span class="text-emerald-300">Đã Lưu ✓</span>';
+            if (window.lucide) lucide.createIcons();
+            setTimeout(() => {
+              saveBtn.disabled = false;
+              saveBtn.innerHTML = '<i data-lucide="save" class="w-3.5 h-3.5 text-cyan-400"></i><span>Lưu Bảng Giá</span>';
+              if (window.lucide) lucide.createIcons();
+            }, 2000);
+          }
+        } else {
+          showToast(data.message || 'Lỗi lưu bảng giá', 'error');
+          if (saveBtn) {
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = '<i data-lucide="save" class="w-3.5 h-3.5 text-cyan-400"></i><span>Lưu Bảng Giá</span>';
+            if (window.lucide) lucide.createIcons();
+          }
+        }
+      } catch (e) {
+        showToast('Lỗi kết nối máy chủ: ' + e.message, 'error');
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '<i data-lucide="save" class="w-3.5 h-3.5 text-cyan-400"></i><span>Lưu Bảng Giá</span>';
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+    }
+
+    function updateVietqrLivePreview() {
+      const bankCode = (document.getElementById('setBankCode')?.value.trim() || 'MB').toUpperCase();
+      const bankAccount = document.getElementById('setBankAccount')?.value.trim() || '0969999888';
+      const bankName = (document.getElementById('setBankName')?.value.trim() || 'NGUYEN VAN A').toUpperCase();
+      const hotline = document.getElementById('setHotline')?.value.trim() || '0969.999.888';
+
+      const qrUrl = `https://img.vietqr.io/image/${bankCode}-${bankAccount}-compact2.png?amount=0&addInfo=MUA%20KEY%20LEAD&accountName=${encodeURIComponent(bankName)}`;
+      
+      const img = document.getElementById('vietqrPreviewImg');
+      if (img) img.src = qrUrl;
+
+      const nameEl = document.getElementById('vietqrPreviewName');
+      if (nameEl) nameEl.innerText = bankName;
+
+      const bankEl = document.getElementById('vietqrPreviewBank');
+      if (bankEl) bankEl.innerText = `Ngân hàng: ${bankCode} • STK: ${bankAccount}`;
+
+      const hotlineEl = document.getElementById('vietqrPreviewHotline');
+      if (hotlineEl) hotlineEl.innerText = `Hotline: ${hotline}`;
+    }
+
+    async function saveAdminSettings() {
+      const payload = {
+        bankCode: document.getElementById('setBankCode').value.trim(),
+        bankAccount: document.getElementById('setBankAccount').value.trim(),
+        bankName: document.getElementById('setBankName').value.trim(),
+        hotline: document.getElementById('setHotline').value.trim(),
+        adminPassword: document.getElementById('setAdminPassword').value.trim(),
+        price_trial_1d: document.getElementById('price_trial_1d')?.value.trim() || '50.000đ',
+        price_month_1m: document.getElementById('price_month_1m')?.value.trim() || '499.000đ',
+        price_month_3m: document.getElementById('price_month_3m')?.value.trim() || '1.290.000đ',
+        price_year_1y: document.getElementById('price_year_1y')?.value.trim() || '2.990.000đ',
+        price_year_3y: document.getElementById('price_year_3y')?.value.trim() || '5.990.000đ',
+        price_lifetime: document.getElementById('price_lifetime')?.value.trim() || '9.990.000đ'
+      };
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Password': adminToken,
+          'X-License-Key': adminToken
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast("Đã lưu cấu hình hệ thống thành công!", "success");
+        if (payload.adminPassword) adminToken = payload.adminPassword;
+        updateVietqrLivePreview();
+      }
+    }
+
+    async function saveZaloConfig() {
+      if (!adminToken) return showToast('Vui lòng đăng nhập quyền Admin trước!', 'error');
+      
+      let zaloCookie = '';
+      document.querySelectorAll('.zalo-cookie-input, #setZaloCookie').forEach(el => {
+        if (el.value.trim() && !zaloCookie) zaloCookie = el.value.trim();
+      });
+      let zaloApiKey = '';
+      document.querySelectorAll('.zalo-apikey-input, #setZaloApiKey').forEach(el => {
+        if (el.value.trim() && !zaloApiKey) zaloApiKey = el.value.trim();
+      });
+      let zaloApiUrl = '';
+      document.querySelectorAll('.zalo-apiurl-input, #setZaloApiUrl').forEach(el => {
+        if (el.value.trim() && !zaloApiUrl) zaloApiUrl = el.value.trim();
+      });
+
+      // Đồng bộ giá trị lên tất cả các ô trên các tab
+      document.querySelectorAll('.zalo-cookie-input, #setZaloCookie').forEach(el => el.value = zaloCookie);
+      document.querySelectorAll('.zalo-apikey-input, #setZaloApiKey').forEach(el => el.value = zaloApiKey);
+      document.querySelectorAll('.zalo-apiurl-input, #setZaloApiUrl').forEach(el => el.value = zaloApiUrl);
+
+      try {
+        const res = await fetch('/api/admin/zalo/session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Password': adminToken,
+            'X-License-Key': adminToken
+          },
+          body: JSON.stringify({ 
+            cookie: zaloCookie, 
+            zaloCookie: zaloCookie,
+            apiKey: zaloApiKey, 
+            zaloApiKey: zaloApiKey,
+            apiUrl: zaloApiUrl,
+            zaloApiUrl: zaloApiUrl
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message || 'Đã lưu cấu hình API & Cookie Zalo!', 'success');
+          checkZaloSessionStatus();
+        } else {
+          showToast(data.message || 'Lỗi lưu cấu hình Zalo', 'error');
+        }
+      } catch (err) {
+        showToast('Lỗi kết nối máy chủ: ' + err.message, 'error');
+      }
+    }
+
+    async function runLiveZaloTest() {
+      if (!adminToken) return showToast('Vui lòng đăng nhập quyền Admin trước!', 'error');
+      
+      let phone = '';
+      document.querySelectorAll('.zalo-test-phone, #testPhoneInput').forEach(el => {
+        if (el.value.trim() && !phone) phone = el.value.trim();
+      });
+      if (!phone) return showToast('Vui lòng nhập số điện thoại cần test!', 'error');
+
+      // Đổi trạng thái nút bấm và badge trên tất cả các tab
+      document.querySelectorAll('.zalo-test-btn, #btnTestZaloPhone').forEach(btn => btn.disabled = true);
+      document.querySelectorAll('.zalo-test-badge, #testStatusBadge').forEach(badge => {
+        badge.className = 'zalo-test-badge px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-100 text-cyan-700 animate-pulse';
+        badge.innerText = 'Đang kiểm tra...';
+      });
+      document.querySelectorAll('.zalo-test-details, #testResultDetails').forEach(details => {
+        details.innerHTML = '<span class="text-slate-500">Đang gửi truy vấn đối chiếu Zalo Server cho SĐT <b>' + phone + '</b>...</span>';
+      });
+
+      try {
+        const res = await fetch('/api/admin/zalo/test', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Password': adminToken,
+            'X-License-Key': adminToken
+          },
+          body: JSON.stringify({ phone })
+        });
+        const data = await res.json();
+        document.querySelectorAll('.zalo-test-btn, #btnTestZaloPhone').forEach(btn => btn.disabled = false);
+
+        if (data.success && data.result) {
+          const r = data.result;
+
+          // Xử lý lỗi phiên Cookie hết hạn (Lỗi 102) hoặc chưa cấu hình
+          if (r.sessionError || r.sessionStatus === 'EXPIRED') {
+            document.querySelectorAll('.zalo-test-badge, #testStatusBadge').forEach(badge => {
+              badge.className = 'zalo-test-badge px-2.5 py-0.5 rounded text-[10px] font-extrabold bg-amber-100 text-amber-800 border border-amber-300';
+              badge.innerText = '⚠️ COOKIE ĐÃ HẾT HẠN (LỖI 102)';
+            });
+            const detailsHtml = `
+              <div class="space-y-1.5 mt-1">
+                <div class="text-amber-800 font-bold flex items-center gap-1.5">
+                  <span>⚠️ Phiên đăng nhập Zalo Web (zpw_sek) đã hết hạn timeout!</span>
+                </div>
+                <div class="text-slate-600 text-[11px] leading-relaxed">
+                  Máy chủ Zalo thông báo <b>Mã lỗi 102</b> (<i>The session key was improperly submitted or has reached its timeout</i>).<br>
+                  Do chuỗi <code>zpw_sek</code> bạn lấy trước đó đã hết hạn phiên làm việc trên Zalo, hệ thống chưa thể kết nối tới Zalo để đối chiếu số <b>${phone}</b>.
+                </div>
+                <div class="p-2.5 bg-amber-50 rounded-lg border border-amber-200 text-[11px] text-amber-900 leading-relaxed space-y-1">
+                  <div class="font-bold">👉 Cách lấy lại Key mới trong 10 giây:</div>
+                  <div>1. Mở lại tab <b>chat.zalo.me</b> trên trình duyệt của bạn, bấm <b>F5 (tải lại trang)</b>.</div>
+                  <div>2. Bấm <b>F12</b> ➔ chọn tab <b>Application (Ứng dụng)</b> ➔ <b>Cookies</b> ➔ <code>https://chat.zalo.me</code>.</div>
+                  <div>3. Copy giá trị ô <b>zpw_sek</b> mới nhất, dán thay thế vào ô Cookie bên cạnh rồi bấm <b>"Lưu Cấu Hình API Zalo"</b>.</div>
+                </div>
+              </div>
+            `;
+            document.querySelectorAll('.zalo-test-details, #testResultDetails').forEach(details => {
+              details.innerHTML = detailsHtml;
+            });
+            checkZaloSessionStatus();
+            return;
+          }
+
+          if (r.zaloActive) {
+            document.querySelectorAll('.zalo-test-badge, #testStatusBadge').forEach(badge => {
+              badge.className = 'zalo-test-badge px-2.5 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-700 border border-emerald-300';
+              badge.innerText = '🟢 ACTIVE (Có Zalo Thật)';
+            });
+            const detailsHtml = `
+              <div class="space-y-1.5 mt-1">
+                <div class="text-emerald-700 font-bold flex items-center gap-1.5">
+                  <span>✔ SĐT này đã kích hoạt tài khoản Zalo!</span>
+                </div>
+                ${r.zaloName ? '<div class="text-slate-800"><b>Tên Zalo:</b> <span class="text-indigo-600 font-bold">' + r.zaloName + '</span></div>' : ''}
+                <div class="text-[11px] text-slate-500"><b>Nguồn xác thực:</b> ${r.source || 'Zalo API / Session'}</div>
+                <div class="pt-1">
+                  <a href="https://zalo.me/${phone}" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-bold text-cyan-600 hover:underline">
+                    👉 Bấm để mở thử trên Zalo Web (zalo.me/${phone})
+                  </a>
+                </div>
+              </div>
+            `;
+            document.querySelectorAll('.zalo-test-details, #testResultDetails').forEach(details => {
+              details.innerHTML = detailsHtml;
+            });
+          } else {
+            document.querySelectorAll('.zalo-test-badge, #testStatusBadge').forEach(badge => {
+              badge.className = 'zalo-test-badge px-2.5 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-rose-700 border border-rose-300';
+              badge.innerText = '⚪ NULL / NOT FOUND';
+            });
+            const detailsHtml = `
+              <div class="space-y-1 mt-1 text-slate-600">
+                <div class="text-rose-600 font-bold">❌ SĐT này không có Zalo hoặc bị chặn tìm kiếm (Null / Not Found)</div>
+                <div><b>Lý do:</b> ${r.reason || 'Tài khoản không tồn tại'}</div>
+                <div class="text-[11px] text-slate-400">Trên giao diện cào Lead, số này sẽ hiển thị huy hiệu xám <b>⚪ Chưa có Zalo / Null</b>.</div>
+              </div>
+            `;
+            document.querySelectorAll('.zalo-test-details, #testResultDetails').forEach(details => {
+              details.innerHTML = detailsHtml;
+            });
+          }
+        } else {
+          document.querySelectorAll('.zalo-test-badge, #testStatusBadge').forEach(badge => {
+            badge.className = 'zalo-test-badge px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700';
+            badge.innerText = 'Lỗi kiểm tra';
+          });
+          document.querySelectorAll('.zalo-test-details, #testResultDetails').forEach(details => {
+            details.innerText = data.message || 'Không thể thực hiện kiểm tra Zalo.';
+          });
+        }
+      } catch (err) {
+        document.querySelectorAll('.zalo-test-btn, #btnTestZaloPhone').forEach(btn => btn.disabled = false);
+        document.querySelectorAll('.zalo-test-badge, #testStatusBadge').forEach(badge => {
+          badge.className = 'zalo-test-badge px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-700';
+          badge.innerText = 'Lỗi';
+        });
+        document.querySelectorAll('.zalo-test-details, #testResultDetails').forEach(details => {
+          details.innerText = 'Lỗi mạng hoặc server: ' + err.message;
+        });
+      }
+    }
+
+    let currentViewingKey = '';
+
+    async function openDeviceDetailModal(key) {
+      currentViewingKey = key;
+      const modal = document.getElementById('deviceLogsModal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+
+      // Set initial loading state
+      document.getElementById('modalLicKey').innerText = key;
+      document.getElementById('modalClientInfo').innerText = 'Đang tải...';
+      document.getElementById('modalPlanExpiry').innerText = 'Đang tải...';
+      document.getElementById('modalLogsTableBody').innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-400">Đang tải nhật ký đối chứng thiết bị...</td></tr>';
+
+      try {
+        const res = await fetch(`/api/admin/licenses/${encodeURIComponent(key)}/logs`, {
+          headers: {
+            'X-Admin-Password': adminToken,
+            'X-License-Key': adminToken
+          }
+        });
+        const data = await res.json();
+        if (!data.success) {
+          showToast(data.message || 'Lỗi tải log thiết bị!', 'error');
+          return;
+        }
+
+        const lic = data.license;
+        const logs = data.logs || [];
+
+        // Client & Plan info
+        document.getElementById('modalClientInfo').innerText = `${lic.clientName} ${lic.clientPhone ? '(' + lic.clientPhone + ')' : ''}`;
+        document.getElementById('modalPlanExpiry').innerText = `${(lic.planType || 'VIP').toUpperCase()} • ${lic.expiresAt ? new Date(lic.expiresAt).toLocaleDateString('vi-VN') : 'Vĩnh viễn'}`;
+
+        const isMaster = (lic.key === 'ADMIN-DEV5S-2026');
+        const statusPill = document.getElementById('modalDevStatusPill');
+
+        if (isMaster) {
+          statusPill.className = 'text-[10px] px-2 py-0.5 rounded font-bold bg-indigo-500/20 text-cyan-300 border border-cyan-500/30';
+          statusPill.innerText = 'ĐA THIẾT BỊ (ADMIN)';
+        } else if (lic.deviceId) {
+          statusPill.className = 'text-[10px] px-2 py-0.5 rounded font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+          statusPill.innerText = 'ĐÃ KHÓA MÁY';
+        } else {
+          statusPill.className = 'text-[10px] px-2 py-0.5 rounded font-bold bg-slate-500/20 text-slate-300 border border-slate-500/30';
+          statusPill.innerText = 'CHƯA KÍCH HOẠT';
+        }
+
+        // Active Device box
+        const activeBox = document.getElementById('modalActiveDeviceBox');
+        const noDevBox = document.getElementById('modalNoDeviceBox');
+
+        if (lic.deviceId) {
+          activeBox.classList.remove('hidden');
+          noDevBox.classList.add('hidden');
+          document.getElementById('modalDeviceName').innerText = lic.deviceInfo || 'Thiết bị người dùng';
+          document.getElementById('modalDeviceIp').innerText = lic.deviceIp || '127.0.0.1';
+          document.getElementById('modalDeviceId').innerText = lic.deviceId;
+          document.getElementById('modalFirstActive').innerText = lic.firstActivatedAt ? formatLogTime(lic.firstActivatedAt) : (lic.createdAt ? formatLogTime(lic.createdAt) : 'Chưa có');
+          document.getElementById('modalLastActive').innerText = lic.lastAccessedAt ? formatLogTime(lic.lastAccessedAt) : 'Chưa có';
+        } else {
+          activeBox.classList.add('hidden');
+          noDevBox.classList.remove('hidden');
+        }
+
+        // Render Logs table
+        document.getElementById('modalLogCount').innerText = logs.length;
+        const tbody = document.getElementById('modalLogsTableBody');
+        if (logs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-400 italic">Chưa có lịch sử log nào được ghi nhận cho key này.</td></tr>';
+        } else {
+          tbody.innerHTML = logs.map(log => {
+            const isBlocked = (log.status === 'BLOCKED');
+            const isReset = (log.status === 'RESET');
+            const rowClass = isBlocked ? 'bg-rose-50/70 font-semibold text-rose-900' : (isReset ? 'bg-cyan-50/40 text-cyan-900' : 'hover:bg-slate-50/80 text-slate-700');
+
+            const statusBadge = isBlocked
+              ? '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-rose-700 border border-rose-300"><i data-lucide="alert-triangle" class="w-3 h-3 text-rose-600"></i> BỊ CHẶN (MÁY LẠ)</span>'
+              : (isReset
+                ? '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-100 text-cyan-800 border border-cyan-200">ĐÃ RESET MÁY</span>'
+                : '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200"><i data-lucide="check" class="w-2.5 h-2.5 text-emerald-600"></i> HỢP LỆ</span>');
+
+            const devStr = log.deviceInfo || (log.deviceId ? 'ID: ' + log.deviceId.substring(0, 14) + '...' : 'Không rõ máy');
+            const ipStr = log.ipAddress ? ` • IP: ${log.ipAddress}` : '';
+
+            return `
+              <tr class="${rowClass} transition-colors">
+                <td class="py-2.5 px-3 font-mono text-[10.5px] whitespace-nowrap">${formatLogTime(log.createdAt)}</td>
+                <td class="py-2.5 px-3 whitespace-nowrap">
+                  <div class="font-bold text-slate-900">${log.action}</div>
+                  ${log.note ? `<div class="text-[10px] text-slate-500 font-normal max-w-xs truncate" title="${log.note}">${log.note}</div>` : ''}
+                </td>
+                <td class="py-2.5 px-3 text-[11px]">
+                  <div class="font-medium truncate max-w-xs" title="${devStr + ipStr}">💻 ${devStr}${ipStr}</div>
+                </td>
+                <td class="py-2.5 px-3 whitespace-nowrap">${statusBadge}</td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        lucide.createIcons({ root: modal });
+      } catch (e) {
+        showToast('Lỗi kết nối máy chủ: ' + e.message, 'error');
+      }
+    }
+
+    function closeDeviceDetailModal() {
+      const modal = document.getElementById('deviceLogsModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function adminResetDeviceFromModal() {
+      if (!currentViewingKey) return;
+      if (!confirm(`Bạn có chắc chắn muốn MỞ KHÓA MÁY cho Key: ${currentViewingKey}?\n\nSau khi mở khóa, khách hàng có thể đăng nhập trên máy tính mới!`)) return;
+
+      try {
+        const res = await fetch(`/api/admin/licenses/${encodeURIComponent(currentViewingKey)}/reset-device`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Password': adminToken,
+            'X-License-Key': adminToken
+          },
+          body: JSON.stringify({ note: 'Admin đã mở khóa máy đổi thiết bị cho khách qua Modal Đối Chứng' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          await openDeviceDetailModal(currentViewingKey);
+          loadAdminLicenses();
+        } else {
+          showToast(data.message || 'Lỗi mở khóa!', 'error');
+        }
+      } catch (e) {
+        showToast('Lỗi mạng: ' + e.message, 'error');
+      }
+    }
+
+    function copyModalDeviceId() {
+      const el = document.getElementById('modalDeviceId');
+      if (el) copyText(el.innerText.trim(), 'Đã copy Device ID!');
+    }
+
+    function copyText(text, successMsg = "Đã sao chép vào bộ nhớ tạm!") {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => showToast(successMsg, "success")).catch(() => fallbackCopy(text, successMsg));
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg, "success");
+      } catch (err) {}
+      document.body.removeChild(textArea);
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `px-3.5 py-2 rounded-xl shadow-lg text-xs font-bold text-white flex items-center gap-2 transform transition-all duration-300 pointer-events-auto ${
+        type === 'success' ? 'bg-emerald-600' : 'bg-rose-600'
+      }`;
+      toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check' : 'alert-circle'}" class="w-4 h-4"></i><span>${message}</span>`;
+      container.appendChild(toast);
+      lucide.createIcons({ root: toast });
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-10px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: CHI TIẾT THIẾT BỊ & ĐỐI CHỨNG NHẬT KÝ ĐĂNG NHẬP -->
+  <!-- ============================================================== -->
+  <div id="deviceLogsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl max-w-3xl w-full border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in duration-150">
+      
+      <!-- Header -->
+      <div class="px-5 py-4 bg-slate-900 text-white flex items-center justify-between gap-3 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600/30 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+            <i data-lucide="smartphone" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-sm text-white flex items-center gap-2">
+              <span>Chi Tiết Thiết Bị & Đối Chứng Nhật Ký Log</span>
+              <span id="modalDevStatusPill" class="text-[10px] px-2 py-0.5 rounded font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Đã Khóa Máy</span>
+            </h3>
+            <p class="text-[11px] text-slate-400 mt-0.5" id="modalDevSubtitle">Xem thông số máy, IP và lịch sử truy cập để đối chứng khi khách hàng báo lỗi hoặc đổi máy</p>
+          </div>
+        </div>
+        <button onclick="closeDeviceDetailModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Content Scrollable -->
+      <div class="p-5 overflow-y-auto space-y-4">
+        
+        <!-- Block 1: Thông tin khách hàng & Key -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs">
+          <div>
+            <span class="text-slate-400 text-[10px] block font-semibold uppercase">Mã License Key</span>
+            <span id="modalLicKey" class="font-mono font-bold text-indigo-700 select-all text-xs sm:text-[13px]">-</span>
+          </div>
+          <div>
+            <span class="text-slate-400 text-[10px] block font-semibold uppercase">Khách Hàng</span>
+            <span id="modalClientInfo" class="font-bold text-slate-900">-</span>
+          </div>
+          <div>
+            <span class="text-slate-400 text-[10px] block font-semibold uppercase">Gói Cước & Hạn Dùng</span>
+            <span id="modalPlanExpiry" class="font-semibold text-slate-700">-</span>
+          </div>
+        </div>
+
+        <!-- Block 2: Thông số Thiết Bị Đang Khóa Hiện Tại (Active Device Binding) -->
+        <div id="modalActiveDeviceBox" class="p-4 rounded-xl bg-gradient-to-r from-emerald-50/70 to-teal-50/70 border border-emerald-200 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-extrabold text-emerald-900 flex items-center gap-1.5 uppercase tracking-wide">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+              <span>Thiết Bị Đang Được Khóa Bản Quyền</span>
+            </span>
+            <button id="modalBtnResetDevice" onclick="adminResetDeviceFromModal()" class="px-3 py-1.5 rounded-lg bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 hover:border-rose-300 font-bold text-xs shadow-xs transition-all flex items-center gap-1">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-rose-600"></i>
+              <span>Mở Khóa Đổi Máy Cho Khách</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="p-2.5 bg-white/90 rounded-lg border border-emerald-100">
+              <span class="text-[10px] text-slate-400 block font-semibold">TÊN THIẾT BỊ / HỆ ĐIỀU HÀNH</span>
+              <span id="modalDeviceName" class="font-bold text-slate-800 text-xs">Chưa có</span>
+            </div>
+            <div class="p-2.5 bg-white/90 rounded-lg border border-emerald-100">
+              <span class="text-[10px] text-slate-400 block font-semibold">ĐỊA CHỈ IP GẦN NHẤT</span>
+              <span id="modalDeviceIp" class="font-mono font-bold text-slate-800 text-xs">127.0.0.1</span>
+            </div>
+            <div class="p-2.5 bg-white/90 rounded-lg border border-emerald-100 sm:col-span-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] text-slate-400 block font-semibold">MÃ ĐỊNH DANH THIẾT BỊ (DEVICE ID)</span>
+                <button onclick="copyModalDeviceId()" class="text-[10px] text-indigo-600 font-bold hover:underline flex items-center gap-0.5">
+                  <i data-lucide="copy" class="w-3 h-3"></i>
+                  <span>Copy ID</span>
+                </button>
+              </div>
+              <span id="modalDeviceId" class="font-mono text-slate-700 text-[11px] break-all select-all block mt-0.5">-</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between text-[11px] text-emerald-800 pt-1 border-t border-emerald-100/60">
+            <span>Kích hoạt lần đầu: <b id="modalFirstActive">-</b></span>
+            <span>Truy cập gần nhất: <b id="modalLastActive">-</b></span>
+          </div>
+        </div>
+
+        <!-- Block 2 (Fallback): Khi chưa kích hoạt máy -->
+        <div id="modalNoDeviceBox" class="hidden p-6 rounded-xl bg-slate-50 border border-slate-200 text-center space-y-1.5">
+          <div class="w-10 h-10 rounded-full bg-slate-200/80 text-slate-500 flex items-center justify-center mx-auto">
+            <i data-lucide="monitor" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-slate-700 text-xs">Key Này Chưa Từng Kích Hoạt Trên Thiết Bị Nào</h4>
+          <p class="text-[11px] text-slate-400 max-w-sm mx-auto">Khi khách hàng mở website và dán mã Key vào sử dụng lần đầu, hệ thống sẽ tự động ghim cố định thiết bị của họ và ghi nhận log tại đây.</p>
+        </div>
+
+        <!-- Block 3: Bảng Nhật Ký Hoạt Động & Phát Hiện Máy (Audit Logs) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="font-extrabold text-slate-900 text-xs flex items-center gap-1.5 uppercase tracking-wide">
+              <i data-lucide="list" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <span>Nhật Ký Truy Cập & Đối Chứng Thiết Bị (<span id="modalLogCount">0</span>)</span>
+            </h4>
+            <span class="text-[10px] text-slate-400 italic">Hiển thị lịch sử đăng nhập, cào data & phát hiện máy lạ</span>
+          </div>
+
+          <div class="border border-slate-200 rounded-xl overflow-hidden max-h-56 overflow-y-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 text-[10px] font-extrabold uppercase sticky top-0 z-10">
+                <tr>
+                  <th class="py-2 px-3">Thời Gian</th>
+                  <th class="py-2 px-3">Hành Động</th>
+                  <th class="py-2 px-3">Thiết Bị & IP</th>
+                  <th class="py-2 px-3">Trạng Thái</th>
+                </tr>
+              </thead>
+              <tbody id="modalLogsTableBody" class="divide-y divide-slate-100 text-[11px]">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="px-5 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+        <span class="text-[11px] text-slate-400">Dữ liệu được lưu trữ tự động trên SQLite để phục vụ đối soát</span>
+        <button onclick="closeDeviceDetailModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs">
+          Đóng Cửa Sổ
+        </button>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
