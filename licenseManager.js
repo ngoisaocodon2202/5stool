@@ -46,7 +46,6 @@ class LicenseManager {
       );
     `);
 
-    // Ensure columns exist if table was previously created
     try {
       const existingCols = this.db.prepare('PRAGMA table_info(licenses)').all().map(c => c.name);
       if (!existingCols.includes('deviceInfo')) {
@@ -62,9 +61,7 @@ class LicenseManager {
       console.warn('[License] Column migration notice:', e.message);
     }
 
-    // Ensure default settings exist
     this.ensureDefaultSettings();
-    // Ensure an initial Lifetime Master key exists for the owner
     this.ensureInitialMasterKey();
   }
 
@@ -86,19 +83,18 @@ class LicenseManager {
 
   ensureDefaultSettings() {
     const defaultSettings = {
-      adminPassword: process.env.ADMIN_PASSWORD || 'admin888', // Environment or default admin password
-      bankCode: 'MB', // MB Bank, VCB, Techcombank, etc.
+      adminPassword: process.env.ADMIN_PASSWORD || 'admin888',
+      bankCode: 'MB',
       bankAccount: '0969999888',
       bankName: 'NGUYEN VAN A',
       hotline: '0969.999.888',
       zaloSupport: 'https://zalo.me/0969999888',
       proxyUrl: process.env.PROXY_URL || '',
-      zaloApiKey: process.env.ZALO_CHECK_API_KEY || ''
+      zaloApiKey: process.env.ZALO_CHECK_API_KEY || '',
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ''
     };
 
-    const getStmt = this.db.prepare('SELECT value FROM settings WHERE key = ?');
     const setStmt = this.db.prepare('INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)');
-
     for (const [k, v] of Object.entries(defaultSettings)) {
       setStmt.run(k, v);
     }
@@ -106,15 +102,13 @@ class LicenseManager {
 
   ensureInitialMasterKey() {
     const adminMasterKey = this.getMasterKey();
-    
-    // Xóa key cũ nếu có trong DB để đảm bảo chỉ có 1 Master Key duy nhất
+
     try {
       this.db.prepare("DELETE FROM licenses WHERE key = 'LEAD-PRO-VIP-MASTER888'").run();
     } catch (e) {}
 
     const existing = this.getLicense(adminMasterKey);
     if (!existing) {
-      console.log(`[License] Khởi tạo Master Key Admin Đa Thiết Bị: ${adminMasterKey}...`);
       const stmt = this.db.prepare(`
         INSERT INTO licenses (
           key, clientName, clientPhone, planType, expiresAt, isActive, maxDailyScrapes, deviceId
@@ -125,19 +119,16 @@ class LicenseManager {
         'Admin Quản Trị Viên (Toàn Quyền Đa Thiết Bị)',
         '0969999888',
         'lifetime',
-        null, // Không bao giờ hết hạn
+        null,
         1,
         999999
       );
-      console.log(`[License] Master Key Admin sẵn sàng: ${adminMasterKey} (Đăng nhập mọi thiết bị)`);
     } else {
-      // Đảm bảo key Admin luôn ở trạng thái mở khóa đa thiết bị
       this.db.prepare(`
         UPDATE licenses 
         SET deviceId = NULL, isActive = 1, planType = 'lifetime', expiresAt = NULL, maxDailyScrapes = 999999
         WHERE key = ?
       `).run(adminMasterKey);
-      console.log(`[License] Master Key Admin hiện hữu: ${adminMasterKey} (Đăng nhập mọi thiết bị)`);
     }
   }
 
@@ -152,6 +143,26 @@ class LicenseManager {
     else if (planType === 'lifetime') typeTag = 'LIFE';
 
     return `LEAD-${typeTag}-${randomHex}`;
+  }
+
+  getPlanDefaultsFromTag(tag) {
+    switch (tag) {
+      case '1D':
+        return { planType: 'trial_1d', maxDailyScrapes: 200 };
+      case '30D':
+        return { planType: 'month_1m', maxDailyScrapes: 6000 };
+      case '90D':
+        return { planType: 'month_3m', maxDailyScrapes: 18000 };
+      case '365D':
+        return { planType: 'year_1y', maxDailyScrapes: 73000 };
+      case '3Y':
+        return { planType: 'year_3y', maxDailyScrapes: 146000 };
+      case 'LIFE':
+      case 'VIP':
+        return { planType: 'lifetime', maxDailyScrapes: 999999 };
+      default:
+        return { planType: 'month_1m', maxDailyScrapes: 6000 };
+    }
   }
 
   calculateExpiry(planType) {
@@ -172,43 +183,79 @@ class LicenseManager {
       now.setDate(now.getDate() + (365 * 3));
       return now.toISOString();
     } else if (planType === 'lifetime') {
-      return null; // Never expires
+      return null;
     }
     now.setDate(now.getDate() + 30);
     return now.toISOString();
   }
 
-  createLicense({ clientName, clientPhone, planType = 'month_1m', maxDailyScrapes = 1000 }) {
+  createLicense({ clientName, clientPhone, planType = 'month_1m', maxDailyScrapes = 6000 }) {
     const key = this.generateKeyString(planType);
     const expiresAt = this.calculateExpiry(planType);
 
     const stmt = this.db.prepare(`
       INSERT INTO licenses (
-        key, clientName, clientPhone, planType, expiresAt, isActive, maxDailyScrapes
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        key, clientName, clientPhone, planType, expiresAt, isActive, maxDailyScrapes, deviceId
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, NULL)
     `);
 
     stmt.run(
       key,
-      clientName ? clientName.trim() : 'Khách Hàng',
+      clientName ? clientName.trim() : 'Khách Hàng VIP',
       clientPhone ? clientPhone.trim() : '',
       planType,
       expiresAt,
       1,
-      parseInt(maxDailyScrapes) || 1000
+      parseInt(maxDailyScrapes) || 6000
     );
 
     return this.getLicense(key);
   }
 
   getLicense(key) {
+    if (!key) return null;
     const stmt = this.db.prepare('SELECT * FROM licenses WHERE key = ?');
-    return stmt.get(key);
+    return stmt.get(key.trim().toUpperCase());
+  }
+
+  // Auto-recover valid LEAD-* keys if Serverless instance cold-started
+  ensureKeyRecoveredIfValidFormat(cleanKey) {
+    let license = this.getLicense(cleanKey);
+    if (license) return license;
+
+    const match = cleanKey.match(/^LEAD-(1D|30D|90D|365D|3Y|LIFE|VIP)-([A-Z0-9]{6,12})$/);
+    if (match) {
+      const tag = match[1];
+      const { planType, maxDailyScrapes } = this.getPlanDefaultsFromTag(tag);
+      const expiresAt = this.calculateExpiry(planType);
+      try {
+        const stmt = this.db.prepare(`
+          INSERT OR IGNORE INTO licenses (
+            key, clientName, clientPhone, planType, expiresAt, isActive, maxDailyScrapes, deviceId
+          ) VALUES (?, ?, ?, ?, ?, 1, ?, NULL)
+        `);
+        stmt.run(cleanKey, `Khách Hàng (${tag})`, '', planType, expiresAt, maxDailyScrapes);
+        license = this.getLicense(cleanKey);
+      } catch (e) {
+        console.warn('[License] Auto-recover error:', e.message);
+      }
+    }
+    return license;
   }
 
   getAllLicenses() {
     const stmt = this.db.prepare('SELECT * FROM licenses ORDER BY createdAt DESC');
     return stmt.all();
+  }
+
+  // Extract OS + Browser core signature (ignoring screen resolution changes from mobile address bar or DevTools)
+  extractCoreDeviceSignature(deviceInfo = '') {
+    if (!deviceInfo) return '';
+    return String(deviceInfo)
+      .split('•')
+      .slice(0, 2)
+      .map(s => s.trim().toLowerCase())
+      .join('|');
   }
 
   verifyLicense(key, deviceId, deviceInfo = '', clientIp = '') {
@@ -217,7 +264,7 @@ class LicenseManager {
     }
 
     const cleanKey = key.trim().toUpperCase();
-    const license = this.getLicense(cleanKey);
+    const license = this.ensureKeyRecoveredIfValidFormat(cleanKey);
 
     if (!license) {
       return { valid: false, reason: 'License Key không tồn tại trên hệ thống hoặc đã bị hủy!' };
@@ -227,7 +274,6 @@ class LicenseManager {
       return { valid: false, reason: 'License Key này đang bị tạm khóa. Vui lòng liên hệ Admin để mở lại!' };
     }
 
-    // Check expiration date
     if (license.expiresAt) {
       const expiry = new Date(license.expiresAt);
       if (expiry < new Date()) {
@@ -240,8 +286,6 @@ class LicenseManager {
       }
     }
 
-    // Anti-share Device Lock
-    // CHÚ Ý: Master Key Admin là Key DUY NHẤT được phép đăng nhập trên nhiều thiết bị tự do không bao giờ bị khóa!
     const masterKey = this.getMasterKey();
     const isAdminMaster = (cleanKey === masterKey);
 
@@ -266,26 +310,49 @@ class LicenseManager {
           ipAddress: clientIp || '',
           action: 'KÍCH HOẠT KHÓA MÁY',
           status: 'SUCCESS',
-          note: `Khóa bản quyền vào thiết bị này thành công`
+          note: 'Khóa bản quyền vào thiết bị khách hàng thành công'
         });
       } else if (license.deviceId !== cleanDevId) {
-        // BLOCKED ATTEMPT: A different device is trying to access this key!
-        this.addLog({
-          licenseKey: cleanKey,
-          deviceId: cleanDevId,
-          deviceInfo: deviceInfo || 'Thiết bị lạ',
-          ipAddress: clientIp || '',
-          action: 'CẢNH BÁO: PHÁT HIỆN MÁY LẠ',
-          status: 'BLOCKED',
-          note: `Từ chối đăng nhập. Key đã bị khóa vào máy: ${license.deviceInfo || license.deviceId}`
-        });
+        // Check if this is actually the SAME physical device whose screen resolution changed (e.g. mobile address bar, DevTools, or reload)
+        const storedCore = this.extractCoreDeviceSignature(license.deviceInfo);
+        const incomingCore = this.extractCoreDeviceSignature(deviceInfo);
+        const isSameIpAndOs = Boolean(
+          storedCore &&
+          incomingCore &&
+          storedCore === incomingCore &&
+          license.deviceIp &&
+          clientIp &&
+          license.deviceIp === clientIp
+        );
 
-        return {
-          valid: false,
-          reason: `Key này đã được kích hoạt trên một thiết bị khác (${license.deviceInfo || 'Thiết bị đã khóa'})! Cơ chế khóa thiết bị (Device Lock) chống chia sẻ Key trái phép. Vui lòng liên hệ Admin nếu bạn đã đổi máy mới.`
-        };
+        if (isSameIpAndOs) {
+          // Update deviceId seamlessly so reload on the same machine never locks out the user
+          const updateDevStmt = this.db.prepare(`
+            UPDATE licenses
+            SET deviceId = ?, deviceInfo = COALESCE(NULLIF(?, ''), deviceInfo), lastAccessedAt = CURRENT_TIMESTAMP
+            WHERE key = ?
+          `);
+          updateDevStmt.run(cleanDevId, deviceInfo, cleanKey);
+          license.deviceId = cleanDevId;
+        } else {
+          // Real different device attempting to use a locked key
+          this.addLog({
+            licenseKey: cleanKey,
+            deviceId: cleanDevId,
+            deviceInfo: deviceInfo || 'Thiết bị lạ',
+            ipAddress: clientIp || '',
+            action: 'CẢNH BÁO: PHÁT HIỆN MÁY LẠ',
+            status: 'BLOCKED',
+            note: `Từ chối đăng nhập. Key đã bị khóa vào máy: ${license.deviceInfo || license.deviceId}`
+          });
+
+          return {
+            valid: false,
+            reason: `Key này đã được kích hoạt trên một thiết bị khác (${license.deviceInfo || 'Thiết bị đã khóa'})! Vui lòng mở Cổng Admin nhấn "Mở Khóa Máy" nếu bạn muốn đổi thiết bị.`
+          };
+        }
       } else {
-        // Same device accessing again: update info and last accessed
+        // Same device accessing again
         const touchStmt = this.db.prepare(`
           UPDATE licenses 
           SET deviceInfo = COALESCE(NULLIF(?, ''), deviceInfo), deviceIp = COALESCE(NULLIF(?, ''), deviceIp), lastAccessedAt = CURRENT_TIMESTAMP 
@@ -307,7 +374,6 @@ class LicenseManager {
       license.lastScrapeDate = todayStr;
     }
 
-    // Check quota
     const remaining = Math.max(0, license.maxDailyScrapes - license.usedToday);
 
     return {
@@ -315,12 +381,13 @@ class LicenseManager {
       license: {
         key: license.key,
         clientName: license.clientName,
+        clientPhone: license.clientPhone || '',
         planType: license.planType,
         expiresAt: license.expiresAt,
         maxDailyScrapes: license.maxDailyScrapes,
         usedToday: license.usedToday,
         remainingToday: remaining,
-        isLifetime: !license.expiresAt,
+        isLifetime: !license.expiresAt || license.planType === 'lifetime',
         isMultiDevice: isAdminMaster,
         deviceId: license.deviceId,
         deviceInfo: license.deviceInfo,
@@ -373,7 +440,7 @@ class LicenseManager {
         licenseKey: cleanKey,
         action: 'MỞ KHÓA THIẾT BỊ',
         status: 'RESET',
-        note: note || 'Admin đã mở khóa máy, cho phép khách hàng đổi sang thiết bị mới'
+        note: note || 'Admin đã mở khóa máy, cho phép khách hàng kích hoạt lại hoặc đổi thiết bị mới'
       });
       return true;
     }
@@ -381,7 +448,8 @@ class LicenseManager {
   }
 
   updateLicense(key, { isActive, expiresAt, maxDailyScrapes, resetDevice, clientName, clientPhone }) {
-    const license = this.getLicense(key);
+    const cleanKey = key ? key.trim().toUpperCase() : '';
+    const license = this.getLicense(cleanKey);
     if (!license) return false;
 
     let sql = 'UPDATE licenses SET ';
@@ -403,7 +471,7 @@ class LicenseManager {
     if (resetDevice) {
       updates.push('deviceId = NULL, deviceInfo = NULL, deviceIp = NULL');
       this.addLog({
-        licenseKey: key,
+        licenseKey: cleanKey,
         action: 'MỞ KHÓA THIẾT BỊ',
         status: 'RESET',
         note: 'Admin đã mở khóa máy, cho phép khách hàng đổi sang thiết bị mới'
@@ -421,7 +489,7 @@ class LicenseManager {
     if (updates.length === 0) return true;
 
     sql += updates.join(', ') + ' WHERE key = ?';
-    params.push(key);
+    params.push(cleanKey);
 
     const stmt = this.db.prepare(sql);
     const info = stmt.run(...params);
@@ -429,12 +497,12 @@ class LicenseManager {
   }
 
   deleteLicense(key) {
+    const cleanKey = key ? key.trim().toUpperCase() : '';
     const stmt = this.db.prepare('DELETE FROM licenses WHERE key = ?');
-    const info = stmt.run(key);
+    const info = stmt.run(cleanKey);
     return info.changes > 0;
   }
 
-  // System Settings Management
   getSetting(key) {
     const stmt = this.db.prepare('SELECT value FROM settings WHERE key = ?');
     const row = stmt.get(key);
@@ -453,18 +521,67 @@ class LicenseManager {
 
   setSetting(key, value) {
     const stmt = this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
-    stmt.run(key, value);
+    stmt.run(key, String(value ?? ''));
     return true;
   }
 
   setSettings(obj) {
     const stmt = this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
     for (const [k, v] of Object.entries(obj)) {
-      stmt.run(k, String(v));
+      if (v !== undefined && v !== null) {
+        stmt.run(k, String(v));
+      }
     }
     return true;
+  }
+
+  exportBackupData() {
+    return {
+      version: '5.5.0-enterprise',
+      exportedAt: new Date().toISOString(),
+      licenses: this.getAllLicenses(),
+      settings: this.getAllSettings()
+    };
+  }
+
+  importBackupData(payload = {}) {
+    let importedLicenses = 0;
+    if (payload.settings && typeof payload.settings === 'object') {
+      this.setSettings(payload.settings);
+    }
+    if (Array.isArray(payload.licenses)) {
+      const stmt = this.db.prepare(`
+        INSERT OR REPLACE INTO licenses (
+          key, clientName, clientPhone, planType, createdAt, expiresAt,
+          isActive, maxDailyScrapes, usedToday, lastScrapeDate,
+          deviceId, deviceInfo, deviceIp, firstActivatedAt, lastAccessedAt
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+      for (const lic of payload.licenses) {
+        if (!lic || !lic.key) continue;
+        stmt.run(
+          lic.key,
+          lic.clientName || 'Khách Hàng',
+          lic.clientPhone || '',
+          lic.planType || 'month_1m',
+          lic.createdAt || new Date().toISOString(),
+          lic.expiresAt || null,
+          lic.isActive !== undefined ? (lic.isActive ? 1 : 0) : 1,
+          lic.maxDailyScrapes || 6000,
+          lic.usedToday || 0,
+          lic.lastScrapeDate || null,
+          lic.deviceId || null,
+          lic.deviceInfo || null,
+          lic.deviceIp || null,
+          lic.firstActivatedAt || null,
+          lic.lastAccessedAt || null
+        );
+        importedLicenses++;
+      }
+    }
+    this.ensureInitialMasterKey();
+    return { importedLicenses };
   }
 }
 
 module.exports = LicenseManager;
-

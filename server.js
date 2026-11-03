@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const db = require('./db');
-const { scraper, VIETNAM_PROVINCES } = require('./scraper');
+const { scraper, VIETNAM_PROVINCES, INDUSTRY_CATALOG } = require('./scraper');
 const zaloChecker = require('./zaloChecker');
 
 const app = express();
@@ -15,33 +15,27 @@ zaloChecker.setDbGetter((key, arg) => {
 });
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '15mb' }));
 
-// Serve static frontend files first
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Root route sends index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Admin panel route
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-// Favicon
 app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
 });
 
-// UTF-8 charset for API
 app.use('/api', (req, res, next) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   next();
 });
 
-// Helper: Lấy địa chỉ IP thực tế của client
 function getClientIp(req) {
   let ip = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '';
   if (typeof ip === 'string' && ip.includes(',')) {
@@ -94,12 +88,10 @@ function requireAdmin(req, res, next) {
   const masterKey = (process.env.ADMIN_MASTER_KEY || 'ADMIN-DEV5S-2026').trim().toUpperCase();
   const currentPassword = process.env.ADMIN_PASSWORD || db.licenseManager.getSetting('adminPassword') || 'admin888';
 
-  // Nếu người dùng gửi đúng Master Key Admin -> Cho phép truy cập
   if (licenseKey && licenseKey.trim().toUpperCase() === masterKey) {
     return next();
   }
 
-  // Nếu người dùng gửi mật khẩu Admin khớp cấu hình
   if (adminPassword && (adminPassword === currentPassword || adminPassword.trim().toUpperCase() === masterKey)) {
     return next();
   }
@@ -119,6 +111,14 @@ app.get('/api/provinces', (req, res) => {
   res.json({
     success: true,
     provinces: VIETNAM_PROVINCES
+  });
+});
+
+// 1.1 GET /api/industries - Full 24+ Business Industries Catalog
+app.get('/api/industries', (req, res) => {
+  res.json({
+    success: true,
+    industries: INDUSTRY_CATALOG || []
   });
 });
 
@@ -173,9 +173,9 @@ app.post('/api/license/verify', (req, res) => {
 // 4. GET /api/leads - Filter & Query (Tenant Isolated)
 app.get('/api/leads', requireLicense, (req, res) => {
   try {
-    const { city, industry, role, zaloOnly, search } = req.query;
+    const { city, industry, role, zaloOnly, zaloStatus, carrier, mobileOnly, crmStatus, sourceType, search } = req.query;
     const tenantKey = req.license.key;
-    const leads = db.filter({ city, industry, role, zaloOnly, search }, tenantKey);
+    const leads = db.filter({ city, industry, role, zaloOnly, zaloStatus, carrier, mobileOnly, crmStatus, sourceType, search }, tenantKey);
     const allCount = db.getStats(tenantKey).totalLeads;
 
     res.json({
@@ -183,6 +183,25 @@ app.get('/api/leads', requireLicense, (req, res) => {
       total: leads.length,
       allTotal: allCount,
       leads: leads
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 4.1 POST /api/leads/sync - Sync Client Cached Leads back to Server (prevents data loss on Serverless cold-start reload)
+app.post('/api/leads/sync', requireLicense, (req, res) => {
+  try {
+    const { leads } = req.body;
+    const tenantKey = req.license.key;
+    if (Array.isArray(leads) && leads.length > 0) {
+      db.batchAdd(leads, tenantKey);
+    }
+    const allLeads = db.getAll(tenantKey);
+    res.json({
+      success: true,
+      total: allLeads.length,
+      leads: allLeads
     });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -203,36 +222,39 @@ app.get('/api/stats', (req, res) => {
   }
 });
 
-// 6. POST /api/leads/scan - 100-200 Leads Bulk Extraction
+// 6. POST /api/leads/scan - Multi-Source Bulk Extraction
 app.post('/api/leads/scan', requireLicense, async (req, res) => {
   try {
-    const { city, industry, targetGoal = 50, skipExisting = true } = req.body;
+    const { city, industry, sourceType = 'all', targetGoal = 50, skipExisting = true } = req.body;
     const goalNumber = Math.min(Math.max(parseInt(targetGoal) || 50, 5), 500);
     const tenantKey = req.license.key;
 
-    console.log(`[API /scan] [Tenant: ${tenantKey}] Quét data: ngành="${industry}", tỉnh="${city}", số lượng=${goalNumber}, lọc trùng=${skipExisting}`);
+    console.log(`[API /scan] [Tenant: ${tenantKey}] Quét đa nguồn (${sourceType}): ngành="${industry}", tỉnh="${city}", số lượng=${goalNumber}, lọc trùng=${skipExisting}`);
 
-    const newLeads = await scraper.scrapeRealEnterprises({
+    const rawNewLeads = await scraper.scrapeRealEnterprises({
       keyword: (industry && industry !== 'all' && industry !== 'Mọi ngành nghề' && industry !== 'Mọi Ngành Nghề') ? industry : '',
       city: (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') ? city : '',
+      sourceType: sourceType || 'all',
       targetGoal: goalNumber,
       skipExisting: !!skipExisting,
       licenseKey: tenantKey
     });
 
-    if (newLeads.length > 0) {
-      db.batchAdd(newLeads, tenantKey);
-      // Record usage for client license kèm log thiết bị
-      db.licenseManager.recordUsage(tenantKey, newLeads.length, req.deviceId, req.deviceInfo, req.clientIp);
+    if (rawNewLeads.length > 0) {
+      db.batchAdd(rawNewLeads, tenantKey);
+      db.licenseManager.recordUsage(tenantKey, rawNewLeads.length, req.deviceId, req.deviceInfo, req.clientIp);
     }
 
     const currentTotal = db.getStats(tenantKey).totalLeads;
+    // Fetch properly scoped leads for the client
+    const savedTenantLeads = db.filter({ city, industry, sourceType }, tenantKey);
 
     res.json({
       success: true,
-      message: `Đã cào thành công ${newLeads.length} dữ liệu doanh nghiệp thật kèm SĐT, MST, link nguồn & Zalo!`,
-      count: newLeads.length,
-      newLeads: newLeads,
+      message: `Đã cào thành công ${rawNewLeads.length} dữ liệu doanh nghiệp thật kèm SĐT, MST, link nguồn & trạng thái Zalo!`,
+      count: rawNewLeads.length,
+      newLeads: rawNewLeads,
+      tenantLeads: savedTenantLeads,
       totalLeads: currentTotal,
       license: db.licenseManager.getLicense(tenantKey)
     });
@@ -263,7 +285,7 @@ app.post('/api/leads/scan-facebook', requireLicense, async (req, res) => {
 
     if (leads.length > 0) {
       db.batchAdd(leads, tenantKey);
-      db.licenseManager.recordUsage(tenantKey, leads.length);
+      db.licenseManager.recordUsage(tenantKey, leads.length, req.deviceId, req.deviceInfo, req.clientIp);
     }
 
     const currentTotal = db.getStats(tenantKey).totalLeads;
@@ -284,34 +306,22 @@ app.post('/api/leads/scan-facebook', requireLicense, async (req, res) => {
   }
 });
 
-// 8. POST /api/zalo/check - Bulk Check Zalo status (Active vs Null/Not Found)
+// 8. POST /api/zalo/check - Bulk Check Zalo status (Active vs Not Found)
 app.post('/api/zalo/check', requireLicense, async (req, res) => {
   try {
     const { phones } = req.body;
     const tenantKey = req.license.key;
     let targetPhones = [];
 
-    if (phones && Array.isArray(phones)) {
+    if (phones && Array.isArray(phones) && phones.length > 0) {
       targetPhones = phones;
     } else {
       const tenantLeads = db.getAll(tenantKey);
       targetPhones = tenantLeads.map(l => l.phone);
     }
 
-    console.log(`[API /zalo/check] [Tenant: ${tenantKey}] Bắt đầu kiểm tra Zalo cho ${targetPhones.length} số điện thoại...`);
+    console.log(`[API /zalo/check] [Tenant: ${tenantKey}] Kiểm tra trạng thái Zalo (Active vs Not Found) cho ${targetPhones.length} SĐT...`);
     const results = await zaloChecker.checkBatch(targetPhones);
-
-    // Kiểm tra nếu phiên Cookie Zalo bị hết hạn hoặc lỗi kết nối -> Cảnh báo ngay lập tức, không ghi đè hỏng dữ liệu
-    const sessionErr = results.find(r => r.sessionError);
-    if (sessionErr) {
-      console.warn(`[API /zalo/check] Lỗi phiên Zalo:`, sessionErr.reason);
-      return res.status(400).json({
-        success: false,
-        sessionError: true,
-        sessionStatus: sessionErr.sessionStatus,
-        message: sessionErr.reason || 'Cookie Zalo đã hết hạn (Lỗi 102). Vui lòng vào Cổng Quản Trị (Admin) để cập nhật Cookie zpw_sek mới!'
-      });
-    }
 
     let activeCount = 0;
     let notFoundCount = 0;
@@ -323,10 +333,102 @@ app.post('/api/zalo/check', requireLicense, async (req, res) => {
 
     res.json({
       success: true,
-      message: `Đã kiểm tra xong ${targetPhones.length} số: ${activeCount} số Có Zalo (Active), ${notFoundCount} số Không có Zalo (Null / Not Found)!`,
+      message: `Đã kiểm tra xong ${results.length} số: ${activeCount} số Đã đăng ký Zalo (ACTIVE), ${notFoundCount} số Chưa đăng ký (NOT FOUND)!`,
       activeCount,
       notFoundCount,
       results: results
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 8.1 POST /api/zalo/check-import - Import Bulk Phone List (.txt/.csv/paste) to Check Zalo Active vs Not Found
+app.post('/api/zalo/check-import', requireLicense, async (req, res) => {
+  try {
+    const { phones = [], saveToLeads = false, defaultIndustry = 'Tệp SĐT Import', defaultCity = 'Toàn quốc' } = req.body;
+    const tenantKey = req.license.key;
+
+    const cleanList = Array.from(new Set(
+      (Array.isArray(phones) ? phones : String(phones).split(/[\r\n,;|\t]+/))
+        .map(p => zaloChecker.normalizePhone(p))
+        .filter(p => p.length >= 9 && p.length <= 11)
+    )).slice(0, 1000);
+
+    if (cleanList.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Không tìm thấy số điện thoại hợp lệ trong danh sách tải lên!'
+      });
+    }
+
+    const results = await zaloChecker.checkBatch(cleanList);
+    let activeCount = 0;
+    let notFoundCount = 0;
+    const importedLeads = [];
+
+    for (const r of results) {
+      if (r.zaloActive) activeCount++;
+      else notFoundCount++;
+
+      if (saveToLeads) {
+        importedLeads.push({
+          id: `IMP-${r.phone}`,
+          company: r.zaloName ? `KH Zalo: ${r.zaloName}` : `Khách Hàng SĐT ${r.phone}`,
+          contactName: r.zaloName || 'Khách hàng Import',
+          role: 'Cá nhân / Doanh nghiệp',
+          phone: r.phone,
+          carrier: r.carrier,
+          email: '',
+          city: defaultCity,
+          address: defaultCity,
+          industry: defaultIndustry,
+          taxCode: '',
+          website: '',
+          status: 'Đã xác thực',
+          zaloActive: r.zaloActive,
+          zaloStatus: r.status,
+          zaloName: r.zaloName || '',
+          zaloAvatar: r.zaloAvatar || '',
+          source: 'Import SĐT Check Zalo',
+          sourceUrl: `https://zalo.me/${r.phone}`,
+          snippet: `Trạng thái Zalo: ${r.status} (${r.reason})`,
+          verifiedAt: new Date().toISOString().split('T')[0],
+          crmStatus: 'new',
+          crmNote: ''
+        });
+      }
+    }
+
+    if (saveToLeads && importedLeads.length > 0) {
+      db.batchAdd(importedLeads, tenantKey);
+    }
+
+    res.json({
+      success: true,
+      message: `Kiểm tra hoàn tất ${results.length} SĐT: ${activeCount} số ACTIVE (Có Zalo) • ${notFoundCount} số NOT FOUND!`,
+      totalChecked: results.length,
+      activeCount,
+      notFoundCount,
+      results,
+      savedCount: importedLeads.length
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 8.2 PUT /api/leads/:id/crm - Update Mini-CRM status & note
+app.put('/api/leads/:id/crm', requireLicense, (req, res) => {
+  try {
+    const { id } = req.params;
+    const { crmStatus, crmNote } = req.body;
+    const tenantKey = req.license.key;
+    const ok = db.updateLeadCrm(id, { crmStatus, crmNote }, tenantKey);
+    res.json({
+      success: true,
+      updated: ok,
+      message: 'Đã lưu trạng thái chăm sóc khách hàng!'
     });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -382,42 +484,43 @@ app.post('/api/leads', requireLicense, async (req, res) => {
     const tenantKey = req.license.key;
 
     if (!company || !phone) {
-      return res.status(400).json({ success: false, message: "Tên công ty và số điện thoại là bắt buộc!" });
+      return res.status(400).json({ success: false, message: 'Tên công ty và số điện thoại là bắt buộc!' });
     }
 
-    let normPhone = phone.replace(/[^0-9+]/g, '');
-    if (normPhone.startsWith('+84')) normPhone = '0' + normPhone.slice(3);
-
+    let normPhone = zaloChecker.normalizePhone(phone);
     const carrier = zaloChecker.getCarrier(normPhone);
-    const zaloStatus = await zaloChecker.checkPhone(normPhone);
+    const zaloRes = await zaloChecker.checkPhone(normPhone);
 
     const newLead = {
       id: `LD-${Date.now().toString().slice(-6)}`,
       company: company.trim(),
-      contactName: contactName ? contactName.trim() : "Chủ doanh nghiệp",
-      role: role ? role.trim() : "Giám đốc điều hành",
+      contactName: contactName ? contactName.trim() : 'Chủ doanh nghiệp',
+      role: role ? role.trim() : 'Giám đốc điều hành',
       phone: normPhone,
       carrier: carrier,
       email: email ? email.trim() : '',
-      city: city || "Toàn quốc",
-      address: address ? address.trim() : "Việt Nam",
-      industry: industry || "Chung",
+      city: city || 'Toàn quốc',
+      address: address ? address.trim() : 'Việt Nam',
+      industry: industry || 'Chung',
       taxCode: taxCode || '',
       website: website || '',
-      status: "Đã xác thực",
-      zaloActive: zaloStatus.zaloActive,
-      zaloName: zaloStatus.zaloName || contactName || company,
-      zaloAvatar: zaloStatus.zaloAvatar || '',
+      status: 'Đã xác thực',
+      zaloActive: zaloRes.zaloActive,
+      zaloStatus: zaloRes.status,
+      zaloName: zaloRes.zaloName || contactName || company,
+      zaloAvatar: zaloRes.zaloAvatar || '',
       verifiedAt: new Date().toISOString().split('T')[0],
-      source: "Thủ công (Người dùng)",
-      sourceUrl: ''
+      source: 'Thủ công (Người dùng)',
+      sourceUrl: `https://zalo.me/${normPhone}`,
+      crmStatus: 'new',
+      crmNote: ''
     };
 
     db.add(newLead, tenantKey);
 
     res.json({
       success: true,
-      message: "Thêm khách hàng thành công!",
+      message: 'Thêm khách hàng thành công!',
       lead: newLead,
       totalLeads: db.getStats(tenantKey).totalLeads
     });
@@ -432,11 +535,11 @@ app.delete('/api/leads/:id', requireLicense, (req, res) => {
     const { id } = req.params;
     const tenantKey = req.license.key;
     const ok = db.delete(id, tenantKey);
-    if (!ok) return res.status(404).json({ success: false, message: "Không tìm thấy dữ liệu cần xóa!" });
+    if (!ok) return res.status(404).json({ success: false, message: 'Không tìm thấy dữ liệu cần xóa!' });
 
     res.json({
       success: true,
-      message: "Đã xóa lead thành công!",
+      message: 'Đã xóa lead thành công!',
       remainingCount: db.getStats(tenantKey).totalLeads
     });
   } catch (err) {
@@ -451,7 +554,7 @@ app.delete('/api/leads', requireLicense, (req, res) => {
     db.clearAll(tenantKey);
     res.json({
       success: true,
-      message: "Đã làm sạch toàn bộ kho dữ liệu leads của bạn!",
+      message: 'Đã làm sạch toàn bộ kho dữ liệu leads của bạn!',
       remainingCount: 0
     });
   } catch (err) {
@@ -507,12 +610,12 @@ app.post('/api/admin/licenses', requireAdmin, (req, res) => {
   }
 });
 
-// 16. PUT /api/admin/licenses/:key - Update license (extend, lock, reset device)
+// 16. PUT /api/admin/licenses/:key - Update license
 app.put('/api/admin/licenses/:key', requireAdmin, (req, res) => {
   try {
     const { key } = req.params;
     const ok = db.licenseManager.updateLicense(key, req.body);
-    if (!ok) return res.status(404).json({ success: false, message: "Không tìm thấy key!" });
+    if (!ok) return res.status(404).json({ success: false, message: 'Không tìm thấy key!' });
 
     res.json({
       success: true,
@@ -528,14 +631,14 @@ app.put('/api/admin/licenses/:key', requireAdmin, (req, res) => {
 app.delete('/api/admin/licenses/:key', requireAdmin, (req, res) => {
   try {
     const { key } = req.params;
-    const ok = db.licenseManager.deleteLicense(key);
+    db.licenseManager.deleteLicense(key);
     res.json({ success: true, message: 'Đã xóa License Key thành công!' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// 17.1. GET /api/admin/licenses/:key/logs - Chi tiết thiết bị & lịch sử log đối chứng
+// 17.1. GET /api/admin/licenses/:key/logs
 app.get('/api/admin/licenses/:key/logs', requireAdmin, (req, res) => {
   try {
     const { key } = req.params;
@@ -548,16 +651,16 @@ app.get('/api/admin/licenses/:key/logs', requireAdmin, (req, res) => {
   }
 });
 
-// 17.2. POST /api/admin/licenses/:key/reset-device - Mở khóa thiết bị để đổi máy cho khách
+// 17.2. POST /api/admin/licenses/:key/reset-device
 app.post('/api/admin/licenses/:key/reset-device', requireAdmin, (req, res) => {
   try {
     const { key } = req.params;
     const { note } = req.body || {};
     const ok = db.licenseManager.resetDevice(key, note);
     if (!ok) return res.status(404).json({ success: false, message: 'Không tìm thấy Key hoặc lỗi mở khóa!' });
-    res.json({ 
-      success: true, 
-      message: 'Đã mở khóa thiết bị thành công! Khách hàng có thể kích hoạt trên máy mới ngay lập tức.' 
+    res.json({
+      success: true,
+      message: 'Đã mở khóa thiết bị thành công! Khách hàng có thể kích hoạt trên máy mới ngay lập tức.'
     });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -574,7 +677,7 @@ app.get('/api/admin/settings', requireAdmin, (req, res) => {
   }
 });
 
-// 19. POST /api/admin/settings - Save system settings (VietQR, Admin password, Proxy)
+// 19. POST /api/admin/settings
 app.post('/api/admin/settings', requireAdmin, (req, res) => {
   try {
     db.licenseManager.setSettings(req.body);
@@ -584,10 +687,38 @@ app.post('/api/admin/settings', requireAdmin, (req, res) => {
   }
 });
 
-// 20. POST /api/admin/zalo/session - Connect real Zalo session & API Key
+// 19.1 GET /api/admin/backup - Export full JSON backup of Licenses & Settings
+app.get('/api/admin/backup', requireAdmin, (req, res) => {
+  try {
+    const backup = db.licenseManager.exportBackupData();
+    res.json({
+      success: true,
+      backup
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 19.2 POST /api/admin/restore - Restore Licenses & Settings from JSON backup
+app.post('/api/admin/restore', requireAdmin, (req, res) => {
+  try {
+    const payload = req.body.backup || req.body;
+    const result = db.licenseManager.importBackupData(payload);
+    res.json({
+      success: true,
+      message: `Đã khôi phục thành công ${result.importedLicenses} License Keys và toàn bộ cấu hình hệ thống!`,
+      ...result
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// 20. POST /api/admin/zalo/session
 app.post('/api/admin/zalo/session', requireAdmin, (req, res) => {
   try {
-    const { cookie, accountInfo, apiKey, apiUrl, zaloCookie, zaloApiKey, zaloApiUrl } = req.body;
+    const { cookie, accountInfo, apiKey, apiUrl, zaloCookie, zaloApiKey, zaloApiUrl, googleMapsApiKey } = req.body;
     const finalCookie = cookie !== undefined ? cookie : zaloCookie;
     const finalApiKey = apiKey !== undefined ? apiKey : zaloApiKey;
     const finalApiUrl = apiUrl !== undefined ? apiUrl : zaloApiUrl;
@@ -598,6 +729,7 @@ app.post('/api/admin/zalo/session', requireAdmin, (req, res) => {
     }
     if (finalApiKey !== undefined) db.licenseManager.setSetting('zaloApiKey', finalApiKey || '');
     if (finalApiUrl !== undefined) db.licenseManager.setSetting('zaloApiUrl', finalApiUrl || '');
+    if (googleMapsApiKey !== undefined) db.licenseManager.setSetting('googleMapsApiKey', googleMapsApiKey || '');
 
     res.json({ success: true, message: 'Đã lưu cấu hình kết nối API & Cookie Zalo thành công!' });
   } catch (err) {
@@ -605,7 +737,7 @@ app.post('/api/admin/zalo/session', requireAdmin, (req, res) => {
   }
 });
 
-// 21. POST /api/admin/zalo/test - Live test any phone number
+// 21. POST /api/admin/zalo/test
 app.post('/api/admin/zalo/test', requireAdmin, async (req, res) => {
   try {
     const { phone, cookie, apiKey, apiUrl, zaloCookie, zaloApiKey, zaloApiUrl } = req.body;
@@ -627,7 +759,7 @@ app.post('/api/admin/zalo/test', requireAdmin, async (req, res) => {
   }
 });
 
-// 22. GET /api/admin/zalo/session-status - Live check current Zalo cookie
+// 22. GET /api/admin/zalo/session-status
 app.get('/api/admin/zalo/session-status', requireAdmin, async (req, res) => {
   try {
     const cookie = db.licenseManager.getSetting('zaloCookie');
@@ -638,17 +770,15 @@ app.get('/api/admin/zalo/session-status', requireAdmin, async (req, res) => {
   }
 });
 
-// Start Server
 if (!process.env.VERCEL) {
   app.listen(PORT, '0.0.0.0', () => {
     const masterKey = (process.env.ADMIN_MASTER_KEY || 'ADMIN-DEV5S-2026').trim().toUpperCase();
     console.log(`=======================================================`);
-    console.log(`🚀 Nền Tảng SaaS Quét Lead B2B (Phiên Bản Thương Mại V5.0)`);
+    console.log(`🚀 Nền Tảng SaaS Quét Lead B2B (Phiên Bản Thương Mại V5.5)`);
     console.log(`📡 Server: http://localhost:${PORT}`);
     console.log(`🔑 Master Key Admin: ${masterKey}`);
     console.log(`🛡️  Mật Khẩu Admin: ${process.env.ADMIN_PASSWORD || db.licenseManager.getSetting('adminPassword') || 'admin888'}`);
-    console.log(`💾 SQLite DB: leads.db (Multi-Tenancy Active)`);
-    console.log(`🌐 Scraper Browser: ${scraper.browserPath || 'Chưa cài Chrome'}`);
+    console.log(`💾 SQLite DB: leads.db (Multi-Tenancy & 63 Tỉnh Thành Active)`);
     console.log(`=======================================================`);
   });
 }

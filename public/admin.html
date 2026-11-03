@@ -203,11 +203,24 @@
         </div>
 
         <!-- Right: Actions -->
-        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          <div class="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs whitespace-nowrap">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="text-slate-300 font-medium">Quyền: <b class="text-indigo-400 font-bold">Admin Toàn Quyền</b></span>
-          </div>
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <button 
+            onclick="exportAdminBackup()" 
+            class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-bold transition-all whitespace-nowrap shrink-0"
+            title="Tải file JSON sao lưu toàn bộ Key & Cấu hình"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5 shrink-0"></i>
+            <span>Backup JSON</span>
+          </button>
+
+          <label 
+            class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer"
+            title="Khôi phục Key & Cấu hình từ file JSON"
+          >
+            <i data-lucide="upload" class="w-3.5 h-3.5 shrink-0"></i>
+            <span>Restore JSON</span>
+            <input type="file" accept=".json" class="hidden" onchange="importAdminBackup(event)" />
+          </label>
 
           <a 
             href="/" 
@@ -802,6 +815,32 @@
             </div>
           </div>
 
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap">Google Maps Places API Key (Tùy chọn)</label>
+              <input 
+                id="setGoogleMapsApiKey" 
+                type="text" 
+                placeholder="AIzaSy... (Để trống hệ thống tự dùng Local Places Engine)" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
+              />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap">Sao Lưu & Khôi Phục Database (.JSON)</label>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="exportAdminBackup()" class="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span>Tải Backup (.json)</span>
+                </button>
+                <label class="flex-1 py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
+                  <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                  <span>Nạp Restore (.json)</span>
+                  <input type="file" accept=".json" class="hidden" onchange="importAdminBackup(event)" />
+                </label>
+              </div>
+            </div>
+          </div>
+
           <div class="pt-2">
             <button 
               onclick="saveAdminSettings()" 
@@ -1282,8 +1321,12 @@
             <td class="py-2.5 px-3.5 font-mono font-semibold text-slate-800 whitespace-nowrap">${lic.usedToday} / ${lic.maxDailyScrapes}</td>
             <td class="py-2.5 px-3.5 text-center whitespace-nowrap">
               <div class="flex items-center justify-center gap-1">
-                <button onclick="copyText('${lic.key}', 'Đã copy Key!')" class="p-1.5 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-all" title="Copy Key">
+                <button onclick="copyText('${lic.key}', 'Đã copy Key!')" class="p-1.5 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-all" title="Copy Mã Key">
                   <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="copyHandoverByKey('${lic.key}')" class="px-2 py-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition-all flex items-center gap-1" title="Copy Mẫu Bàn Giao Key Chuyên Nghiệp Gửi Zalo Cho Khách">
+                  <i data-lucide="clipboard-check" class="w-3 h-3"></i>
+                  <span>Mẫu Bàn Giao</span>
                 </button>
                 <button onclick="openDeviceDetailModal('${lic.key}')" class="p-1.5 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-all" title="Xem Chi Tiết Thiết Bị & Đối Chứng Log">
                   <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
@@ -1357,11 +1400,85 @@
       const key = document.getElementById('newKeyResultInput').value;
       const clientName = document.getElementById('newClientName').value.trim() || 'Quý khách';
       const planVal = document.getElementById('newPlanType').value;
+      const maxDaily = document.getElementById('newMaxDaily').value;
       const planText = PLAN_DATA[planVal] ? PLAN_DATA[planVal].name : 'Bản quyền 5S DEV.TOOL';
-      
-      const msg = `Kính gửi ${clientName},\n5S DEV.TOOL xin gửi bạn mã kích hoạt bản quyền:\n\n🔑 Mã License Key: ${key}\n📦 Gói dịch vụ: ${planText}\n\n👉 Hướng dẫn: Bạn mở website tool, dán mã Key này vào ô "Mã Bản Quyền (License Key)" rồi bấm Xác Nhận Kích Hoạt là sử dụng được ngay!\nChúc bạn khai thác data hiệu quả!`;
-      
-      copyText(msg, "Đã copy tin nhắn kèm hướng dẫn gửi Zalo!");
+      const webUrl = window.location.origin;
+      const hotline = document.getElementById('setHotline')?.value || '0969.999.888';
+
+      const msg = `🎉 THÔNG TIN BÀN GIAO BẢN QUYỀN 5S DEV.TOOL\n----------------------------------\n👤 Khách hàng: ${clientName}\n🌐 Link truy cập Tool: ${webUrl}\n🔑 Mã License Key: ${key}\n📦 Gói đăng ký: ${planText}\n🚀 Hạn mức khai thác: ${maxDaily >= 999999 ? 'Không giới hạn (Max Speed ∞)' : maxDaily + ' Leads'}\n----------------------------------\n👉 HƯỚNG DẪN SỬ DỤNG:\n1. Truy cập đường dẫn ${webUrl}\n2. Dán mã Key "${key}" vào ô kích hoạt bản quyền.\n3. Chọn Tỉnh/Thành phố (63 tỉnh), Ngành nghề và Nguồn cào để bắt đầu quét dữ liệu & kiểm tra Zalo Active!\n📞 Hotline/Zalo hỗ trợ kỹ thuật: ${hotline}`;
+
+      copyText(msg, "Đã copy Mẫu Bàn Giao Key chuyên nghiệp để gửi Zalo cho khách!");
+    }
+
+    function copyHandoverByKey(key) {
+      const lic = allLicensesList.find(l => l.key === key);
+      if (!lic) return copyText(key, "Đã copy Key!");
+      const planText = PLAN_DATA[lic.planType] ? PLAN_DATA[lic.planType].name : lic.planType;
+      const expText = lic.expiresAt ? new Date(lic.expiresAt).toLocaleDateString('vi-VN') : 'Vĩnh viễn (Trọn đời)';
+      const webUrl = window.location.origin;
+      const hotline = document.getElementById('setHotline')?.value || '0969.999.888';
+
+      const msg = `🎉 THÔNG TIN BÀN GIAO BẢN QUYỀN 5S DEV.TOOL\n----------------------------------\n👤 Khách hàng: ${lic.clientName}\n🌐 Link truy cập Tool: ${webUrl}\n🔑 Mã License Key: ${lic.key}\n📦 Gói đăng ký: ${planText}\n⏳ Hạn sử dụng: ${expText}\n🚀 Hạn mức khai thác: ${lic.maxDailyScrapes >= 999999 ? 'Không giới hạn (Max Speed ∞)' : lic.maxDailyScrapes + ' Leads'}\n----------------------------------\n👉 HƯỚNG DẪN KÍCH HOẠT:\nMở link ${webUrl} -> Dán mã "${lic.key}" -> Bấm Xác Nhận Kích Hoạt để sử dụng ngay!\n📞 Hỗ trợ kỹ thuật: ${hotline}`;
+
+      copyText(msg, `Đã copy Mẫu Bàn Giao của khách "${lic.clientName}"!`);
+    }
+
+    async function exportAdminBackup() {
+      if (!adminToken) return showToast('Vui lòng đăng nhập Admin!', 'error');
+      try {
+        const res = await fetch('/api/admin/backup', {
+          headers: {
+            'X-Admin-Password': adminToken,
+            'X-License-Key': adminToken
+          }
+        });
+        const data = await res.json();
+        if (data.success && data.backup) {
+          const blob = new Blob([JSON.stringify(data.backup, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `5S_Admin_Backup_${new Date().toISOString().split('T')[0]}.json`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('Đã tải xuống file Backup JSON thành công!', 'success');
+        }
+      } catch (e) {
+        showToast('Lỗi xuất file Backup: ' + e.message, 'error');
+      }
+    }
+
+    async function importAdminBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          const res = await fetch('/api/admin/restore', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Admin-Password': adminToken,
+              'X-License-Key': adminToken
+            },
+            body: JSON.stringify({ backup: parsed })
+          });
+          const data = await res.json();
+          if (data.success) {
+            showToast(data.message, 'success');
+            loadAdminLicenses();
+            loadAdminSettings();
+          } else {
+            showToast(data.message || 'Lỗi khôi phục dữ liệu', 'error');
+          }
+        } catch (err) {
+          showToast('File JSON không hợp lệ: ' + err.message, 'error');
+        }
+      };
+      reader.readAsText(file);
     }
 
     async function adminToggleActive(key, newState) {
@@ -1422,6 +1539,7 @@
           if (document.getElementById('setBankName')) document.getElementById('setBankName').value = s.bankName || 'NGUYEN VAN A';
           if (document.getElementById('setHotline')) document.getElementById('setHotline').value = s.hotline || '0969.999.888';
           if (document.getElementById('setAdminPassword')) document.getElementById('setAdminPassword').value = s.adminPassword || 'admin888';
+          if (document.getElementById('setGoogleMapsApiKey')) document.getElementById('setGoogleMapsApiKey').value = s.googleMapsApiKey || '';
           
           // Điền giá tiền tùy chỉnh đã lưu trong Database
           if (s.price_trial_1d && document.getElementById('price_trial_1d')) document.getElementById('price_trial_1d').value = s.price_trial_1d;
@@ -1564,6 +1682,7 @@
         bankName: document.getElementById('setBankName').value.trim(),
         hotline: document.getElementById('setHotline').value.trim(),
         adminPassword: document.getElementById('setAdminPassword').value.trim(),
+        googleMapsApiKey: document.getElementById('setGoogleMapsApiKey')?.value.trim() || '',
         price_trial_1d: document.getElementById('price_trial_1d')?.value.trim() || '50.000đ',
         price_month_1m: document.getElementById('price_month_1m')?.value.trim() || '499.000đ',
         price_month_3m: document.getElementById('price_month_3m')?.value.trim() || '1.290.000đ',

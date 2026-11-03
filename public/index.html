@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>5S DEV.TOOL - Nền Tảng SaaS Quét Lead B2B & Marketing Tự Động</title>
+  <title>5S DEV.TOOL - Nền Tảng SaaS Quét Lead B2B Đa Nguồn & Check Zalo Tự Động</title>
   
   <!-- Favicon 5S DEV.TOOL -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -81,104 +81,78 @@
     @keyframes rowEnterGlow { 0% { background-color: #dcfce7; } 100% { background-color: transparent; } }
     .new-lead-highlight { animation: rowEnterGlow 3s ease-out; }
 
-    /* ======================================================== */
-    /* ULTRA-MODERN FORM SELECTS STYLING FOR ENTIRE APPLICATION */
-    /* ======================================================== */
     select, .modern-select {
       appearance: none !important;
       -webkit-appearance: none !important;
       -moz-appearance: none !important;
       background-color: #ffffff !important;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.2' stroke='%236366f1'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E") !important;
-      background-position: right 0.85rem center !important;
+      background-position: right 0.75rem center !important;
       background-repeat: no-repeat !important;
-      background-size: 1.15rem 1.15rem !important;
-      padding-top: 0.625rem !important;
-      padding-bottom: 0.625rem !important;
-      padding-left: 0.875rem !important;
-      padding-right: 2.6rem !important;
+      background-size: 1rem 1rem !important;
+      padding-top: 0.55rem !important;
+      padding-bottom: 0.55rem !important;
+      padding-left: 0.75rem !important;
+      padding-right: 2.2rem !important;
       border: 1.5px solid #e2e8f0 !important;
-      border-radius: 0.85rem !important;
-      box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
+      border-radius: 0.75rem !important;
+      box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04) !important;
       cursor: pointer !important;
-      font-size: 0.8125rem !important; /* 13px */
+      font-size: 0.78rem !important;
       font-weight: 700 !important;
       color: #0f172a !important;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
       outline: none !important;
     }
 
+    select.crm-mini-select {
+      padding-top: 0.25rem !important;
+      padding-bottom: 0.25rem !important;
+      padding-left: 0.5rem !important;
+      padding-right: 1.6rem !important;
+      font-size: 0.7rem !important;
+      border-radius: 0.5rem !important;
+      background-position: right 0.4rem center !important;
+      background-size: 0.85rem 0.85rem !important;
+    }
+
     select:hover, .modern-select:hover {
       border-color: #818cf8 !important;
       background-color: #f8faff !important;
-      box-shadow: 0 3px 10px -1px rgba(99, 102, 241, 0.12) !important;
     }
 
     select:focus, .modern-select:focus {
       border-color: #4f46e5 !important;
       background-color: #ffffff !important;
-      box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.2) !important;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18) !important;
     }
 
-    select option {
-      font-size: 0.8125rem !important;
-      font-weight: 600 !important;
-      padding: 10px 14px !important;
-      color: #1e293b !important;
-      background-color: #ffffff !important;
-    }
-
-    /* Custom Dropdown Animations & Scrollbars */
     .dropdown-slide-down {
       animation: dropSlideDown 0.16s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       transform-origin: top center;
     }
     @keyframes dropSlideDown {
-      0% {
-        opacity: 0;
-        transform: translateY(-6px) scale(0.99);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      0% { opacity: 0; transform: translateY(-6px) scale(0.99); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 5px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f8fafc;
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-  
-    
-    /* ======================================================== */
-    /* TRUE MOBILE RESPONSIVE & ANTI-ZOOM CSS                   */
-    /* ======================================================== */
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
     .touch-scroll {
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-x: contain;
     }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-      height: 0;
-      width: 0;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    .no-scrollbar::-webkit-scrollbar { display: none; height: 0; width: 0; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
     @media screen and (max-width: 768px) {
-      /* Hardcode font-size >= 16px để iOS Safari & Chrome Mobile không kích hoạt Form Zoom */
       input, select, textarea, .modern-select {
         font-size: 16px !important;
+      }
+      select.crm-mini-select {
+        font-size: 13px !important;
       }
       input::placeholder, textarea::placeholder {
         font-size: 13px !important;
@@ -187,16 +161,14 @@
         touch-action: pan-x pan-y;
         -webkit-text-size-adjust: 100%;
       }
-      /* Tối ưu padding container chính trên mobile */
       main {
         padding-left: 0.75rem !important;
         padding-right: 0.75rem !important;
-        padding-top: 1rem !important;
+        padding-top: 0.85rem !important;
         padding-bottom: 1rem !important;
-        gap: 1rem !important;
+        gap: 0.85rem !important;
       }
     }
-
   </style>
 </head>
 <body class="h-full bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
@@ -205,7 +177,7 @@
   <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- ============================================================== -->
-  <!-- MODAL: KÍCH HOẠT LICENSE KEY DÀNH CHO KHÁCH HÀNG (GATEWAY) -->
+  <!-- MODAL 1: KÍCH HOẠT LICENSE KEY DÀNH CHO KHÁCH HÀNG (GATEWAY) -->
   <!-- ============================================================== -->
   <div id="licenseGateModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
@@ -213,7 +185,7 @@
       <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-6 text-white text-center border-b border-cyan-500/20">
         <img src="/logo.jpg" alt="5S DEV.TOOL" class="w-16 h-16 mx-auto mb-3 rounded-2xl object-cover border-2 border-cyan-400/40 shadow-xl shadow-cyan-500/30" />
         <h2 class="text-xl font-black tracking-tight text-white">Kích Hoạt <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">5S DEV.TOOL</span></h2>
-        <p class="text-xs text-slate-300 mt-1">Vui lòng nhập License Key được cấp để bắt đầu sử dụng</p>
+        <p class="text-xs text-slate-300 mt-1">Vui lòng nhập License Key được cấp để bắt đầu khai thác dữ liệu</p>
       </div>
 
       <div class="p-6 space-y-4 text-xs">
@@ -222,15 +194,15 @@
           <input 
             id="inputClientKey" 
             type="text" 
-            placeholder="Ví dụ: ADMIN-DEV5S-2026 hoặc LEAD-VIP-A8F2K9" 
+            placeholder="Ví dụ: ADMIN-DEV5S-2026 hoặc LEAD-30D-A8F2K9" 
             class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl font-mono text-sm uppercase font-bold text-indigo-700 tracking-wider focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white" 
           />
-          <span class="text-[11px] text-slate-400 mt-1 block">Khóa thiết bị tự động (Anti-share key) khi kích hoạt lần đầu.</span>
+          <span class="text-[11px] text-slate-400 mt-1 block">Hệ thống tự động lưu phiên đăng nhập và bảo toàn dữ liệu khi tải lại trang (F5).</span>
         </div>
 
         <div id="gateErrorBox" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"></div>
 
-        <!-- Khung Thanh Toán VietQR Tự Động (Hiển thị khi hết hạn hoặc mua key) -->
+        <!-- Khung Thanh Toán VietQR Tự Động -->
         <div id="gatePaymentBox" class="hidden p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 space-y-2.5 text-center">
           <span class="text-[11px] font-bold text-indigo-900 block uppercase tracking-wider">Thông Tin Chuyển Khoản Mua / Gia Hạn Key</span>
           <img id="gateVietQRImg" src="" alt="VietQR Thanh Toán" class="mx-auto rounded-xl border border-indigo-200 shadow-xs max-h-48" />
@@ -251,12 +223,152 @@
         >
           XÁC NHẬN KÍCH HOẠT BẢN QUYỀN
         </button>
-
-        <div class="pt-2 text-center text-[11px] text-slate-400">
-          Chưa có Key bản quyền? Vui lòng chuyển khoản theo mã VietQR phía trên và gửi bill cho Admin để nhận mã.
-        </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: KỊCH BẢN NHẮN ZALO & TELESALE CÁ NHÂN HÓA (ADD-ON 6.1) -->
+  <!-- ============================================================== -->
+  <div id="scriptModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div class="bg-gradient-to-r from-indigo-700 via-indigo-600 to-cyan-600 p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center">
+            <i data-lucide="message-square-plus" class="w-4 h-4 text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-extrabold">Kịch Bản Nhắn Zalo & Telesale Cá Nhân Hóa Tự Động</h3>
+            <p class="text-[11px] text-indigo-100">Tự động điền tên công ty, người đại diện & copy sẵn khi bấm nút Chat Zalo</p>
+          </div>
+        </div>
+        <button onclick="closeScriptModal()" class="w-7 h-7 rounded-lg bg-black/20 text-white/80 hover:text-white flex items-center justify-center">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-4 text-xs">
+        <!-- Chọn nhanh mẫu gợi ý -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1.5">Chọn nhanh mẫu kịch bản thực chiến:</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button type="button" onclick="applyPresetScript(1)" class="px-3 py-2 rounded-xl border border-indigo-200 bg-indigo-50/70 hover:bg-indigo-100 text-indigo-800 font-bold text-left transition-all">
+              🤝 Mẫu 1: Chào Hợp Tác B2B
+            </button>
+            <button type="button" onclick="applyPresetScript(2)" class="px-3 py-2 rounded-xl border border-cyan-200 bg-cyan-50/70 hover:bg-cyan-100 text-cyan-800 font-bold text-left transition-all">
+              🔥 Mẫu 2: Chào Giải Pháp / Dịch Vụ
+            </button>
+            <button type="button" onclick="applyPresetScript(3)" class="px-3 py-2 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100 text-emerald-800 font-bold text-left transition-all">
+              🎁 Mẫu 3: Tặng Báo Giá / Ưu Đãi
+            </button>
+          </div>
+        </div>
+
+        <!-- Biến tự động chèn -->
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+          <span class="text-[11px] font-bold text-slate-600 block">Bấm vào biến bên dưới để chèn vào nội dung tin nhắn:</span>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" onclick="insertScriptVar('{ten_cong_ty}')" class="px-2 py-1 rounded-lg bg-white border border-slate-300 hover:border-indigo-500 font-mono text-[11px] font-bold text-indigo-700">{ten_cong_ty}</button>
+            <button type="button" onclick="insertScriptVar('{nguoi_dai_dien}')" class="px-2 py-1 rounded-lg bg-white border border-slate-300 hover:border-indigo-500 font-mono text-[11px] font-bold text-indigo-700">{nguoi_dai_dien}</button>
+            <button type="button" onclick="insertScriptVar('{nganh_nghe}')" class="px-2 py-1 rounded-lg bg-white border border-slate-300 hover:border-indigo-500 font-mono text-[11px] font-bold text-indigo-700">{nganh_nghe}</button>
+            <button type="button" onclick="insertScriptVar('{tinh_thanh}')" class="px-2 py-1 rounded-lg bg-white border border-slate-300 hover:border-indigo-500 font-mono text-[11px] font-bold text-indigo-700">{tinh_thanh}</button>
+            <button type="button" onclick="insertScriptVar('{sdt}')" class="px-2 py-1 rounded-lg bg-white border border-slate-300 hover:border-indigo-500 font-mono text-[11px] font-bold text-indigo-700">{sdt}</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nội dung tin nhắn mẫu:</label>
+          <textarea id="zaloScriptTextarea" rows="5" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-300 focus:bg-white focus:border-indigo-500 focus:outline-none text-xs leading-relaxed font-medium text-slate-800"></textarea>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+          <label class="inline-flex items-center gap-2 cursor-pointer">
+            <input id="chkAutoCopyScript" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600" />
+            <span class="font-bold text-slate-700">Tự động copy lời chào khi bấm nút "Chat Zalo"</span>
+          </label>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeScriptModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 font-bold hover:bg-slate-200">Đóng</button>
+            <button type="button" onclick="saveZaloScript()" class="px-5 py-2 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 shadow-md shadow-indigo-500/20">Lưu Kịch Bản</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 3: IMPORT DANH SÁCH SĐT CHECK ZALO HÀNG LOẠT (ADD-ON 6.4) -->
+  <!-- ============================================================== -->
+  <div id="importZaloModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 max-h-[90vh] flex flex-col">
+      <div class="bg-gradient-to-r from-cyan-700 via-cyan-600 to-indigo-700 p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center">
+            <i data-lucide="file-Spreadsheet" class="w-4 h-4 text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-extrabold">Import Danh Sách SĐT Check Zalo Hàng Loạt (Active vs Not Found)</h3>
+            <p class="text-[11px] text-cyan-100">Dán danh sách SĐT hoặc tải file .TXT / .CSV để lọc sạch số có Zalo Active</p>
+          </div>
+        </div>
+        <button onclick="closeImportZaloModal()" class="w-7 h-7 rounded-lg bg-black/20 text-white/80 hover:text-white flex items-center justify-center">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4 text-xs flex-1">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <label class="font-bold text-slate-700">Dán danh sách số điện thoại (Mỗi số 1 dòng hoặc cách nhau dấu phẩy):</label>
+          <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200 font-bold cursor-pointer hover:bg-indigo-100 transition-all">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+            <span>Chọn File .TXT / .CSV</span>
+            <input type="file" accept=".txt,.csv" class="hidden" onchange="handlePhoneFileUpload(event)" />
+          </label>
+        </div>
+
+        <textarea id="importPhonesInput" rows="5" placeholder="0988123456&#10;0909888999&#10;0912345678&#10;02438223344" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-300 font-mono text-xs focus:bg-white focus:border-cyan-600 focus:outline-none"></textarea>
+
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <label class="inline-flex items-center gap-2 cursor-pointer">
+            <input id="chkSaveImportToLeads" type="checkbox" checked class="w-4 h-4 rounded text-cyan-600" />
+            <span class="font-bold text-slate-700">Tự động lưu các số đã kiểm tra vào bảng Leads chính</span>
+          </label>
+
+          <button id="btnRunImportCheck" onclick="submitImportPhoneCheck()" class="btn-shimmer px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-indigo-600 text-white font-extrabold shadow-md hover:from-cyan-700 hover:to-indigo-700 transition-all flex items-center gap-1.5">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            <span>KIỂM TRA ZALO (ACTIVE / NOT FOUND) NGAY</span>
+          </button>
+        </div>
+
+        <!-- Kết quả kiểm tra hàng loạt -->
+        <div id="importCheckResultBox" class="hidden space-y-3 pt-3 border-t border-slate-200">
+          <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="font-bold text-slate-700">Tổng kiểm tra: <b id="impTotalCount" class="text-slate-900">0</b></span>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-extrabold">🟢 ACTIVE: <b id="impActiveCount">0</b></span>
+              <span class="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-800 font-extrabold">🔴 NOT FOUND: <b id="impNotFoundCount">0</b></span>
+            </div>
+            <button onclick="exportImportedZaloResults()" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-bold hover:bg-emerald-700">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>Xuất Kết Quả (.xlsx)</span>
+            </button>
+          </div>
+
+          <div class="max-h-56 overflow-y-auto border border-slate-200 rounded-xl custom-scrollbar">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 font-bold text-slate-600 sticky top-0">
+                <tr>
+                  <th class="p-2">SĐT</th>
+                  <th class="p-2">Nhà Mạng</th>
+                  <th class="p-2">Trạng Thái Zalo</th>
+                  <th class="p-2">Tên Zalo / Ghi Chú</th>
+                </tr>
+              </thead>
+              <tbody id="importCheckResultTbody" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -271,7 +383,7 @@
           <span class="text-sm sm:text-lg font-black tracking-tight text-slate-900 whitespace-nowrap font-sans">5S <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500">DEV.TOOL</span></span>
           <span class="px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200 whitespace-nowrap flex items-center gap-1 shrink-0">
             <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
-            <span>PRO</span>
+            <span>V5.5 PRO</span>
           </span>
         </div>
       </div>
@@ -290,25 +402,26 @@
 
       <!-- Right: Actions & Admin Portal -->
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-        
-        <!-- Switch / Change Key -->
+        <button onclick="openScriptModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 text-xs font-bold transition-all" title="Cấu hình kịch bản chào Zalo tự động">
+          <i data-lucide="message-square-plus" class="w-3.5 h-3.5"></i>
+          <span>Kịch Bản Zalo</span>
+        </button>
+
         <button onclick="openLicenseGateModal(true)" class="p-2 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 text-xs font-bold transition-all shrink-0" title="Đổi Key Bản Quyền">
           <i data-lucide="key" class="w-4 h-4"></i>
         </button>
 
-        <!-- Admin Portal Button -->
         <a href="/admin" target="_blank" class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-all shadow-xs whitespace-nowrap shrink-0">
           <i data-lucide="lock" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
           <span class="hidden sm:inline">Quản Trị Key</span>
           <span class="sm:hidden">Admin</span>
         </a>
-
       </div>
 
     </div>
   </header>
 
-  <!-- Sub-header for Mobile: Client Status Pill (Chỉ hiện trên Mobile khi đã kích hoạt Key) -->
+  <!-- Sub-header for Mobile: Client Status Pill -->
   <div id="clientStatusPillMobile" class="hidden md:hidden bg-slate-900 text-slate-300 px-3 py-1.5 text-[11px] items-center justify-between border-b border-slate-800">
     <div class="flex items-center gap-1.5 min-w-0">
       <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
@@ -320,11 +433,10 @@
     </div>
   </div>
 
-
   <!-- MAIN CONTAINER -->
-  <main class="max-w-[1600px] mx-auto px-4 lg:px-8 py-6 flex flex-col gap-6">
+  <main class="max-w-[1600px] mx-auto px-4 lg:px-8 py-5 flex flex-col gap-5">
 
-    <!-- PHẦN 1: 4 CHỈ SỐ KPI CHÍNH (GRID 2x2 GỌN GÀNG TRÊN MOBILE, KHÔNG CẮT CHỮ) -->
+    <!-- PHẦN 1: 4 CHỈ SỐ KPI CHÍNH -->
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
       
       <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between">
@@ -336,57 +448,57 @@
         </div>
         <div class="flex items-baseline gap-1.5 mb-1 flex-wrap">
           <span id="kpiTotalLeads" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">0</span>
-          <span class="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 whitespace-nowrap">100% Real</span>
+          <span class="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 whitespace-nowrap">Đa Nguồn B2B</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 truncate">leads.db • Tốc độ cao</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 truncate">GMaps • FB • Trang Vàng • Cổng DN</p>
       </div>
 
       <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between">
         <div class="flex items-center justify-between mb-1.5 gap-1">
-          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide truncate">SĐT Zalo Active</span>
-          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0">
-            <i data-lucide="message-square" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide truncate">Zalo: ACTIVE</span>
+          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
         </div>
         <div class="flex items-baseline gap-1.5 mb-1 flex-wrap">
-          <span id="kpiZaloActive" class="text-xl sm:text-2xl font-black text-cyan-600 tracking-tight">0</span>
-          <span class="text-[9px] sm:text-[10px] font-bold text-cyan-700 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200 whitespace-nowrap">Nhắn Tin</span>
+          <span id="kpiZaloActive" class="text-xl sm:text-2xl font-black text-emerald-600 tracking-tight">0</span>
+          <span class="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 whitespace-nowrap">🟢 Đã Đăng Ký</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Đã lọc số cố định</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Not Found: <b id="kpiZaloNotFound" class="text-rose-500">0</b> số</p>
       </div>
 
       <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between">
         <div class="flex items-center justify-between mb-1.5 gap-1">
           <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide truncate">Có Link Nguồn</span>
-          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+          <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0">
             <i data-lucide="shield-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
         </div>
         <div class="flex items-baseline gap-1.5 mb-1 flex-wrap">
-          <span id="kpiVerifiedCount" class="text-xl sm:text-2xl font-black text-emerald-600 tracking-tight">0</span>
-          <span class="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 whitespace-nowrap">Đối Soát</span>
+          <span id="kpiVerifiedCount" class="text-xl sm:text-2xl font-black text-cyan-600 tracking-tight">0</span>
+          <span class="text-[9px] sm:text-[10px] font-bold text-cyan-700 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200 whitespace-nowrap">Đối Soát Thật</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Khách click mở 100%</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Click mở trực tiếp nguồn</p>
       </div>
 
       <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between">
         <div class="flex items-center justify-between mb-1.5 gap-1">
-          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide truncate">Phạm Vi Cào</span>
+          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide truncate">Phạm Vi & Ngành</span>
           <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
             <i data-lucide="map-pin" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
         </div>
         <div class="flex items-baseline gap-1.5 mb-1 flex-wrap">
           <span class="text-xl sm:text-2xl font-black text-amber-600 tracking-tight">63 Tỉnh</span>
-          <span class="text-[9px] sm:text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 whitespace-nowrap">Toàn Quốc</span>
+          <span class="text-[9px] sm:text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 whitespace-nowrap">24+ Ngành Lớn</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Tự lật trang 100-200 leads</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Kho >3.200+ DN & Lật trang</p>
       </div>
 
     </section>
 
-    <!-- PHẦN 2: BỘ ĐIỀU KHIỂN & BỘ LỌC CÀO DỮ LIỆU -->
-    <section id="controlSuite" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col gap-4">
+    <!-- PHẦN 2: BỘ ĐIỀU KHIỂN & BỘ LỌC CÀO ĐA NGUỒN -->
+    <section id="controlSuite" class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm flex flex-col gap-3.5">
       
       <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-100 overflow-x-auto touch-scroll no-scrollbar">
         <div class="flex items-center gap-2.5 min-w-0 flex-shrink-0">
@@ -394,8 +506,8 @@
             <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
           </div>
           <div class="min-w-0">
-            <h2 class="text-xs sm:text-sm font-bold text-slate-900 whitespace-nowrap">Máy Quét Data Doanh Nghiệp Thật 100%</h2>
-            <p class="text-[11px] sm:text-xs text-slate-400 whitespace-nowrap">Chọn tỉnh thành, ngành nghề và hạn mức 100-200 leads</p>
+            <h2 class="text-xs sm:text-sm font-bold text-slate-900 whitespace-nowrap">Trung Tâm Quét Lead Đa Nguồn (Google Maps API • Facebook • Trang Vàng • Cổng DN)</h2>
+            <p class="text-[11px] sm:text-xs text-slate-400 whitespace-nowrap">Lọc chuẩn xác 100% theo 63 tỉnh thành, 24+ ngành nghề thực chiến & kiểm tra Zalo Active / Not Found</p>
           </div>
         </div>
 
@@ -406,10 +518,10 @@
         </div>
       </div>
 
-      <!-- BỘ LỌC 4 Ô ĐẦY ĐỦ 63 TỈNH THÀNH -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <!-- HÀNG LỌC CHÍNH (5 CỘT TRÊN DESKTOP): TÌM KIẾM | NGUỒN CÀO | 63 TỈNH THÀNH | 24+ NGÀNH NGHỀ | SỐ LƯỢNG CÀO -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
         
-        <!-- Tìm kiếm -->
+        <!-- 1. Tìm kiếm từ khóa -->
         <div>
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Tìm kiếm nội bộ</label>
           <div class="relative">
@@ -417,14 +529,29 @@
             <input 
               id="filterSearch" 
               type="text" 
-              placeholder="Tên công ty, SĐT, MST..." 
-              class="w-full pl-9 pr-3 py-2.5 text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+              placeholder="Tên công ty, SĐT, MST, ghi chú..." 
+              class="w-full pl-9 pr-3 py-2 text-xs font-semibold bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
               oninput="debounceSearch()"
             />
           </div>
         </div>
 
-        <!-- 63 Tỉnh Thành: Custom Dropdown LUÔN BUNG XUỐNG DƯỚI -->
+        <!-- 2. Nguồn Dữ Liệu Cào (Multi-Source Selector) -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
+            <span>Nguồn Dữ Liệu Cào</span>
+            <span class="text-[10px] text-indigo-600 font-bold">Đa Kênh</span>
+          </label>
+          <select id="filterSourceType" onchange="fetchLeads()" class="modern-select w-full">
+            <option value="all">🌐 Đa Nguồn (Tất cả 4 Kênh)</option>
+            <option value="gmaps">📍 Google Maps Places API</option>
+            <option value="facebook">📘 Facebook Fanpage Business</option>
+            <option value="yellowpages">📒 Trang Vàng Việt Nam</option>
+            <option value="doanhnghiep">🏛️ Cổng DN Quốc Gia (MST)</option>
+          </select>
+        </div>
+
+        <!-- 3. 63 Tỉnh Thành: Custom Searchable Dropdown -->
         <div class="relative">
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
             <span class="flex items-center gap-1">
@@ -434,180 +561,191 @@
             <span class="text-[10px] text-indigo-600 font-bold">63 Tỉnh</span>
           </label>
           
-          <!-- Hidden Native Select (For seamless API & JS sync) -->
           <select id="filterCity" onchange="fetchLeads()" class="hidden">
             <option value="all">Toàn quốc</option>
           </select>
 
-          <!-- Trigger Button -->
           <button 
             type="button" 
             id="btnDropdownCity" 
             onclick="toggleCityDropdown(event)" 
-            class="w-full flex items-center justify-between px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl hover:border-indigo-400 hover:shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-left text-xs font-bold text-slate-800"
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-left text-xs font-bold text-slate-800"
           >
-            <span id="labelDropdownCity" class="truncate">📍 Toàn Quốc (Mọi Tỉnh Thành)</span>
+            <span id="labelDropdownCity" class="truncate">📍 Toàn Quốc (63 Tỉnh Thành)</span>
             <i id="chevronDropdownCity" data-lucide="chevron-down" class="w-4 h-4 text-indigo-500 transition-transform duration-200 flex-shrink-0"></i>
           </button>
 
-          <!-- Custom Floating Menu (Luôn mở xuống dưới!) -->
           <div 
             id="menuDropdownCity" 
             class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 space-y-1.5 dropdown-slide-down min-w-[240px]"
           >
-            <!-- Tìm kiếm nhanh tỉnh thành -->
             <div class="relative p-0.5">
               <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
               <input 
                 id="searchCityInput" 
                 type="text" 
-                placeholder="Gõ tìm nhanh tỉnh thành..." 
+                placeholder="Gõ tìm nhanh tỉnh thành (VD: Đà Nẵng, Bình Dương)..." 
                 class="w-full pl-7 pr-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-700" 
                 oninput="filterCityList(this.value)"
                 onclick="event.stopPropagation()"
               />
             </div>
-            <!-- Danh sách 63 tỉnh cuộn mượt -->
-            <div id="cityOptionsList" class="max-h-56 overflow-y-auto space-y-0.5 custom-scrollbar pr-1">
-              <!-- Rendered via JS -->
-            </div>
+            <div id="cityOptionsList" class="max-h-60 overflow-y-auto space-y-0.5 custom-scrollbar pr-1"></div>
           </div>
         </div>
 
-        <!-- Ngành nghề Mục Tiêu: Custom Dropdown LUÔN BUNG XUỐNG DƯỚI -->
+        <!-- 4. Ngành Nghề Mục Tiêu (24+ Ngành + Nhập Từ Khóa Tùy Ý) -->
         <div class="relative">
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
             <span class="flex items-center gap-1">
               <i data-lucide="briefcase" class="w-3.5 h-3.5 text-cyan-600"></i>
-              <span>Ngành Nghề Mục Tiêu</span>
+              <span>Ngành Nghề Kinh Doanh</span>
             </span>
-            <span class="text-[10px] text-cyan-600 font-bold">Tất Cả</span>
+            <span class="text-[10px] text-cyan-600 font-bold">24+ Ngành</span>
           </label>
 
-          <select id="filterIndustry" onchange="fetchLeads()" class="hidden">
-            <option value="all">all</option>
-          </select>
+          <input type="hidden" id="filterIndustry" value="all" />
 
-          <!-- Trigger Button -->
           <button 
             type="button" 
             id="btnDropdownIndustry" 
             onclick="toggleIndustryDropdown(event)" 
-            class="w-full flex items-center justify-between px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl hover:border-cyan-400 hover:shadow-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all text-left text-xs font-bold text-slate-800"
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 text-left text-xs font-bold text-slate-800"
           >
-            <span id="labelDropdownIndustry" class="truncate">🏢 Mọi Ngành Nghề</span>
+            <span id="labelDropdownIndustry" class="truncate">🏢 Mọi Ngành Nghề (Tất Cả)</span>
             <i id="chevronDropdownIndustry" data-lucide="chevron-down" class="w-4 h-4 text-cyan-600 transition-transform duration-200 flex-shrink-0"></i>
           </button>
 
-          <!-- Floating Menu (Luôn mở xuống dưới!) -->
           <div 
             id="menuDropdownIndustry" 
-            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-0.5 dropdown-slide-down max-h-60 overflow-y-auto custom-scrollbar min-w-[220px]"
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 space-y-1.5 dropdown-slide-down min-w-[270px]"
           >
-            <div onclick="selectCustomIndustry('all', '🏢 Mọi Ngành Nghề')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-bold text-xs transition-all">
-              <span>🏢 Mọi Ngành Nghề</span>
-              <i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600"></i>
+            <!-- Tìm hoặc gõ ngành tùy ý -->
+            <div class="relative p-0.5 flex gap-1" onclick="event.stopPropagation()">
+              <div class="relative flex-1">
+                <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input 
+                  id="searchIndustryInput" 
+                  type="text" 
+                  placeholder="Tìm hoặc gõ ngành (Trà sữa, Sản xuất, Nội thất...)" 
+                  class="w-full pl-7 pr-2 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-cyan-500 font-medium text-slate-700" 
+                  oninput="filterIndustryList(this.value)"
+                  onkeydown="if(event.key==='Enter'){ event.preventDefault(); applyCustomIndustryKeyword(); }"
+                />
+              </div>
+              <button type="button" onclick="applyCustomIndustryKeyword()" class="px-2.5 py-1.5 rounded-lg bg-cyan-600 text-white text-[11px] font-bold hover:bg-cyan-700 shrink-0" title="Lọc theo từ khóa ngành bạn vừa gõ">
+                Chọn
+              </button>
             </div>
-            <div onclick="selectCustomIndustry('Bất động sản', '🏘️ Bất Động Sản & Môi Giới')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>🏘️ Bất Động Sản & Môi Giới</span>
-            </div>
-            <div onclick="selectCustomIndustry('Spa & Thẩm mỹ', '💆 Spa & Thẩm Mỹ Viện')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>💆 Spa & Thẩm Mỹ Viện</span>
-            </div>
-            <div onclick="selectCustomIndustry('Nha khoa', '🦷 Nha Khoa & Y Tế')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>🦷 Nha Khoa & Y Tế</span>
-            </div>
-            <div onclick="selectCustomIndustry('Thiết kế Nội thất', '🛋️ Thiết Kế & Thi Công Nội Thất')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>🛋️ Thiết Kế & Thi Công Nội Thất</span>
-            </div>
-            <div onclick="selectCustomIndustry('Vận tải & Logistics', '🚚 Vận Tải & Logistics')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>🚚 Vận Tải & Logistics</span>
-            </div>
-            <div onclick="selectCustomIndustry('F&B & Nhà hàng', '☕ F&B, Nhà Hàng, Quán Cafe')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>☕ F&B, Nhà Hàng, Quán Cafe</span>
-            </div>
-            <div onclick="selectCustomIndustry('Giáo dục & Đào tạo', '🎓 Giáo Dục & Đào Tạo')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>🎓 Giáo Dục & Đào Tạo</span>
-            </div>
-            <div onclick="selectCustomIndustry('Xuất nhập khẩu', '🚢 Xuất Nhập Khẩu')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>🚢 Xuất Nhập Khẩu</span>
-            </div>
-            <div onclick="selectCustomIndustry('Xây dựng', '🏗️ Xây Dựng & Vật Liệu')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>🏗️ Xây Dựng & Vật Liệu</span>
-            </div>
-            <div onclick="selectCustomIndustry('Thời trang', '👗 Thời Trang & May Mặc')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span>👗 Thời Trang & May Mặc</span>
-            </div>
+            <div id="industryOptionsList" class="max-h-60 overflow-y-auto space-y-0.5 custom-scrollbar pr-1"></div>
           </div>
         </div>
 
-        <!-- Số lượng Cào: Custom Dropdown LUÔN BUNG XUỐNG DƯỚI -->
+        <!-- 5. Số Lượng Cào Mỗi Lần -->
         <div class="relative">
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
             <span class="flex items-center gap-1">
               <i data-lucide="gauge" class="w-3.5 h-3.5 text-emerald-600"></i>
               <span>Số Lượng Cào</span>
             </span>
-            <span class="text-[10px] text-emerald-600 font-bold">Đủ SĐT</span>
+            <span class="text-[10px] text-emerald-600 font-bold">Đa Trang</span>
           </label>
 
           <input type="hidden" id="scanLimit" value="50" />
 
-          <!-- Trigger Button -->
           <button 
             type="button" 
             id="btnDropdownLimit" 
             onclick="toggleLimitDropdown(event)" 
-            class="w-full flex items-center justify-between px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl hover:border-emerald-400 hover:shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-left text-xs font-bold text-emerald-700 font-mono"
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-emerald-400 focus:outline-none text-left text-xs font-bold text-emerald-700 font-mono"
           >
             <span id="labelDropdownLimit" class="truncate">🚀 50 Khách Hàng (Chuẩn)</span>
             <i id="chevronDropdownLimit" data-lucide="chevron-down" class="w-4 h-4 text-emerald-600 transition-transform duration-200 flex-shrink-0"></i>
           </button>
 
-          <!-- Floating Menu (Luôn mở xuống dưới!) -->
           <div 
             id="menuDropdownLimit" 
             class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down min-w-[210px]"
           >
-            <div onclick="selectCustomLimit('25', '⚡ 25 Khách Hàng (Nhanh)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
+            <div onclick="selectCustomLimit('25', '⚡ 25 Khách Hàng (Nhanh)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono">
               <span>⚡ 25 Khách Hàng</span>
-              <span class="text-[10px] text-slate-400 font-sans font-normal">Nhanh</span>
+              <span class="text-[10px] text-slate-400 font-sans">Nhanh</span>
             </div>
-            <div onclick="selectCustomLimit('50', '🚀 50 Khách Hàng (Chuẩn)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-xs font-mono border border-emerald-100 transition-all">
+            <div onclick="selectCustomLimit('50', '🚀 50 Khách Hàng (Chuẩn)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-xs font-mono border border-emerald-100">
               <span>🚀 50 Khách Hàng</span>
-              <span class="text-[10px] bg-emerald-600 text-white px-1.5 py-0.5 rounded font-sans font-bold">Chuẩn</span>
+              <span class="text-[10px] bg-emerald-600 text-white px-1.5 py-0.5 rounded font-sans">Chuẩn</span>
             </div>
-            <div onclick="selectCustomLimit('100', '🔥 100 Khách Hàng (Gói Lớn)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
+            <div onclick="selectCustomLimit('100', '🔥 100 Khách Hàng (Gói Lớn)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono">
               <span>🔥 100 Khách Hàng</span>
-              <span class="text-[10px] text-slate-400 font-sans font-normal">Gói Lớn</span>
+              <span class="text-[10px] text-slate-400 font-sans">Gói Lớn</span>
             </div>
-            <div onclick="selectCustomLimit('150', '💎 150 Khách Hàng (Đại Lý)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
+            <div onclick="selectCustomLimit('150', '💎 150 Khách Hàng (Đại Lý)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono">
               <span>💎 150 Khách Hàng</span>
-              <span class="text-[10px] text-purple-600 font-sans font-bold">Đại Lý</span>
+              <span class="text-[10px] text-purple-600 font-sans">Đại Lý</span>
             </div>
-            <div onclick="selectCustomLimit('200', '👑 200 Khách Hàng (Tối Đa)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
+            <div onclick="selectCustomLimit('200', '👑 200 Khách Hàng (Tối Đa)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono">
               <span>👑 200 Khách Hàng</span>
-              <span class="text-[10px] bg-amber-500 text-white px-1.5 py-0.5 rounded font-sans font-bold">Tối Đa</span>
+              <span class="text-[10px] bg-amber-500 text-white px-1.5 py-0.5 rounded font-sans">Tối Đa</span>
             </div>
           </div>
         </div>
 
       </div>
 
-      <!-- TÙY CHỌN LỌC TRÙNG CHIẾN DỊCH (CUỘN NGANG HOẶC KHÔNG RỚT CHỮ) -->
-      <div class="overflow-x-auto touch-scroll no-scrollbar pb-0.5">
-        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs whitespace-nowrap min-w-full">
-          <input id="chkSkipExisting" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 cursor-pointer flex-shrink-0" />
-          <label for="chkSkipExisting" class="cursor-pointer font-bold text-slate-700 select-none whitespace-nowrap">
-            Chỉ cào khách hàng mới (Tự động bỏ qua các số điện thoại đã từng cào trước đó trong hệ thống)
+      <!-- HÀNG LỌC NÂNG CAO (NHÀ MẠNG, TRẠNG THÁI ZALO ACTIVE/NOT FOUND, MINI-CRM, ẨN SỐ BÀN 02X) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-2 border-t border-slate-100">
+        
+        <!-- Lọc Trạng Thái Zalo (Active vs Not Found) -->
+        <div>
+          <select id="filterZaloStatus" onchange="fetchLeads()" class="modern-select w-full">
+            <option value="all">💬 Trạng Thái Zalo: Tất cả SĐT</option>
+            <option value="ACTIVE">🟢 Zalo: ACTIVE (Đã đăng ký Zalo)</option>
+            <option value="NOT_FOUND">🔴 Zalo: NOT FOUND (Chưa đăng ký)</option>
+          </select>
+        </div>
+
+        <!-- Lọc Nhà Mạng Viễn Thông -->
+        <div>
+          <select id="filterCarrier" onchange="fetchLeads()" class="modern-select w-full">
+            <option value="all">📡 Nhà Mạng: Tất cả (Viettel/Vina/Mobi...)</option>
+            <option value="VIETTEL">🟢 Nhà mạng VIETTEL (096, 097, 098, 086, 03x)</option>
+            <option value="VINAPHONE">🔵 Nhà mạng VINAPHONE (091, 094, 088, 08x)</option>
+            <option value="MOBIFONE">🟠 Nhà mạng MOBIFONE (090, 093, 089, 07x)</option>
+          </select>
+        </div>
+
+        <!-- Lọc Trạng Thái Chăm Sóc Mini-CRM -->
+        <div>
+          <select id="filterCrmStatus" onchange="fetchLeads()" class="modern-select w-full">
+            <option value="all">📋 Tiến Độ Sale (CRM): Mọi trạng thái</option>
+            <option value="new">🆕 Mới cào (Chưa liên hệ)</option>
+            <option value="called">📞 Đã gọi điện</option>
+            <option value="zalo_sent">💬 Đã kết bạn / Nhắn Zalo</option>
+            <option value="interested">🔥 Khách quan tâm</option>
+            <option value="closed">✅ Đã chốt đơn thành công</option>
+            <option value="no_answer">❌ Không nghe máy / Thuê bao</option>
+          </select>
+        </div>
+
+        <!-- Tùy chọn Chỉ SĐT Di Động & Bỏ trùng -->
+        <div class="flex items-center justify-between gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none" title="Loại bỏ toàn bộ số điện thoại bàn cố định (024, 028...)">
+            <input id="chkMobileOnly" type="checkbox" onchange="fetchLeads()" class="w-4 h-4 rounded text-indigo-600 cursor-pointer" />
+            <span class="font-bold text-slate-700 whitespace-nowrap">📱 Chỉ SĐT Di Động (Ẩn 02x)</span>
+          </label>
+          <span class="text-slate-300">|</span>
+          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none" title="Bỏ qua các số đã có trong kho khi cào mới">
+            <input id="chkSkipExisting" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 cursor-pointer" />
+            <span class="font-bold text-slate-700 whitespace-nowrap">Lọc trùng</span>
           </label>
         </div>
+
       </div>
 
-                  <!-- DÃY NÚT THAO TÁC CÀO & XUẤT FILE (TỐI ƯU 100% MOBILE & DESKTOP) -->
+      <!-- DÃY NÚT THAO TÁC CÀO & TIỆN ÍCH THƯƠNG MẠI -->
       <div class="space-y-2.5 pt-2 border-t border-slate-100">
         
-        <!-- NÚT 1 CHÍNH: BẮT ĐẦU CÀO DATA THẬT (FULL-WIDTH TRÊN MOBILE, CỰC NỔI BẬT) -->
+        <!-- NÚT 1 CHÍNH: BẮT ĐẦU CÀO DATA ĐA NGUỒN -->
         <button 
           id="btnStartScan"
           onclick="triggerLiveScan()" 
@@ -615,72 +753,79 @@
           style="white-space: nowrap !important;"
         >
           <i data-lucide="radar" class="w-4 h-4 shrink-0"></i>
-          <span class="tracking-tight sm:tracking-wide whitespace-nowrap uppercase">BẮT ĐẦU CÀO DATA THẬT (100 - 200 LEADS)</span>
+          <span class="tracking-tight sm:tracking-wide whitespace-nowrap uppercase">BẮT ĐẦU CÀO DATA ĐA NGUỒN (GMAPS • FB • TRANG VÀNG • CỔNG DN)</span>
         </button>
 
-        <!-- DÃY NÚT PHỤ: GRID 2 CỘT TRÊN MOBILE, DÒNG NGANG TRÊN DESKTOP -->
+        <!-- DÃY NÚT PHỤ -->
         <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
           
-          <!-- NÚT 2: CÀO FANPAGE FACEBOOK -->
+          <!-- Cào URL Fanpage FB -->
           <button 
             onclick="openFanpageModal()" 
-            class="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-all whitespace-nowrap"
+            class="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-all whitespace-nowrap"
           >
             <i data-lucide="facebook" class="w-3.5 h-3.5 shrink-0"></i>
-            <span class="truncate">Cào Fanpage FB</span>
+            <span class="truncate">Cào Link FB</span>
           </button>
 
-          <!-- NÚT 3: XUẤT EXCEL (.XLSX) -->
+          <!-- Check Zalo Toàn Bộ Kho -->
+          <button 
+            onclick="checkAllZalo()" 
+            class="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-cyan-900 bg-cyan-50 border border-cyan-300 rounded-xl hover:bg-cyan-100 transition-all whitespace-nowrap"
+          >
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-cyan-600 shrink-0"></i>
+            <span class="truncate">Check Zalo Toàn Bộ</span>
+          </button>
+
+          <!-- Import SĐT Check Zalo Hàng Loạt (Add-on 6.4) -->
+          <button 
+            onclick="openImportZaloModal()" 
+            class="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-indigo-800 bg-indigo-50 border border-indigo-200 rounded-xl hover:bg-indigo-100 transition-all whitespace-nowrap"
+          >
+            <i data-lucide="upload-cloud" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i>
+            <span class="truncate">Import SĐT Check Zalo</span>
+          </button>
+
+          <!-- Mẫu Kịch Bản Nhắn Zalo (Add-on 6.1) -->
+          <button 
+            onclick="openScriptModal()" 
+            class="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 rounded-xl hover:bg-amber-100 transition-all whitespace-nowrap"
+          >
+            <i data-lucide="message-square-plus" class="w-3.5 h-3.5 text-amber-600 shrink-0"></i>
+            <span class="truncate">Mẫu Lời Chào Zalo</span>
+          </button>
+
+          <!-- Xuất Excel (.XLSX) -->
           <button 
             onclick="exportToExcel()" 
-            class="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-xs transition-all whitespace-nowrap"
+            class="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-xs transition-all whitespace-nowrap"
           >
             <i data-lucide="download" class="w-3.5 h-3.5 shrink-0"></i>
             <span class="truncate">Xuất Excel (.xlsx)</span>
           </button>
 
-          <!-- NÚT 4: XUẤT DANH BẠ VCARD (.VCF) -->
+          <!-- Xuất Danh Bạ VCard (.VCF) -->
           <button 
             onclick="exportToVCard()" 
-            class="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-purple-700 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 transition-all whitespace-nowrap"
-            title="Xuất danh bạ để nạp vào điện thoại, Zalo tự gợi ý kết bạn!"
+            class="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-purple-700 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 transition-all whitespace-nowrap"
           >
             <i data-lucide="smartphone" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i>
             <span class="truncate">Xuất VCard (.vcf)</span>
           </button>
 
-          <!-- NÚT 5: CHECK ZALO TOÀN BỘ -->
-          <button 
-            onclick="checkAllZalo()" 
-            class="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-cyan-800 bg-cyan-50 border border-cyan-200 rounded-xl hover:bg-cyan-100 transition-all whitespace-nowrap"
-          >
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-cyan-600 shrink-0"></i>
-            <span class="truncate">Check Zalo All</span>
-          </button>
-
-          <!-- NÚT 6: CHỈ HIỆN CÓ ZALO -->
-          <button 
-            id="btnToggleZalo"
-            onclick="toggleZaloFilter()" 
-            class="col-span-2 sm:col-auto inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-slate-700 bg-slate-100 border border-slate-200 rounded-xl hover:bg-slate-200 transition-all whitespace-nowrap"
-          >
-            <i data-lucide="filter" class="w-3.5 h-3.5 text-slate-500 shrink-0"></i>
-            <span>Chỉ Hiện Có Zalo</span>
-          </button>
-
-          <!-- NÚT ĐẶT LẠI & XÓA KHO -->
-          <div class="col-span-2 sm:col-auto sm:ml-auto flex items-center justify-between sm:justify-end gap-2 pt-1 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+          <!-- Đặt lại & Xóa kho -->
+          <div class="col-span-2 sm:col-auto sm:ml-auto flex items-center justify-between sm:justify-end gap-1.5 pt-1 sm:pt-0 border-t sm:border-t-0 border-slate-100">
             <button 
               onclick="resetFilters()" 
-              class="inline-flex items-center gap-1 px-3 py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all"
+              class="inline-flex items-center gap-1 px-2.5 py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-all"
             >
               <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 shrink-0"></i>
-              <span>Đặt Lại</span>
+              <span>Đặt Lại Lọc</span>
             </button>
 
             <button 
               onclick="clearAllDatabase()" 
-              class="inline-flex items-center gap-1 px-3 py-2 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-xl transition-all"
+              class="inline-flex items-center gap-1 px-2.5 py-2 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-xl transition-all"
             >
               <i data-lucide="trash-2" class="w-3.5 h-3.5 shrink-0"></i>
               <span>Xóa Kho</span>
@@ -700,10 +845,10 @@
             </div>
             <div>
               <div class="text-xs font-extrabold text-cyanAccent-400 tracking-wider uppercase flex items-center gap-2">
-                <span>HỆ THỐNG ĐANG CÀO 100-200 LEADS QUA CỤM BROWSER ĐA LUỒNG</span>
+                <span>HỆ THỐNG ĐANG CÀO ĐA NGUỒN & KIỂM TRA TRẠNG THÁI ZALO (ACTIVE / NOT FOUND)</span>
                 <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
               </div>
-              <div id="scanStatusText" class="text-xs text-slate-300 font-medium">Đang khởi chạy cụm tab ngầm và lật trang tìm số điện thoại thật...</div>
+              <div id="scanStatusText" class="text-xs text-slate-300 font-medium">Đang kết nối Google Maps Places, Trang Vàng, Fanpage & Cổng DN Quốc Gia...</div>
             </div>
           </div>
           <div class="text-right">
@@ -717,46 +862,43 @@
 
     </section>
 
-    <!-- PHẦN 3: BẢNG DỮ LIỆU THẬT 100% -->
+    <!-- PHẦN 3: BẢNG DỮ LIỆU ĐA NGUỒN & MINI-CRM -->
     <section id="tableSection" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
       
-                  <div class="p-3 sm:p-4 border-b border-slate-100 flex items-center justify-between gap-2 bg-white">
+      <div class="p-3 sm:p-4 border-b border-slate-100 flex items-center justify-between gap-2 bg-white">
         <div class="flex items-center gap-2 min-w-0">
           <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
             <i data-lucide="table" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
           <div class="min-w-0">
-            <h2 class="text-xs sm:text-sm font-bold text-slate-900 truncate">Danh Sách Khách Hàng Tiềm Năng Thật</h2>
-            <p class="text-[10px] sm:text-xs text-slate-400 truncate">Trích xuất trực tiếp, có link nguồn kiểm chứng</p>
+            <h2 class="text-xs sm:text-sm font-bold text-slate-900 truncate">Danh Sách Khách Hàng Tiềm Năng & Trạng Thái Zalo / CRM</h2>
+            <p class="text-[10px] sm:text-xs text-slate-400 truncate">Bấm "Chat Zalo" để tự động copy lời chào cá nhân hóa theo tên công ty</p>
           </div>
         </div>
-        <span id="leadsCountBadge" class="px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200 whitespace-nowrap shrink-0">
+        <span id="leadsCountBadge" class="px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200 whitespace-nowrap shrink-0">
           0 kết quả
         </span>
       </div>
 
-      <!-- MOBILE VIEW: DANH SÁCH THẺ LEAD ĐẦY ĐỦ 100% THÔNG TIN (KHÔNG CẦN VUỐT NGANG) -->
-      <div id="leadsMobileCards" class="md:hidden p-3 space-y-3 max-h-[75vh] overflow-y-auto custom-scrollbar">
-        <!-- Rendered via JS -->
-      </div>
+      <!-- MOBILE VIEW: DANH SÁCH THẺ LEAD ĐẦY ĐỦ 100% THÔNG TIN -->
+      <div id="leadsMobileCards" class="md:hidden p-3 space-y-3 max-h-[75vh] overflow-y-auto custom-scrollbar"></div>
 
-      <!-- DESKTOP VIEW: BẢNG DỮ LIỆU 7 CỘT (CHỈ HIỂN THỊ TRÊN DESKTOP/MÀN HÌNH LỚN) -->
+      <!-- DESKTOP VIEW: BẢNG DỮ LIỆU 8 CỘT -->
       <div class="hidden md:block w-full overflow-x-auto overflow-y-auto max-h-[75vh] touch-scroll custom-scrollbar border-b border-slate-100">
-        <table class="w-full min-w-[980px] text-left text-xs border-collapse">
+        <table class="w-full min-w-[1100px] text-left text-xs border-collapse">
           <thead class="sticky top-0 z-10 bg-slate-50/95 backdrop-blur-xs">
             <tr class="border-b border-slate-200 text-slate-600 font-bold tracking-wider uppercase text-[11px]">
-              <th class="py-3.5 px-2 text-center w-[50px] whitespace-nowrap">STT</th>
-              <th class="py-3.5 px-3 min-w-[260px] whitespace-nowrap">DOANH NGHIỆP & MST</th>
-              <th class="py-3.5 px-3 min-w-[190px] whitespace-nowrap">HOTLINE & ZALO</th>
-              <th class="py-3.5 px-3 min-w-[170px] whitespace-nowrap">EMAIL LIÊN HỆ</th>
-              <th class="py-3.5 px-3 min-w-[220px] whitespace-nowrap">TỈNH THÀNH & ĐỊA CHỈ</th>
-              <th class="py-3.5 px-3 min-w-[150px] whitespace-nowrap">NGÀNH NGHỀ</th>
-              <th class="py-3.5 px-2 text-center min-w-[90px] whitespace-nowrap">THAO TÁC</th>
+              <th class="py-3.5 px-2 text-center w-[46px] whitespace-nowrap">STT</th>
+              <th class="py-3.5 px-3 min-w-[250px] whitespace-nowrap">DOANH NGHIỆP & NGUỒN CÀO</th>
+              <th class="py-3.5 px-3 min-w-[210px] whitespace-nowrap">SĐT & STATUS ZALO (ACTIVE / NOT FOUND)</th>
+              <th class="py-3.5 px-3 min-w-[175px] whitespace-nowrap">TIẾN ĐỘ SALE (MINI-CRM)</th>
+              <th class="py-3.5 px-3 min-w-[155px] whitespace-nowrap">EMAIL LIÊN HỆ</th>
+              <th class="py-3.5 px-3 min-w-[200px] whitespace-nowrap">TỈNH THÀNH & ĐỊA CHỈ</th>
+              <th class="py-3.5 px-3 min-w-[140px] whitespace-nowrap">NGÀNH NGHỀ</th>
+              <th class="py-3.5 px-2 text-center min-w-[85px] whitespace-nowrap">THAO TÁC</th>
             </tr>
           </thead>
-          <tbody id="leadsTableBody" class="divide-y divide-slate-100 text-slate-700">
-            <!-- Rendered via JS -->
-          </tbody>
+          <tbody id="leadsTableBody" class="divide-y divide-slate-100 text-slate-700"></tbody>
         </table>
       </div>
 
@@ -765,10 +907,10 @@
         <div class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center mb-3">
           <i data-lucide="database" class="w-8 h-8"></i>
         </div>
-        <h3 class="text-sm font-bold text-slate-800 mb-1">Kho dữ liệu hiện đang trống (Không có dữ liệu mẫu)</h3>
-        <p class="text-xs text-slate-500 max-w-md mb-4">Nhấn nút <strong class="text-indigo-600 font-bold">"BẮT ĐẦU CÀO DATA THẬT (100 - 200 LEADS)"</strong> để hệ thống tự động lật trang và cào data thật ngay!</p>
-        <button onclick="triggerLiveScan()" class="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-500/20 transition-all hover:-translate-y-0.5 active:scale-95">
-          🚀 Bắt Đầu Cào Data Thật Ngay
+        <h3 class="text-sm font-bold text-slate-800 mb-1">Chưa có dữ liệu khớp bộ lọc hiện tại</h3>
+        <p class="text-xs text-slate-500 max-w-md mb-4">Nhấn nút <strong class="text-indigo-600 font-bold">"BẮT ĐẦU CÀO DATA ĐA NGUỒN"</strong> để hệ thống quét ngay dữ liệu theo đúng Tỉnh thành & Ngành nghề bạn đang chọn!</p>
+        <button onclick="triggerLiveScan()" class="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-500/20 transition-all">
+          🚀 Quét Dữ Liệu Theo Bộ Lọc Này Ngay
         </button>
       </div>
 
@@ -776,7 +918,7 @@
       <div class="p-3.5 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 font-medium">
         <div class="flex items-center gap-2">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>Cơ sở dữ liệu SQLite (<code class="text-indigo-600 font-mono">leads.db</code>) • Bảo mật bản quyền License Key</span>
+          <span>Lưu trữ bền vững SQLite (<code class="text-indigo-600 font-mono">leads.db</code>) + Đồng bộ Cache trình duyệt chống mất dữ liệu khi F5</span>
         </div>
         <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-indigo-600 hover:underline font-semibold">
           Về đầu trang ↑
@@ -787,213 +929,15 @@
 
   </main>
 
-  <!-- ============================================================== -->
-  <!-- MODAL: ADMIN DASHBOARD (QUẢN LÝ LICENSE KEY & KHÁCH HÀNG) -->
-  <!-- ============================================================== -->
-  <div id="adminModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-3xl w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 max-h-[90vh] flex flex-col">
-      
-      <!-- Admin Header -->
-      <div class="bg-slate-900 p-4 text-white flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
-            <i data-lucide="shield" class="w-4 h-4"></i>
-          </div>
-          <div>
-            <h3 class="text-sm font-bold">Cổng Quản Trị Cấp License Key (Admin Portal)</h3>
-            <p class="text-[10px] text-slate-400">Tạo key, phân quyền ngày/tháng/vĩnh viễn, khóa thiết bị & cấu hình VietQR</p>
-          </div>
-        </div>
-        <button onclick="closeAdminModal()" class="w-7 h-7 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-all">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <!-- Admin Login Form (Hiển thị khi chưa login) -->
-      <div id="adminLoginForm" class="p-8 text-center space-y-4 max-w-md mx-auto my-auto">
-        <div class="w-12 h-12 mx-auto rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-          <i data-lucide="lock" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <h4 class="text-sm font-bold text-slate-900">Xác Thực Quản Trị Viên</h4>
-          <p class="text-xs text-slate-400 mt-0.5">Nhập mật khẩu Admin để vào bảng điều khiển cấp Key</p>
-        </div>
-        <div>
-          <input id="adminPasswordInput" type="password" placeholder="Mật khẩu Admin (Mặc định: admin888)" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-        </div>
-        <button onclick="submitAdminLogin()" class="w-full py-2.5 rounded-xl text-white bg-slate-900 hover:bg-slate-800 font-bold text-xs transition-all">
-          ĐĂNG NHẬP ADMIN
-        </button>
-      </div>
-
-      <!-- Admin Dashboard Content (Hiển thị sau khi login) -->
-      <div id="adminDashboardContent" class="hidden flex-1 overflow-y-auto p-5 space-y-5 text-xs">
-        
-        <!-- Tabs -->
-        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
-          <button id="adminTabBtn1" onclick="switchAdminSubTab(1)" class="px-3.5 py-1.5 rounded-xl font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
-            Tạo Key Mới Cho Khách
-          </button>
-          <button id="adminTabBtn2" onclick="switchAdminSubTab(2)" class="px-3.5 py-1.5 rounded-xl font-bold text-slate-600 hover:bg-slate-100">
-            Danh Sách Key Đã Cấp (<span id="adminTotalKeysCount">0</span>)
-          </button>
-          <button id="adminTabBtn3" onclick="switchAdminSubTab(3)" class="px-3.5 py-1.5 rounded-xl font-bold text-slate-600 hover:bg-slate-100">
-            Cấu Hình VietQR & Zalo
-          </button>
-        </div>
-
-        <!-- TAB 1: TẠO KEY MỚI -->
-        <div id="adminSubTab1" class="space-y-3.5">
-          <div class="p-4 rounded-2xl bg-indigo-50/50 border border-indigo-200 space-y-3">
-            <h4 class="font-bold text-indigo-900">Thông Tin Khách Hàng Nhận Key</h4>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Tên Khách Hàng (*)</label>
-                <input id="newClientName" type="text" placeholder="Nguyễn Văn B" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-semibold focus:outline-none" />
-              </div>
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Số Điện Thoại Khách</label>
-                <input id="newClientPhone" type="text" placeholder="0912345678" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-semibold focus:outline-none" />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <!-- Gói Thời Hạn Bản Quyền -->
-              <div>
-                <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between">
-                  <span>Gói Thời Hạn Bản Quyền (*)</span>
-                  <span class="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Thời Hạn</span>
-                </label>
-                <div class="relative">
-                  <select id="newPlanType" onchange="const m={'trial_1d':'200','month_1m':'6000','month_3m':'18000','year_1y':'73000','year_3y':'146000','lifetime':'999999'}; if(m[this.value]) document.getElementById('newMaxDaily').value=m[this.value];" class="modern-select w-full bg-white border border-slate-200 rounded-xl font-bold text-indigo-950 cursor-pointer">
-                    <option value="trial_1d">⚡ 1 Ngày (200 Leads / Ngày)</option>
-                    <option value="month_1m" selected>📦 1 Tháng (6.000 Leads / Tháng)</option>
-                    <option value="month_3m">🚀 3 Tháng (18.000 Leads / 3 Tháng)</option>
-                    <option value="year_1y">👑 1 Năm (73.000 Leads / Năm)</option>
-                    <option value="year_3y">🏆 3 Năm (146.000 Leads / 3 Năm)</option>
-                    <option value="lifetime">💎 Vĩnh Viễn (Max Speed - Không Giới Hạn)</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Hạn Mức Cào Mỗi Ngày -->
-              <div>
-                <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between">
-                  <span>Hạn Mức Cào Mỗi Ngày (*)</span>
-                  <span class="text-[10px] text-slate-400 font-semibold font-mono">Tự động seed</span>
-                </label>
-                <div class="relative">
-                  <select id="newMaxDaily" class="modern-select w-full bg-white border border-slate-200 rounded-xl font-bold text-slate-800 font-mono cursor-pointer">
-                    <option value="200">⚡ 200 Leads / Ngày</option>
-                    <option value="6000" selected>📦 6.000 Leads / Tháng</option>
-                    <option value="18000">🚀 18.000 Leads / 3 Tháng</option>
-                    <option value="73000">👑 73.000 Leads / Năm</option>
-                    <option value="146000">🏆 146.000 Leads / 3 Năm</option>
-                    <option value="999999">💎 Max Speed (Không Giới Hạn ∞)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <button onclick="submitCreateLicense()" class="btn-shimmer px-5 py-2.5 rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 font-extrabold shadow-md shadow-indigo-500/20 transition-all">
-              TẠO LICENSE KEY NGAY
-            </button>
-          </div>
-
-          <!-- Kết quả Key vừa tạo -->
-          <div id="newKeyResultBox" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
-            <span class="text-emerald-800 font-bold block">Key mới tạo thành công! Hãy copy gửi cho khách:</span>
-            <div class="flex items-center gap-2">
-              <input id="newKeyResultInput" readonly class="flex-1 px-3 py-2 bg-white border border-emerald-300 rounded-xl font-mono font-black text-emerald-700 text-sm" />
-              <button onclick="copyGeneratedKey()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700">
-                Copy Key
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 2: DANH SÁCH KEY ĐÃ CẤP -->
-        <div id="adminSubTab2" class="hidden space-y-3">
-          <div class="overflow-x-auto border border-slate-200 rounded-2xl">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 border-b border-slate-200 font-bold text-slate-600">
-                <tr>
-                  <th class="p-2.5">Key</th>
-                  <th class="p-2.5">Khách Hàng</th>
-                  <th class="p-2.5">Gói</th>
-                  <th class="p-2.5">Hạn Dùng</th>
-                  <th class="p-2.5">Thiết Bị</th>
-                  <th class="p-2.5">Hôm Nay</th>
-                  <th class="p-2.5 text-center">Thao Tác</th>
-                </tr>
-              </thead>
-              <tbody id="adminLicensesTableBody" class="divide-y divide-slate-100 font-medium">
-                <!-- Rendered via JS -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- TAB 3: CẤU HÌNH VIETQR & ZALO & MẬT KHẨU -->
-        <div id="adminSubTab3" class="hidden space-y-4">
-          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-            <h4 class="font-bold text-slate-800">Cấu Hình Tài Khoản Ngân Hàng (Hiển Thị Mã VietQR Cho Khách)</h4>
-            <div class="grid grid-cols-3 gap-3">
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Mã Ngân Hàng</label>
-                <input id="setBankCode" type="text" placeholder="MB, VCB, TCB, ACB..." class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold uppercase" />
-              </div>
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Số Tài Khoản</label>
-                <input id="setBankAccount" type="text" placeholder="0969999888" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-mono font-bold" />
-              </div>
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Tên Chủ Tài Khoản</label>
-                <input id="setBankName" type="text" placeholder="NGUYEN VAN A" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold uppercase" />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Số Hotline Hỗ Trợ</label>
-                <input id="setHotline" type="text" placeholder="0969.999.888" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl" />
-              </div>
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Mật Khẩu Admin Mới</label>
-                <input id="setAdminPassword" type="text" placeholder="admin888" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl font-mono" />
-              </div>
-            </div>
-
-            <button onclick="saveAdminSettings()" class="px-4 py-2 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800">
-              Lưu Cấu Hình Hệ Thống
-            </button>
-          </div>
-
-          <div class="p-4 rounded-2xl bg-cyan-50 border border-cyan-200 space-y-2">
-            <h4 class="font-bold text-cyan-900">Kết Nối Phiên Zalo Web Thật (Tùy Chọn)</h4>
-            <p class="text-[11px] text-cyan-800">Dán Cookie phiên Zalo Web (`chat.zalo.me`) để server tự động truy vấn hồ sơ Zalo thật của số điện thoại:</p>
-            <textarea id="setZaloCookie" placeholder="zpw_sek=...; _ga=... (Dán cookie từ DevTools chat.zalo.me)" rows="2" class="w-full px-3 py-2 bg-white border border-cyan-300 rounded-xl font-mono text-[11px]"></textarea>
-            <button onclick="saveZaloSession()" class="px-4 py-1.5 bg-cyan-700 text-white rounded-xl font-bold hover:bg-cyan-800">
-              Lưu Phiên Zalo Web
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
   <!-- MODAL: CÀO FANPAGE FACEBOOK -->
   <div id="fanpageModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-      
       <div class="bg-gradient-to-r from-blue-700 to-indigo-700 p-4 text-white flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i data-lucide="facebook" class="w-5 h-5 text-white"></i>
           <h3 class="text-sm font-bold">Cào Dữ Liệu Fanpage / Group Facebook Công Khai</h3>
         </div>
-        <button onclick="closeFanpageModal()" class="w-7 h-7 rounded-lg bg-black/20 text-white/80 hover:text-white flex items-center justify-center transition-all">
+        <button onclick="closeFanpageModal()" class="w-7 h-7 rounded-lg bg-black/20 text-white/80 hover:text-white flex items-center justify-center">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
@@ -1006,27 +950,54 @@
         </div>
 
         <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-          <button type="button" onclick="closeFanpageModal()" class="px-4 py-2 rounded-xl text-slate-600 bg-slate-100 hover:bg-slate-200 font-bold transition-all">
+          <button type="button" onclick="closeFanpageModal()" class="px-4 py-2 rounded-xl text-slate-600 bg-slate-100 hover:bg-slate-200 font-bold">
             Hủy Bỏ
           </button>
-          <button type="submit" class="btn-shimmer px-5 py-2 rounded-xl text-white bg-blue-600 hover:bg-blue-700 font-bold shadow-md shadow-blue-500/20 transition-all">
+          <button type="submit" class="btn-shimmer px-5 py-2 rounded-xl text-white bg-blue-600 hover:bg-blue-700 font-bold shadow-md">
             Bắt Đầu Cào Facebook Ngay
           </button>
         </div>
       </form>
-
     </div>
   </div>
 
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
     let currentLeads = [];
-    let isZaloFilterActive = false;
     let isScanning = false;
     let searchDebounceTimer = null;
-    let adminToken = null;
+    let allProvincesList = [];
+    let allIndustriesList = [];
+    let selectedCity = 'all';
+    let selectedIndustry = 'all';
+    let lastImportedZaloResults = [];
 
-    // Deterministic Canvas & Hardware Fingerprint Generation (Anti-share key)
+    const DEFAULT_ZALO_SCRIPT = "Chào anh/chị {nguoi_dai_dien} tại {ten_cong_ty} ({tinh_thanh}), em thấy bên mình đang hoạt động trong lĩnh vực {nganh_nghe}. Bên em đang có giải pháp hỗ trợ tối ưu chi phí và tăng trưởng khách hàng rất tốt cho ngành {nganh_nghe}, em xin phép kết nối Zalo để gửi thông tin chi tiết cho anh/chị tham khảo nhé ạ!";
+
+    const PRESET_SCRIPTS = {
+      1: "Chào anh/chị {nguoi_dai_dien} - Đại diện {ten_cong_ty} tại {tinh_thanh}. Em biết bên mình hoạt động mạnh trong mảng {nganh_nghe} nên xin phép kết bạn Zalo qua số {sdt} để trao đổi cơ hội hợp tác cung ứng B2B cùng có lợi ạ!",
+      2: DEFAULT_ZALO_SCRIPT,
+      3: "Dạ chào anh/chị {nguoi_dai_dien} ({ten_cong_ty}), trong tháng này bên em đang có chương trình ưu đãi đặc biệt dành riêng cho các doanh nghiệp ngành {nganh_nghe} tại khu vực {tinh_thanh}. Em xin phép gửi bảng báo giá ưu đãi qua Zalo này để anh/chị xem qua nhé!"
+    };
+
+    const CRM_STATUS_META = {
+      new: { label: '🆕 Mới cào', cls: 'bg-slate-100 text-slate-700 border-slate-200' },
+      called: { label: '📞 Đã gọi', cls: 'bg-blue-50 text-blue-700 border-blue-200' },
+      zalo_sent: { label: '💬 Đã nhắn Zalo', cls: 'bg-cyan-50 text-cyan-700 border-cyan-200' },
+      interested: { label: '🔥 Quan tâm', cls: 'bg-amber-50 text-amber-800 border-amber-200' },
+      closed: { label: '✅ Đã chốt', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+      no_answer: { label: '❌ K.Nghe máy', cls: 'bg-rose-50 text-rose-700 border-rose-200' }
+    };
+
+    // Cookie helpers for rock-solid persistence across reloads
+    function setCookie(name, val) {
+      document.cookie = `${name}=${encodeURIComponent(val)}; path=/; max-age=31536000; SameSite=Lax`;
+    }
+    function getCookie(name) {
+      const m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return m ? decodeURIComponent(m[2]) : '';
+    }
+
     function generateCanvasFingerprint() {
       try {
         const canvas = document.createElement('canvas');
@@ -1036,13 +1007,10 @@
         if (!ctx) return 'NO_CTX';
         ctx.textBaseline = 'top';
         ctx.font = '14px Arial';
-        ctx.textBaseline = 'alphabetic';
         ctx.fillStyle = '#f60';
         ctx.fillRect(125, 1, 62, 20);
         ctx.fillStyle = '#069';
-        ctx.fillText('LeadExtractor,V5.0~#*!', 2, 15);
-        ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
-        ctx.fillText('LeadExtractor,V5.0~#*!', 4, 17);
+        ctx.fillText('LeadExtractor,V5.5~#*!', 2, 15);
         return canvas.toDataURL();
       } catch (e) {
         return 'ERR_CANVAS';
@@ -1052,36 +1020,36 @@
     function fastHash(str) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
         hash |= 0;
       }
       return Math.abs(hash).toString(16).toUpperCase();
     }
 
+    // Stable Device ID: Does NOT depend on window/screen width/height so resizing/DevTools/mobile bar never changes it!
     function getDeviceId() {
-      let devId = localStorage.getItem('lead_extractor_device_id');
+      let devId = localStorage.getItem('lead_extractor_device_id') || getCookie('lead_extractor_device_id');
       if (!devId || !devId.startsWith('FP-')) {
         const canvasFp = generateCanvasFingerprint();
-        const screenFp = `${screen.width}x${screen.height}x${screen.colorDepth}`;
         const tzFp = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').replace(/[^\x20-\x7E]/g, '');
         const cores = navigator.hardwareConcurrency || 4;
         const lang = (navigator.language || '').replace(/[^\x20-\x7E]/g, '');
-        const rawEntropy = `${canvasFp}___${screenFp}___${tzFp}___${cores}___${lang}`;
+        const platform = (navigator.platform || '').replace(/[^\x20-\x7E]/g, '');
+        const rawEntropy = `${canvasFp}___${tzFp}___${cores}___${lang}___${platform}`;
         const h1 = fastHash(rawEntropy);
         const h2 = fastHash(rawEntropy.split('').reverse().join(''));
         devId = `FP-${h1}${h2}`.padEnd(16, 'X').slice(0, 16);
-        localStorage.setItem('lead_extractor_device_id', devId);
       }
-      return String(devId).replace(/[^\x20-\x7E]/g, '');
+      devId = String(devId).replace(/[^\x20-\x7E]/g, '');
+      localStorage.setItem('lead_extractor_device_id', devId);
+      setCookie('lead_extractor_device_id', devId);
+      return devId;
     }
 
     function getDeviceInfo() {
       const ua = navigator.userAgent || '';
       let os = 'Windows PC';
       if (/Windows NT 10.0/i.test(ua)) os = 'Windows 10/11';
-      else if (/Windows NT 6.3/i.test(ua)) os = 'Windows 8.1';
-      else if (/Windows NT 6.1/i.test(ua)) os = 'Windows 7';
       else if (/Macintosh|Mac OS X/i.test(ua)) os = 'macOS';
       else if (/iPhone/i.test(ua)) os = 'iPhone iOS';
       else if (/iPad/i.test(ua)) os = 'iPadOS';
@@ -1094,41 +1062,73 @@
       else if (/Safari\//i.test(ua)) browser = 'Apple Safari';
       else if (/Firefox\//i.test(ua)) browser = 'Mozilla Firefox';
 
-      const screenRes = (window.screen && window.screen.width) ? `${window.screen.width}x${window.screen.height}` : '';
-      const raw = `${os} - ${browser}${screenRes ? ' (' + screenRes + ')' : ''}`;
-      // Clean all non-ASCII characters to guarantee ByteString compliance for HTTP headers
-      return raw.replace(/[^\x20-\x7E]/g, '');
+      const raw = `${os} • ${browser}`;
+      return raw.replace(/[^\x20-\x7E•]/g, '');
     }
 
     function getActiveKey() {
-      const raw = localStorage.getItem('lead_extractor_license_key') || '';
-      return String(raw).trim().replace(/[^\x20-\x7E]/g, '');
+      const raw = localStorage.getItem('lead_extractor_license_key') || getCookie('lead_extractor_license_key') || '';
+      const clean = String(raw).trim().toUpperCase().replace(/[^\x20-\x7E]/g, '');
+      if (clean) {
+        localStorage.setItem('lead_extractor_license_key', clean);
+        setCookie('lead_extractor_license_key', clean);
+      }
+      return clean;
+    }
+
+    function setActiveKey(key) {
+      const clean = String(key || '').trim().toUpperCase().replace(/[^\x20-\x7E]/g, '');
+      localStorage.setItem('lead_extractor_license_key', clean);
+      setCookie('lead_extractor_license_key', clean);
     }
 
     function getAuthHeaders() {
       return {
         'Content-Type': 'application/json',
         'X-License-Key': getActiveKey(),
-        'X-Device-Id': getDeviceId(),
-        'X-Device-Info': getDeviceInfo()
+        'X-Device-Id': getDeviceId().replace(/[^\x20-\x7E]/g, ''),
+        'X-Device-Info': getDeviceInfo().replace(/[^\x20-\x7E]/g, '-')
       };
+    }
+
+    // Local Lead Cache to guarantee 0% data loss on page reload (even across Serverless cold starts)
+    function saveLocalLeadCache(key, leads) {
+      if (!key || !Array.isArray(leads)) return;
+      try {
+        localStorage.setItem(`lead_cache_${key}`, JSON.stringify(leads.slice(0, 600)));
+      } catch (e) {}
+    }
+
+    function getLocalLeadCache(key) {
+      if (!key) return [];
+      try {
+        const raw = localStorage.getItem(`lead_cache_${key}`);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function clearLocalLeadCache(key) {
+      if (!key) return;
+      try {
+        localStorage.removeItem(`lead_cache_${key}`);
+      } catch (e) {}
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
       lucide.createIcons();
-      await loadProvinces();
-      await checkInitialLicense();
-      if (getActiveKey()) {
-        fetchLeads();
+      initScriptSettings();
+      await Promise.all([loadProvinces(), loadIndustries()]);
+      const valid = await checkInitialLicense();
+      if (valid && getActiveKey()) {
+        await fetchLeads();
         fetchStats();
       }
     });
 
-    let allProvincesList = [];
-    let selectedCity = 'all';
-
     // ==========================================
-    // CUSTOM DROPDOWN CONTROLLERS (ALWAYS OPEN DOWNWARDS)
+    // CUSTOM DROPDOWN CONTROLLERS
     // ==========================================
     function toggleCityDropdown(e) {
       if (e) e.stopPropagation();
@@ -1146,7 +1146,7 @@
             renderCityDropdownItems(allProvincesList);
             inp.focus();
           }
-        }, 60);
+        }, 50);
       }
     }
 
@@ -1159,6 +1159,14 @@
       if (isHidden) {
         menu.classList.remove('hidden');
         chevron.classList.add('rotate-180');
+        setTimeout(() => {
+          const inp = document.getElementById('searchIndustryInput');
+          if (inp) {
+            inp.value = '';
+            renderIndustryDropdownItems(allIndustriesList);
+            inp.focus();
+          }
+        }, 50);
       }
     }
 
@@ -1183,37 +1191,26 @@
     }
 
     function selectCustomIndustry(value, label) {
+      selectedIndustry = value;
       document.getElementById('filterIndustry').value = value;
       document.getElementById('labelDropdownIndustry').innerText = label;
-      
-      // Update checkmark
-      document.querySelectorAll('.industry-item').forEach(el => {
-        el.className = "industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all";
-        const icon = el.querySelector('svg');
-        if (icon) icon.remove();
-      });
-      if (window.event && window.event.currentTarget) {
-        const target = window.event.currentTarget;
-        target.className = "industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-cyan-50 text-cyan-800 font-bold text-xs transition-all";
-        target.innerHTML += `<i data-lucide="check" class="w-3.5 h-3.5 text-cyan-600"></i>`;
-        lucide.createIcons({ root: target });
-      }
-
       closeAllHeaderDropdowns();
       fetchLeads();
+    }
+
+    function applyCustomIndustryKeyword() {
+      const inp = document.getElementById('searchIndustryInput');
+      const val = inp ? inp.value.trim() : '';
+      if (!val) {
+        selectCustomIndustry('all', '🏢 Mọi Ngành Nghề (Tất Cả)');
+      } else {
+        selectCustomIndustry(val, `🎯 Ngành: ${val}`);
+      }
     }
 
     function selectCustomLimit(value, label) {
       document.getElementById('scanLimit').value = value;
       document.getElementById('labelDropdownLimit').innerText = label;
-      
-      document.querySelectorAll('.limit-item').forEach(el => {
-        el.className = "limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all";
-      });
-      if (window.event && window.event.currentTarget) {
-        window.event.currentTarget.className = "limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-xs font-mono border border-emerald-100 transition-all";
-      }
-
       closeAllHeaderDropdowns();
     }
 
@@ -1227,14 +1224,18 @@
     }
 
     document.addEventListener('click', (e) => {
-      // Don't close if clicking inside search box
-      if (e.target && (e.target.id === 'searchCityInput' || e.target.closest('#menuDropdownCity') || e.target.closest('#menuDropdownIndustry') || e.target.closest('#menuDropdownLimit'))) {
+      if (e.target && (
+        e.target.id === 'searchCityInput' ||
+        e.target.id === 'searchIndustryInput' ||
+        e.target.closest('#menuDropdownCity') ||
+        e.target.closest('#menuDropdownIndustry') ||
+        e.target.closest('#menuDropdownLimit')
+      )) {
         return;
       }
       closeAllHeaderDropdowns();
     });
 
-    // 63 Tỉnh Thành Dynamic Loader & Search
     async function loadProvinces() {
       try {
         const res = await fetch('/api/provinces');
@@ -1262,8 +1263,8 @@
       if (!container) return;
 
       let html = `
-        <div onclick="selectCustomCity('all', '📍 Toàn Quốc (Mọi Tỉnh Thành)')" class="city-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${selectedCity === 'all' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold'} text-xs transition-all">
-          <span>📍 Toàn Quốc (Mọi Tỉnh Thành)</span>
+        <div onclick="selectCustomCity('all', '📍 Toàn Quốc (63 Tỉnh Thành)')" class="city-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${selectedCity === 'all' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold'} text-xs transition-all">
+          <span>📍 Toàn Quốc (63 Tỉnh Thành)</span>
           ${selectedCity === 'all' ? '<i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600"></i>' : ''}
         </div>
       `;
@@ -1293,28 +1294,85 @@
       renderCityDropdownItems(filtered);
     }
 
-    // License Check on Launch
+    async function loadIndustries() {
+      try {
+        const res = await fetch('/api/industries');
+        const data = await res.json();
+        if (data.success && data.industries) {
+          allIndustriesList = data.industries;
+          renderIndustryDropdownItems(allIndustriesList);
+        }
+      } catch (e) {}
+    }
+
+    function renderIndustryDropdownItems(industries) {
+      const container = document.getElementById('industryOptionsList');
+      if (!container) return;
+
+      let html = `
+        <div onclick="selectCustomIndustry('all', '🏢 Mọi Ngành Nghề (Tất Cả)')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${selectedIndustry === 'all' ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold'} text-xs transition-all">
+          <span>🏢 Mọi Ngành Nghề (Tất Cả)</span>
+          ${selectedIndustry === 'all' ? '<i data-lucide="check" class="w-3.5 h-3.5 text-cyan-600"></i>' : ''}
+        </div>
+      `;
+
+      industries.forEach(item => {
+        const isSelected = (selectedIndustry === item.id);
+        const safeId = item.id.replace(/'/g, "\\'");
+        const safeLabel = item.label.replace(/'/g, "\\'");
+        html += `
+          <div onclick="selectCustomIndustry('${safeId}', '${safeLabel}')" class="industry-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${isSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold'} text-xs transition-all">
+            <span>${item.label}</span>
+            ${isSelected ? '<i data-lucide="check" class="w-3.5 h-3.5 text-cyan-600"></i>' : ''}
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      lucide.createIcons({ root: container });
+    }
+
+    function filterIndustryList(query) {
+      if (!query || !query.trim()) {
+        renderIndustryDropdownItems(allIndustriesList);
+        return;
+      }
+      const q = query.trim().toLowerCase();
+      const filtered = allIndustriesList.filter(item =>
+        item.label.toLowerCase().includes(q) ||
+        item.id.toLowerCase().includes(q) ||
+        (item.keywords && item.keywords.some(k => k.toLowerCase().includes(q)))
+      );
+      renderIndustryDropdownItems(filtered);
+    }
+
+    // ==========================================
+    // LICENSE VERIFICATION & SESSION RESTORE
+    // ==========================================
     async function checkInitialLicense() {
       const key = getActiveKey();
       if (!key) {
         openLicenseGateModal();
-        return;
+        return false;
       }
 
-      const res = await fetch('/api/license/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key, deviceId: getDeviceId(), deviceInfo: getDeviceInfo() })
-      });
-      const data = await res.json();
+      try {
+        const res = await fetch('/api/license/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key, deviceId: getDeviceId(), deviceInfo: getDeviceInfo() })
+        });
+        const data = await res.json();
 
-      if (!data.success) {
-        openLicenseGateModal(false, data);
-      } else {
-        if (data.license?.isMultiDevice) {
-          adminToken = key;
+        if (!data.success) {
+          openLicenseGateModal(false, data);
+          return false;
+        } else {
+          updateClientPill(data.license);
+          return true;
         }
-        updateClientPill(data.license);
+      } catch (e) {
+        return true;
       }
     }
 
@@ -1370,7 +1428,7 @@
     }
 
     async function activateLicenseKey() {
-      const key = document.getElementById('inputClientKey').value.trim();
+      const key = document.getElementById('inputClientKey').value.trim().toUpperCase();
       if (!key) {
         alert("Vui lòng nhập License Key!");
         return;
@@ -1384,14 +1442,11 @@
       const data = await res.json();
 
       if (data.success) {
-        localStorage.setItem('lead_extractor_license_key', key);
-        if (data.license?.isMultiDevice) {
-          adminToken = key;
-        }
+        setActiveKey(key);
         document.getElementById('licenseGateModal').classList.add('hidden');
         updateClientPill(data.license);
         showToast("Kích hoạt bản quyền thành công!", "success");
-        fetchLeads();
+        await fetchLeads();
         fetchStats();
       } else {
         openLicenseGateModal(false, data);
@@ -1424,7 +1479,7 @@
       setTimeout(() => {
         toast.classList.add('opacity-0', 'translate-y-2');
         setTimeout(() => toast.remove(), 300);
-      }, 3500);
+      }, 3800);
     }
 
     async function fetchStats() {
@@ -1438,6 +1493,8 @@
           document.getElementById('kpiTotalLeads').innerText = stats.totalLeads;
           document.getElementById('badgeTotalDbCount').innerText = stats.totalLeads;
           document.getElementById('kpiZaloActive').innerText = stats.zaloActiveCount;
+          const nfEl = document.getElementById('kpiZaloNotFound');
+          if (nfEl) nfEl.innerText = stats.zaloNotFoundCount || 0;
           document.getElementById('kpiVerifiedCount').innerText = stats.verifiedCount;
         }
       } catch (err) {}
@@ -1446,6 +1503,19 @@
     function debounceSearch() {
       clearTimeout(searchDebounceTimer);
       searchDebounceTimer = setTimeout(() => fetchLeads(), 250);
+    }
+
+    function hasActiveFilters() {
+      return (
+        document.getElementById('filterCity').value !== 'all' ||
+        document.getElementById('filterIndustry').value !== 'all' ||
+        document.getElementById('filterSourceType').value !== 'all' ||
+        document.getElementById('filterZaloStatus').value !== 'all' ||
+        document.getElementById('filterCarrier').value !== 'all' ||
+        document.getElementById('filterCrmStatus').value !== 'all' ||
+        document.getElementById('chkMobileOnly').checked ||
+        document.getElementById('filterSearch').value.trim() !== ''
+      );
     }
 
     async function fetchLeads(highlightIds = []) {
@@ -1457,12 +1527,21 @@
 
       const city = document.getElementById('filterCity').value;
       const industry = document.getElementById('filterIndustry').value;
+      const sourceType = document.getElementById('filterSourceType').value;
+      const zaloStatus = document.getElementById('filterZaloStatus').value;
+      const carrier = document.getElementById('filterCarrier').value;
+      const crmStatus = document.getElementById('filterCrmStatus').value;
+      const mobileOnly = document.getElementById('chkMobileOnly').checked;
       const search = document.getElementById('filterSearch').value;
 
       const params = new URLSearchParams();
       if (city !== 'all') params.append('city', city);
       if (industry !== 'all') params.append('industry', industry);
-      if (isZaloFilterActive) params.append('zaloOnly', 'true');
+      if (sourceType !== 'all') params.append('sourceType', sourceType);
+      if (zaloStatus !== 'all') params.append('zaloStatus', zaloStatus);
+      if (carrier !== 'all') params.append('carrier', carrier);
+      if (crmStatus !== 'all') params.append('crmStatus', crmStatus);
+      if (mobileOnly) params.append('mobileOnly', 'true');
       if (search.trim()) params.append('search', search.trim());
 
       try {
@@ -1472,7 +1551,31 @@
         const data = await res.json();
         
         if (data.success) {
+          // If server DB reset (e.g. Serverless cold start) and returned 0 total leads, auto-sync from browser cache!
+          if (data.allTotal === 0 && !hasActiveFilters()) {
+            const cachedLeads = getLocalLeadCache(key);
+            if (cachedLeads && cachedLeads.length > 0) {
+              const syncRes = await fetch('/api/leads/sync', {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ leads: cachedLeads })
+              });
+              const syncData = await syncRes.json();
+              if (syncData.success && syncData.leads) {
+                currentLeads = syncData.leads;
+                renderTable(currentLeads, highlightIds);
+                document.getElementById('leadsCountBadge').innerText = `Hiển thị: ${currentLeads.length} kết quả`;
+                document.getElementById('badgeTotalDbCount').innerText = syncData.total;
+                fetchStats();
+                return;
+              }
+            }
+          }
+
           currentLeads = data.leads;
+          if (!hasActiveFilters() && currentLeads.length > 0) {
+            saveLocalLeadCache(key, currentLeads);
+          }
           renderTable(currentLeads, highlightIds);
           document.getElementById('leadsCountBadge').innerText = `Hiển thị: ${currentLeads.length} kết quả`;
           document.getElementById('badgeTotalDbCount').innerText = data.allTotal;
@@ -1482,6 +1585,72 @@
       } catch (err) {
         showToast("Lỗi khi tải danh sách: " + err.message, "error");
       }
+    }
+
+    function renderSourceBadge(source = '', sourceUrl = '') {
+      const s = (source + ' ' + sourceUrl).toLowerCase();
+      if (s.includes('google') || s.includes('maps')) {
+        return `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">📍 Google Maps</span>`;
+      }
+      if (s.includes('facebook')) {
+        return `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">📘 Facebook Fanpage</span>`;
+      }
+      if (s.includes('trang vàng') || s.includes('trangvang')) {
+        return `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-yellow-50 text-yellow-800 border border-yellow-300">📒 Trang Vàng VN</span>`;
+      }
+      return `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">🏛️ Cổng DN Quốc Gia</span>`;
+    }
+
+    function renderZaloStatusBadge(lead) {
+      const isActive = Boolean(lead.zaloActive || lead.zaloStatus === 'ACTIVE');
+      const safeId = String(lead.id).replace(/'/g, "\\'");
+      if (isActive) {
+        return `
+          <div class="flex flex-col gap-1">
+            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200 w-fit">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>ZALO: ACTIVE</span>
+              ${lead.zaloName ? `<span class="text-emerald-900 font-semibold truncate max-w-[110px]">• ${lead.zaloName}</span>` : ''}
+            </div>
+            <button onclick="openZaloWithGreeting('${safeId}')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition-all shadow-2xs w-fit" title="Tự động copy lời chào cá nhân hóa và mở Zalo">
+              <i data-lucide="message-circle" class="w-3 h-3"></i>
+              <span>Chat Zalo & Copy Lời Chào</span>
+            </button>
+          </div>
+        `;
+      } else {
+        const isLandline = String(lead.phone || '').startsWith('02');
+        return `
+          <div class="flex flex-col gap-1">
+            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-rose-50 text-rose-700 border border-rose-200 w-fit">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              <span>ZALO: NOT FOUND</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-medium">${isLandline ? 'Số cố định (Không dùng Zalo)' : 'Chưa đăng ký tài khoản Zalo'}</span>
+          </div>
+        `;
+      }
+    }
+
+    function renderCrmCell(lead) {
+      const status = lead.crmStatus || 'new';
+      const note = lead.crmNote || '';
+      const safeId = String(lead.id).replace(/'/g, "\\'");
+      return `
+        <div class="space-y-1">
+          <select onchange="updateLeadCrmStatus('${safeId}', this.value)" class="crm-mini-select w-full">
+            <option value="new" ${status === 'new' ? 'selected' : ''}>🆕 Mới cào</option>
+            <option value="called" ${status === 'called' ? 'selected' : ''}>📞 Đã gọi</option>
+            <option value="zalo_sent" ${status === 'zalo_sent' ? 'selected' : ''}>💬 Đã nhắn Zalo</option>
+            <option value="interested" ${status === 'interested' ? 'selected' : ''}>🔥 Quan tâm</option>
+            <option value="closed" ${status === 'closed' ? 'selected' : ''}>✅ Đã chốt</option>
+            <option value="no_answer" ${status === 'no_answer' ? 'selected' : ''}>❌ K.Nghe máy</option>
+          </select>
+          <button onclick="promptLeadNote('${safeId}')" class="w-full text-left px-2 py-1 rounded bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-[10px] text-slate-600 truncate block" title="${note || 'Bấm để thêm ghi chú chăm sóc khách hàng'}">
+            📝 ${note ? `<b class="text-indigo-700">${note}</b>` : '<span class="italic text-slate-400">Thêm ghi chú...</span>'}
+          </button>
+        </div>
+      `;
     }
 
     function renderTable(leads, highlightIds = []) {
@@ -1498,13 +1667,13 @@
 
       if (emptyState) emptyState.classList.add('hidden');
 
-      // 1. RENDER DESKTOP TABLE ROWS
+      // 1. DESKTOP TABLE
       const rowsHtml = leads.map((lead, idx) => {
         const isNew = highlightIds.includes(lead.id);
         const highlightClass = isNew ? 'new-lead-highlight bg-emerald-50/50' : 'hover:bg-slate-50/80';
-        
-        const phoneFormatted = lead.phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+        const phoneFormatted = String(lead.phone || '').replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
         const carrierTag = lead.carrier ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">${lead.carrier}</span>` : '';
+        const safeId = String(lead.id).replace(/'/g, "\\'");
 
         return `
           <tr class="${highlightClass} transition-colors group">
@@ -1514,61 +1683,46 @@
             <td class="py-3 px-3">
               <div class="flex items-start gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-50 to-indigo-100 border border-indigo-200 flex items-center justify-center text-indigo-700 font-extrabold flex-shrink-0 text-xs shadow-xs mt-0.5">
-                  ${lead.company.charAt(0).toUpperCase()}
+                  ${(lead.company || 'D').charAt(0).toUpperCase()}
                 </div>
-                <div class="min-w-0 flex-1">
+                <div class="min-w-0 flex-1 space-y-1">
                   <div class="font-bold text-slate-900 line-clamp-2 text-xs sm:text-[13px] leading-tight" title="${lead.company}">
                     ${lead.company}
                   </div>
-                  <div class="text-[11px] text-slate-500 flex items-center gap-1.5 flex-wrap mt-0.5">
-                    <span class="font-semibold text-slate-700 truncate max-w-[130px]">${lead.contactName || 'Người đại diện'}</span>
+                  <div class="text-[11px] text-slate-500 flex items-center gap-1.5 flex-wrap">
+                    <span class="font-semibold text-slate-700 truncate max-w-[140px]">👤 ${lead.contactName || 'Người đại diện'}</span>
                     ${lead.taxCode ? `<span class="text-slate-300">•</span><span class="text-slate-500 font-mono text-[10px]">MST: ${lead.taxCode}</span>` : ''}
                   </div>
-                  ${lead.sourceUrl ? `
-                    <div class="mt-0.5">
-                      <a href="${lead.sourceUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] font-semibold text-indigo-600 hover:text-indigo-800 hover:underline">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    ${renderSourceBadge(lead.source, lead.sourceUrl)}
+                    ${lead.sourceUrl ? `
+                      <a href="${lead.sourceUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-600 hover:text-indigo-800 hover:underline">
                         <i data-lucide="external-link" class="w-3 h-3"></i>
-                        <span>Xem nguồn gốc đối soát</span>
+                        <span>Mở nguồn</span>
                       </a>
-                    </div>
-                  ` : ''}
+                    ` : ''}
+                  </div>
                 </div>
               </div>
             </td>
             <td class="py-3 px-3">
-              <div class="flex items-center gap-1.5 flex-wrap">
-                <span class="font-mono font-bold text-slate-900 tracking-wide text-xs sm:text-[13px]">${phoneFormatted}</span>
+              <div class="flex items-center gap-1.5 flex-wrap mb-1.5">
+                <span class="font-mono font-black text-slate-900 tracking-wide text-xs sm:text-[13px]">${phoneFormatted}</span>
                 ${carrierTag}
-                <button onclick="copyText('${lead.phone}', 'Đã copy SĐT!')" class="p-1 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all" title="Copy SĐT">
+                <button onclick="copyText('${lead.phone}', 'Đã copy SĐT!')" class="p-1 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100" title="Copy SĐT">
                   <i data-lucide="copy" class="w-3 h-3"></i>
                 </button>
               </div>
-              <div class="mt-1">
-                ${lead.zaloName ? `
-                  <a href="https://zalo.me/${lead.phone}" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-all shadow-2xs" title="Đã đối soát Zalo: ${lead.zaloName}">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
-                    <span>Zalo: ${lead.zaloName}</span>
-                  </a>
-                ` : (lead.zaloActive ? `
-                  <a href="https://zalo.me/${lead.phone}" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition-all shadow-2xs" title="Số di động thật - Bấm để mở chat Zalo">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                    <i data-lucide="message-circle" class="w-3.5 h-3.5 text-blue-600"></i>
-                    <span>Mở Chat Zalo</span>
-                  </a>
-                ` : `
-                  <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-500 border border-slate-200" title="Số bàn hoặc chưa kích hoạt Zalo">
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                    <span>Số bàn / Null</span>
-                  </div>
-                `)}
-              </div>
+              ${renderZaloStatusBadge(lead)}
+            </td>
+            <td class="py-3 px-3">
+              ${renderCrmCell(lead)}
             </td>
             <td class="py-3 px-3">
               ${lead.email ? `
                 <div class="flex items-center gap-1">
-                  <a href="mailto:${lead.email}" class="text-slate-800 hover:text-indigo-600 font-medium hover:underline text-xs truncate max-w-[170px] block" title="${lead.email}">${lead.email}</a>
-                  <button onclick="copyText('${lead.email}', 'Đã copy email!')" class="p-0.5 rounded text-slate-400 hover:text-slate-600 transition-all flex-shrink-0"><i data-lucide="copy" class="w-3 h-3"></i></button>
+                  <a href="mailto:${lead.email}" class="text-slate-800 hover:text-indigo-600 font-medium hover:underline text-xs truncate max-w-[155px] block" title="${lead.email}">${lead.email}</a>
+                  <button onclick="copyText('${lead.email}', 'Đã copy email!')" class="p-0.5 rounded text-slate-400 hover:text-slate-600 flex-shrink-0"><i data-lucide="copy" class="w-3 h-3"></i></button>
                 </div>
               ` : `<span class="text-slate-400 text-[11px] italic">Chưa công khai</span>`}
             </td>
@@ -1583,16 +1737,16 @@
               </div>
             </td>
             <td class="py-3 px-3">
-              <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold border bg-indigo-50 text-indigo-700 border-indigo-200 truncate max-w-full" title="${lead.industry}">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold border bg-indigo-50 text-indigo-700 border-indigo-200 truncate max-w-[140px]" title="${lead.industry}">
                 ${lead.industry}
               </span>
             </td>
             <td class="py-3 px-2 text-center whitespace-nowrap">
               <div class="flex items-center justify-center gap-1.5">
-                <button onclick="copyLeadInfo('${lead.id}')" class="p-1.5 rounded-lg text-indigo-600 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 transition-all" title="Sao chép toàn bộ thông tin">
+                <button onclick="copyLeadInfo('${safeId}')" class="p-1.5 rounded-lg text-indigo-600 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100" title="Sao chép toàn bộ thông tin">
                   <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                 </button>
-                <button onclick="deleteLead('${lead.id}')" class="p-1.5 rounded-lg text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-100 transition-all" title="Xóa khỏi cơ sở dữ liệu">
+                <button onclick="deleteLead('${safeId}')" class="p-1.5 rounded-lg text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-100" title="Xóa khỏi cơ sở dữ liệu">
                   <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                 </button>
               </div>
@@ -1606,112 +1760,80 @@
         lucide.createIcons({ root: tbody });
       }
 
-      // 2. RENDER MOBILE CARDS (KHÔNG CẦN KÉO NGANG, HIỂN THỊ ĐỦ 100% THÔNG TIN)
+      // 2. MOBILE CARDS VIEW
       if (mobileCards) {
         const cardsHtml = leads.map((lead, idx) => {
           const isNew = highlightIds.includes(lead.id);
-          const highlightClass = isNew ? 'bg-emerald-50/70 border-emerald-300 ring-2 ring-emerald-300' : 'bg-white border-slate-200/90 hover:border-indigo-200';
-          const phoneFormatted = lead.phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+          const highlightClass = isNew ? 'bg-emerald-50/70 border-emerald-300 ring-2 ring-emerald-300' : 'bg-white border-slate-200/90';
+          const phoneFormatted = String(lead.phone || '').replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
           const carrierTag = lead.carrier ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">${lead.carrier}</span>` : '';
+          const isActive = Boolean(lead.zaloActive || lead.zaloStatus === 'ACTIVE');
+          const safeId = String(lead.id).replace(/'/g, "\\'");
 
           return `
             <div class="${highlightClass} p-3.5 rounded-2xl border shadow-xs space-y-2.5 transition-all">
-              <!-- Top Row: STT, Tên Công Ty & Nút Thao Tác -->
               <div class="flex items-start justify-between gap-2">
-                <div class="flex items-start gap-2.5 min-w-0">
-                  <div class="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-700 font-mono font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                <div class="flex items-start gap-2 min-w-0">
+                  <div class="w-6 h-6 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-700 font-mono font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">
                     ${idx + 1}
                   </div>
-                  <div class="min-w-0">
-                    <h3 class="text-xs sm:text-[13px] font-bold text-slate-900 leading-snug">
-                      ${lead.company}
-                    </h3>
-                    <div class="flex items-center gap-1.5 flex-wrap mt-0.5 text-[11px] text-slate-500">
-                      <span class="font-semibold text-slate-700">${lead.contactName || 'Người đại diện'}</span>
-                      ${lead.taxCode ? `<span class="text-slate-300">•</span><span class="font-mono text-[10px] text-slate-600 bg-slate-100 px-1 py-0.5 rounded">MST: ${lead.taxCode}</span>` : ''}
+                  <div class="min-w-0 space-y-1">
+                    <h3 class="text-xs font-bold text-slate-900 leading-snug">${lead.company}</h3>
+                    <div class="flex items-center gap-1.5 flex-wrap text-[11px] text-slate-500">
+                      <span class="font-semibold text-slate-700">👤 ${lead.contactName || 'Người đại diện'}</span>
+                      ${renderSourceBadge(lead.source, lead.sourceUrl)}
                     </div>
                   </div>
                 </div>
-
-                <!-- Action Buttons: Copy All & Delete Lead -->
                 <div class="flex items-center gap-1 shrink-0">
-                  <button onclick="copyLeadInfo('${lead.id}')" class="p-1.5 rounded-lg text-indigo-600 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 transition-all" title="Sao chép toàn bộ thông tin">
-                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                  </button>
-                  <button onclick="deleteLead('${lead.id}')" class="p-1.5 rounded-lg text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-100 transition-all" title="Xóa khỏi cơ sở dữ liệu">
-                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                  </button>
+                  <button onclick="copyLeadInfo('${safeId}')" class="p-1.5 rounded-lg text-indigo-600 bg-indigo-50 border border-indigo-100"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                  <button onclick="deleteLead('${safeId}')" class="p-1.5 rounded-lg text-rose-600 bg-rose-50 border border-rose-100"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                 </div>
               </div>
 
-              <!-- Hotline & Zalo (Row Nổi Bật Nhất Cho Telesale/Sale) -->
-              <div class="p-2.5 rounded-xl bg-slate-50/90 border border-slate-200 flex items-center justify-between gap-2 flex-wrap">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                    <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-                  </span>
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="font-mono font-black text-slate-900 text-sm tracking-wide">${phoneFormatted}</span>
+              <!-- Hotline & Zalo Status -->
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <div class="flex items-center gap-1.5">
+                    <a href="tel:${lead.phone}" class="font-mono font-black text-slate-900 text-sm tracking-wide">${phoneFormatted}</a>
                     ${carrierTag}
-                    <button onclick="copyText('${lead.phone}', 'Đã copy SĐT!')" class="p-1 rounded text-slate-400 hover:text-indigo-600 hover:bg-white transition-all" title="Copy SĐT">
-                      <i data-lucide="copy" class="w-3 h-3"></i>
-                    </button>
                   </div>
-                </div>
-
-                <div class="shrink-0">
-                  ${lead.zaloName ? `
-                    <a href="https://zalo.me/${lead.phone}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition-all shadow-xs">
-                      <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
-                      <span>Zalo: ${lead.zaloName}</span>
-                    </a>
-                  ` : (lead.zaloActive ? `
-                    <a href="https://zalo.me/${lead.phone}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-xs">
-                      <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
-                      <span>Chat Zalo</span>
-                    </a>
+                  ${isActive ? `
+                    <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-800">🟢 ZALO: ACTIVE</span>
                   ` : `
-                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-semibold bg-slate-200/80 text-slate-500">
-                      <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                      <span>Số bàn / Null</span>
-                    </span>
-                  `)}
+                    <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-rose-800">🔴 ZALO: NOT FOUND</span>
+                  `}
                 </div>
-              </div>
-
-              <!-- Email & Ngành Nghề -->
-              <div class="grid grid-cols-1 xs:grid-cols-2 gap-2 text-xs">
-                <div class="flex items-center gap-1.5 text-[11px] truncate">
-                  <span class="text-slate-400 font-semibold shrink-0">Email:</span>
-                  ${lead.email ? `
-                    <a href="mailto:${lead.email}" class="text-indigo-600 hover:underline font-medium truncate">${lead.email}</a>
-                    <button onclick="copyText('${lead.email}', 'Đã copy email!')" class="p-0.5 text-slate-400 hover:text-indigo-600 shrink-0"><i data-lucide="copy" class="w-3 h-3"></i></button>
-                  ` : `<span class="text-slate-400 italic">Chưa công khai</span>`}
-                </div>
-
-                <div class="flex items-center gap-1.5 text-[11px] truncate">
-                  <span class="text-slate-400 font-semibold shrink-0">Ngành:</span>
-                  <span class="font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-md truncate" title="${lead.industry}">
-                    ${lead.industry}
-                  </span>
-                </div>
-              </div>
-
-              <!-- Địa chỉ Đầy Đủ & Link Nguồn Kiểm Chứng Thật 100% -->
-              <div class="pt-2 border-t border-slate-100 space-y-1.5 text-xs">
-                <div class="flex items-start gap-1.5 text-[11px] text-slate-600 leading-snug">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-indigo-500 shrink-0 mt-0.5"></i>
-                  <span><b class="text-slate-800">${lead.city}:</b> ${lead.address || 'Việt Nam'}</span>
-                </div>
-
-                ${lead.sourceUrl ? `
-                  <div class="pt-0.5">
-                    <a href="${lead.sourceUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-600 hover:text-indigo-800 hover:underline">
-                      <i data-lucide="external-link" class="w-3 h-3"></i>
-                      <span>Xem nguồn gốc đối soát thật 100%</span>
-                    </a>
-                  </div>
+                ${isActive ? `
+                  <button onclick="openZaloWithGreeting('${safeId}')" class="w-full py-1.5 px-3 rounded-lg text-[11px] font-bold bg-emerald-600 text-white hover:bg-emerald-700 flex items-center justify-center gap-1.5 shadow-2xs">
+                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                    <span>Chat Zalo (${lead.zaloName || 'Mở Zalo'}) & Copy Lời Chào</span>
+                  </button>
                 ` : ''}
+              </div>
+
+              <!-- Mini-CRM on Mobile -->
+              <div class="grid grid-cols-2 gap-2">
+                <select onchange="updateLeadCrmStatus('${safeId}', this.value)" class="crm-mini-select w-full">
+                  <option value="new" ${lead.crmStatus === 'new' ? 'selected' : ''}>🆕 Mới cào</option>
+                  <option value="called" ${lead.crmStatus === 'called' ? 'selected' : ''}>📞 Đã gọi</option>
+                  <option value="zalo_sent" ${lead.crmStatus === 'zalo_sent' ? 'selected' : ''}>💬 Đã nhắn Zalo</option>
+                  <option value="interested" ${lead.crmStatus === 'interested' ? 'selected' : ''}>🔥 Quan tâm</option>
+                  <option value="closed" ${lead.crmStatus === 'closed' ? 'selected' : ''}>✅ Đã chốt</option>
+                  <option value="no_answer" ${lead.crmStatus === 'no_answer' ? 'selected' : ''}>❌ K.Nghe máy</option>
+                </select>
+                <button onclick="promptLeadNote('${safeId}')" class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-700 truncate text-left">
+                  📝 ${lead.crmNote || 'Ghi chú...'}
+                </button>
+              </div>
+
+              <!-- Ngành nghề & Địa chỉ -->
+              <div class="pt-2 border-t border-slate-100 space-y-1 text-[11px] text-slate-600">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">${lead.industry}</span>
+                  ${lead.sourceUrl ? `<a href="${lead.sourceUrl}" target="_blank" class="font-bold text-indigo-600 underline">Xem nguồn →</a>` : ''}
+                </div>
+                <div>📍 <b>${lead.city}:</b> ${lead.address || 'Việt Nam'}</div>
               </div>
             </div>
           `;
@@ -1722,42 +1844,31 @@
       }
     }
 
-    function toggleZaloFilter() {
-      isZaloFilterActive = !isZaloFilterActive;
-      const btn = document.getElementById('btnToggleZalo');
-      if (isZaloFilterActive) {
-        btn.classList.remove('bg-slate-100', 'text-slate-700', 'border-slate-200');
-        btn.classList.add('bg-cyan-600', 'text-white', 'border-cyan-600', 'shadow-md');
-        showToast("Đang hiển thị các số có Zalo Active", "info");
-      } else {
-        btn.classList.remove('bg-cyan-600', 'text-white', 'border-cyan-600', 'shadow-md');
-        btn.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-200');
-      }
-      fetchLeads();
-    }
-
     function resetFilters() {
       document.getElementById('filterCity').value = 'all';
       document.getElementById('filterIndustry').value = 'all';
+      document.getElementById('filterSourceType').value = 'all';
+      document.getElementById('filterZaloStatus').value = 'all';
+      document.getElementById('filterCarrier').value = 'all';
+      document.getElementById('filterCrmStatus').value = 'all';
+      document.getElementById('chkMobileOnly').checked = false;
       document.getElementById('filterSearch').value = '';
       
-      const cityLbl = document.getElementById('labelDropdownCity');
-      if (cityLbl) cityLbl.innerText = '📍 Toàn Quốc (Mọi Tỉnh Thành)';
-      const indLbl = document.getElementById('labelDropdownIndustry');
-      if (indLbl) indLbl.innerText = '🏢 Mọi Ngành Nghề';
+      document.getElementById('labelDropdownCity').innerText = '📍 Toàn Quốc (63 Tỉnh Thành)';
+      document.getElementById('labelDropdownIndustry').innerText = '🏢 Mọi Ngành Nghề (Tất Cả)';
       
       selectedCity = 'all';
+      selectedIndustry = 'all';
       renderCityDropdownItems(allProvincesList);
+      renderIndustryDropdownItems(allIndustriesList);
 
-      isZaloFilterActive = false;
-      const btn = document.getElementById('btnToggleZalo');
-      btn.classList.remove('bg-cyan-600', 'text-white', 'border-cyan-600', 'shadow-md');
-      btn.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-200');
       fetchLeads();
-      showToast("Đã khôi phục bộ lọc", "info");
+      showToast("Đã khôi phục toàn bộ bộ lọc", "info");
     }
 
-    // TRIGGER LIVE SCAN 100-200 LEADS (PROTECTED BY LICENSE)
+    // ==========================================
+    // MULTI-SOURCE LIVE SCAN (100-200 LEADS)
+    // ==========================================
     async function triggerLiveScan() {
       if (isScanning) return;
       isScanning = true;
@@ -1772,29 +1883,34 @@
       scanBtn.classList.add('opacity-75', 'cursor-not-allowed');
 
       scanPanel.classList.remove('hidden');
-      scanBar.style.width = '10%';
-      scanPercent.innerText = '10%';
-      statusText.innerText = 'Đang khởi động cụm Headless Browser để cào dữ liệu thật...';
+      scanBar.style.width = '15%';
+      scanPercent.innerText = '15%';
 
       const city = document.getElementById('filterCity').value;
       const industry = document.getElementById('filterIndustry').value;
+      const sourceType = document.getElementById('filterSourceType').value;
       const targetGoal = document.getElementById('scanLimit').value;
       const skipExisting = document.getElementById('chkSkipExisting').checked;
 
-      scanBar.style.width = '30%';
-      scanPercent.innerText = '30%';
-      statusText.innerText = `Đang quét cổng dữ liệu quốc gia (Mục tiêu: ${targetGoal} leads có SĐT thật)...`;
+      statusText.innerText = `Đang quét đa nguồn (${sourceType.toUpperCase()}) • Ngành: ${industry === 'all' ? 'Tất cả' : industry} • Khu vực: ${city === 'all' ? '63 Tỉnh Thành' : city}...`;
+
+      setTimeout(() => {
+        if (isScanning) {
+          scanBar.style.width = '45%';
+          scanPercent.innerText = '45%';
+        }
+      }, 300);
 
       try {
         const res = await fetch('/api/leads/scan', {
           method: 'POST',
           headers: getAuthHeaders(),
-          body: JSON.stringify({ city, industry, targetGoal, skipExisting })
+          body: JSON.stringify({ city, industry, sourceType, targetGoal, skipExisting })
         });
         
         scanBar.style.width = '85%';
         scanPercent.innerText = '85%';
-        statusText.innerText = 'Đang tự động bóc tách SĐT, xác thực Zalo và lưu vào SQLite...';
+        statusText.innerText = 'Đang đối soát trạng thái Zalo (Active / Not Found) và lưu vào SQLite...';
 
         const data = await res.json();
 
@@ -1802,7 +1918,7 @@
         scanPercent.innerText = '100%';
 
         if (data.success) {
-          const newIds = data.newLeads.map(l => l.id);
+          const newIds = (data.newLeads || []).map(l => l.id);
           showToast(data.message, "success");
           if (data.license) updateClientPill(data.license);
           await fetchLeads(newIds);
@@ -1820,18 +1936,21 @@
           scanBtn.disabled = false;
           scanBtn.classList.remove('opacity-75', 'cursor-not-allowed');
           isScanning = false;
-        }, 1200);
+        }, 900);
       }
     }
 
-    // CHECK ALL ZALO
+    // ==========================================
+    // ZALO BULK CHECK & IMPORT PHONE LIST
+    // ==========================================
     async function checkAllZalo() {
-      showToast("Đang kiểm tra Zalo cho toàn bộ số điện thoại...", "info");
+      showToast("Đang kiểm tra trạng thái Zalo (Active vs Not Found) cho toàn bộ danh sách...", "info");
       try {
+        const phones = currentLeads.map(l => l.phone);
         const res = await fetch('/api/zalo/check', {
           method: 'POST',
           headers: getAuthHeaders(),
-          body: JSON.stringify({})
+          body: JSON.stringify({ phones })
         });
         const data = await res.json();
         if (data.success) {
@@ -1848,7 +1967,217 @@
       }
     }
 
-    // EXPORT TO EXCEL (.XLSX)
+    function openImportZaloModal() {
+      document.getElementById('importZaloModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeImportZaloModal() {
+      document.getElementById('importZaloModal').classList.add('hidden');
+    }
+
+    function handlePhoneFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target.result || '';
+        const matches = content.match(/(?:\+84|84|0)[0-9\s.\-]{8,12}/g) || [];
+        const cleaned = matches.map(m => m.replace(/[^0-9]/g, '')).filter(m => m.length >= 9 && m.length <= 11);
+        document.getElementById('importPhonesInput').value = Array.from(new Set(cleaned)).join('\n');
+        showToast(`Đã đọc ${cleaned.length} số điện thoại từ file ${file.name}!`, "info");
+      };
+      reader.readAsText(file);
+    }
+
+    async function submitImportPhoneCheck() {
+      const rawText = document.getElementById('importPhonesInput').value.trim();
+      if (!rawText) {
+        showToast("Vui lòng dán danh sách số điện thoại hoặc tải file!", "error");
+        return;
+      }
+      const saveToLeads = document.getElementById('chkSaveImportToLeads').checked;
+      const btn = document.getElementById('btnRunImportCheck');
+      btn.disabled = true;
+      btn.classList.add('opacity-70');
+
+      try {
+        const res = await fetch('/api/zalo/check-import', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({
+            phones: rawText,
+            saveToLeads,
+            defaultCity: selectedCity === 'all' ? 'Toàn quốc' : selectedCity,
+            defaultIndustry: selectedIndustry === 'all' ? 'Tệp SĐT Import' : selectedIndustry
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          lastImportedZaloResults = data.results || [];
+          document.getElementById('importCheckResultBox').classList.remove('hidden');
+          document.getElementById('impTotalCount').innerText = data.totalChecked;
+          document.getElementById('impActiveCount').innerText = data.activeCount;
+          document.getElementById('impNotFoundCount').innerText = data.notFoundCount;
+
+          const tbody = document.getElementById('importCheckResultTbody');
+          tbody.innerHTML = lastImportedZaloResults.map(r => `
+            <tr class="hover:bg-slate-50">
+              <td class="p-2 font-mono font-bold text-slate-900">${r.phone}</td>
+              <td class="p-2 font-semibold text-slate-600">${r.carrier}</td>
+              <td class="p-2">
+                ${r.zaloActive
+                  ? '<span class="px-2 py-0.5 rounded font-extrabold text-[10px] bg-emerald-100 text-emerald-800">🟢 ACTIVE</span>'
+                  : '<span class="px-2 py-0.5 rounded font-extrabold text-[10px] bg-rose-100 text-rose-800">🔴 NOT FOUND</span>'}
+              </td>
+              <td class="p-2 text-slate-700 font-medium">${r.zaloName ? `<b>${r.zaloName}</b> (${r.reason})` : r.reason}</td>
+            </tr>
+          `).join('');
+
+          showToast(data.message, "success");
+          if (saveToLeads) {
+            await fetchLeads();
+            fetchStats();
+          }
+        } else {
+          showToast(data.message || "Lỗi kiểm tra SĐT", "error");
+        }
+      } catch (e) {
+        showToast("Lỗi kết nối: " + e.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-70');
+      }
+    }
+
+    function exportImportedZaloResults() {
+      if (!lastImportedZaloResults.length) return;
+      const rows = lastImportedZaloResults.map((r, i) => ({
+        "STT": i + 1,
+        "SỐ ĐIỆN THOẠI": r.phone,
+        "NHÀ MẠNG": r.carrier,
+        "TRẠNG THÁI ZALO": r.zaloActive ? "ACTIVE" : "NOT FOUND",
+        "TÊN TÀI KHOẢN ZALO": r.zaloName || "",
+        "LINK ZALO": `https://zalo.me/${r.phone}`,
+        "CHI TIẾT": r.reason
+      }));
+      const ws = XLSX.utils.json_to_sheet(rows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Ket_Qua_Check_Zalo");
+      XLSX.writeFile(wb, `KetQua_CheckZalo_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // ==========================================
+    // ADD-ON 6.1: PERSONALIZED ZALO GREETING SCRIPT
+    // ==========================================
+    function initScriptSettings() {
+      const saved = localStorage.getItem('lead_zalo_greeting_script') || DEFAULT_ZALO_SCRIPT;
+      const autoCopy = localStorage.getItem('lead_zalo_auto_copy') !== 'false';
+      const ta = document.getElementById('zaloScriptTextarea');
+      const chk = document.getElementById('chkAutoCopyScript');
+      if (ta) ta.value = saved;
+      if (chk) chk.checked = autoCopy;
+    }
+
+    function openScriptModal() {
+      initScriptSettings();
+      document.getElementById('scriptModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeScriptModal() {
+      document.getElementById('scriptModal').classList.add('hidden');
+    }
+
+    function applyPresetScript(num) {
+      const ta = document.getElementById('zaloScriptTextarea');
+      if (ta && PRESET_SCRIPTS[num]) {
+        ta.value = PRESET_SCRIPTS[num];
+      }
+    }
+
+    function insertScriptVar(varName) {
+      const ta = document.getElementById('zaloScriptTextarea');
+      if (!ta) return;
+      const start = ta.selectionStart || ta.value.length;
+      const end = ta.selectionEnd || ta.value.length;
+      ta.value = ta.value.slice(0, start) + varName + ta.value.slice(end);
+      ta.focus();
+    }
+
+    function saveZaloScript() {
+      const ta = document.getElementById('zaloScriptTextarea');
+      const chk = document.getElementById('chkAutoCopyScript');
+      if (ta) localStorage.setItem('lead_zalo_greeting_script', ta.value.trim() || DEFAULT_ZALO_SCRIPT);
+      if (chk) localStorage.setItem('lead_zalo_auto_copy', chk.checked ? 'true' : 'false');
+      closeScriptModal();
+      showToast("Đã lưu mẫu kịch bản chào Zalo cá nhân hóa!", "success");
+    }
+
+    function buildGreetingForLead(lead) {
+      const template = localStorage.getItem('lead_zalo_greeting_script') || DEFAULT_ZALO_SCRIPT;
+      return template
+        .replace(/\{ten_cong_ty\}/g, lead.company || 'Quý công ty')
+        .replace(/\{nguoi_dai_dien\}/g, lead.contactName || 'Anh/Chị')
+        .replace(/\{nganh_nghe\}/g, lead.industry || 'kinh doanh')
+        .replace(/\{tinh_thanh\}/g, lead.city || 'Việt Nam')
+        .replace(/\{sdt\}/g, lead.phone || '');
+    }
+
+    function openZaloWithGreeting(leadId) {
+      const lead = currentLeads.find(l => String(l.id) === String(leadId));
+      if (!lead) return;
+      const autoCopy = localStorage.getItem('lead_zalo_auto_copy') !== 'false';
+      if (autoCopy) {
+        const msg = buildGreetingForLead(lead);
+        copyText(msg, `Đã copy lời chào cho ${lead.company}! Hãy dán (Ctrl+V) vào khung chat Zalo.`);
+      }
+      if (!lead.crmStatus || lead.crmStatus === 'new') {
+        updateLeadCrmStatus(lead.id, 'zalo_sent', true);
+      }
+      window.open(`https://zalo.me/${lead.phone}`, '_blank');
+    }
+
+    // ==========================================
+    // ADD-ON 6.2: MINI-CRM STATUS & NOTE
+    // ==========================================
+    async function updateLeadCrmStatus(id, crmStatus, silent = false) {
+      const lead = currentLeads.find(l => String(l.id) === String(id));
+      if (lead) lead.crmStatus = crmStatus;
+      saveLocalLeadCache(getActiveKey(), currentLeads);
+
+      try {
+        await fetch(`/api/leads/${encodeURIComponent(id)}/crm`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ crmStatus })
+        });
+        if (!silent) showToast("Đã cập nhật tiến độ chăm sóc khách hàng!", "info");
+      } catch (e) {}
+    }
+
+    async function promptLeadNote(id) {
+      const lead = currentLeads.find(l => String(l.id) === String(id));
+      if (!lead) return;
+      const nextNote = prompt(`Nhập ghi chú chăm sóc cho "${lead.company}":`, lead.crmNote || '');
+      if (nextNote === null) return;
+      lead.crmNote = nextNote.trim();
+      saveLocalLeadCache(getActiveKey(), currentLeads);
+      renderTable(currentLeads);
+
+      try {
+        await fetch(`/api/leads/${encodeURIComponent(id)}/crm`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ crmNote: lead.crmNote })
+        });
+        showToast("Đã lưu ghi chú khách hàng!", "success");
+      } catch (e) {}
+    }
+
+    // ==========================================
+    // EXPORT TO EXCEL (.XLSX) & VCARD (.VCF)
+    // ==========================================
     function exportToExcel() {
       if (!currentLeads || currentLeads.length === 0) {
         showToast("Không có dữ liệu để xuất file!", "error");
@@ -1858,38 +2187,39 @@
       try {
         const exportData = currentLeads.map((item, index) => ({
           "STT": index + 1,
-          "MÃ LEAD": item.id,
-          "TÊN DOANH NGHIỆP / FANPAGE": item.company,
+          "TÊN DOANH NGHIỆP / CỬA HÀNG": item.company,
           "NGƯỜI ĐẠI DIỆN": item.contactName || '',
           "CHỨC VỤ": item.role || '',
           "SỐ ĐIỆN THOẠI": item.phone,
           "NHÀ MẠNG": item.carrier || '',
-          "LINK CHAT ZALO": `https://zalo.me/${item.phone}`,
-          "TRẠNG THÁI ZALO": item.zaloActive ? "Đang Hoạt Động (Active)" : "Chưa Kích Hoạt",
+          "TRẠNG THÁI ZALO": (item.zaloActive || item.zaloStatus === 'ACTIVE') ? "ACTIVE (Đã đăng ký)" : "NOT FOUND (Chưa đăng ký)",
           "TÊN HIỂN THỊ ZALO": item.zaloName || '',
-          "EMAIL LIÊN HỆ": item.email || '',
+          "LINK CHAT ZALO": `https://zalo.me/${item.phone}`,
+          "TRẠNG THÁI CHĂM SÓC (CRM)": CRM_STATUS_META[item.crmStatus || 'new']?.label || 'Mới cào',
+          "GHI CHÚ SALE": item.crmNote || '',
+          "NGÀNH NGHỀ": item.industry,
           "TỈNH THÀNH": item.city,
           "ĐỊA CHỈ CHI TIẾT": item.address,
-          "NGÀNH NGHỀ": item.industry,
+          "EMAIL LIÊN HỆ": item.email || '',
           "MÃ SỐ THUẾ": item.taxCode || '',
-          "LINK NGUỒN ĐỐI SOÁT": item.sourceUrl || item.source || ''
+          "NGUỒN DỮ LIỆU": item.source || '',
+          "LINK NGUỒN ĐỐI SOÁT": item.sourceUrl || ''
         }));
 
         const ws = XLSX.utils.json_to_sheet(exportData);
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Leads_100%_That");
+        XLSX.utils.book_append_sheet(wb, ws, "Leads_B2B_5S");
 
         const dateStr = new Date().toISOString().split('T')[0];
-        const fileName = `Leads_Real_Data_${dateStr}.xlsx`;
+        const fileName = `5S_Leads_Data_${dateStr}.xlsx`;
         XLSX.writeFile(wb, fileName);
 
-        showToast(`Đã xuất ${currentLeads.length} leads ra file Excel ${fileName}!`, "success");
+        showToast(`Đã xuất ${currentLeads.length} leads kèm trạng thái Zalo & CRM ra file ${fileName}!`, "success");
       } catch (err) {
         showToast("Lỗi khi xuất file Excel: " + err.message, "error");
       }
     }
 
-    // EXPORT TO VCARD (.VCF)
     function exportToVCard() {
       if (!currentLeads || currentLeads.length === 0) {
         showToast("Không có dữ liệu để xuất danh bạ!", "error");
@@ -1904,7 +2234,7 @@
           const phone = lead.phone || '';
           const email = lead.email || '';
           const address = (lead.address || '') + (lead.city ? ', ' + lead.city : '');
-          const note = `Nguồn đối soát: ${lead.sourceUrl || lead.source || ''}`;
+          const note = `Zalo: ${lead.zaloActive ? 'ACTIVE' : 'NOT FOUND'} | Nguồn: ${lead.sourceUrl || lead.source || ''}`;
 
           vcf += `BEGIN:VCARD\r\nVERSION:3.0\r\nFN:${name}\r\nORG:${org}\r\nTITLE:${lead.role || ''}\r\nTEL;TYPE=CELL,VOICE:${phone}\r\n`;
           if (email) vcf += `EMAIL;TYPE=PREF,INTERNET:${email}\r\n`;
@@ -1924,15 +2254,16 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
 
-        showToast(`Đã xuất ${currentLeads.length} danh bạ vCard (.vcf)! Mở file trên điện thoại để tự nạp và kết bạn Zalo!`, "success");
+        showToast(`Đã xuất ${currentLeads.length} danh bạ vCard (.vcf)!`, "success");
       } catch (err) {
         showToast("Lỗi xuất file: " + err.message, "error");
       }
     }
 
     async function clearAllDatabase() {
-      if (!confirm("Bạn có chắc chắn muốn xóa toàn bộ kho dữ liệu hiện tại?")) return;
+      if (!confirm("Bạn có chắc chắn muốn xóa toàn bộ kho dữ liệu hiện tại của Key này?")) return;
       try {
+        clearLocalLeadCache(getActiveKey());
         const res = await fetch('/api/leads', {
           method: 'DELETE',
           headers: getAuthHeaders()
@@ -1953,12 +2284,14 @@
     async function deleteLead(id) {
       if (!confirm("Bạn có chắc muốn xóa lead này?")) return;
       try {
-        const res = await fetch(`/api/leads/${id}`, {
+        const res = await fetch(`/api/leads/${encodeURIComponent(id)}`, {
           method: 'DELETE',
           headers: getAuthHeaders()
         });
         const data = await res.json();
         if (data.success) {
+          currentLeads = currentLeads.filter(l => String(l.id) !== String(id));
+          saveLocalLeadCache(getActiveKey(), currentLeads);
           showToast("Đã xóa lead!", "success");
           fetchLeads();
           fetchStats();
@@ -1969,9 +2302,9 @@
     }
 
     function copyLeadInfo(id) {
-      const lead = currentLeads.find(l => l.id === id);
+      const lead = currentLeads.find(l => String(l.id) === String(id));
       if (!lead) return;
-      const text = `Doanh nghiệp: ${lead.company}\nNgười đại diện: ${lead.contactName}\nSố điện thoại: ${lead.phone} (Zalo: https://zalo.me/${lead.phone})\nEmail: ${lead.email}\nĐịa chỉ: ${lead.address}, ${lead.city}\nNgành nghề: ${lead.industry}\nNguồn đối soát: ${lead.sourceUrl || ''}`;
+      const text = `Doanh nghiệp: ${lead.company}\nNgười đại diện: ${lead.contactName}\nSố điện thoại: ${lead.phone} (Zalo: ${lead.zaloActive ? 'ACTIVE' : 'NOT FOUND'} - https://zalo.me/${lead.phone})\nEmail: ${lead.email}\nĐịa chỉ: ${lead.address}, ${lead.city}\nNgành nghề: ${lead.industry}\nNguồn: ${lead.sourceUrl || lead.source || ''}`;
       copyText(text, "Đã sao chép toàn bộ thông tin!");
     }
 
@@ -1998,7 +2331,6 @@
       document.body.removeChild(textArea);
     }
 
-    // FACEBOOK MODAL
     function openFanpageModal() {
       document.getElementById('fanpageModal').classList.remove('hidden');
     }
@@ -2009,7 +2341,7 @@
       e.preventDefault();
       const url = document.getElementById('fanpageUrl').value;
       closeFanpageModal();
-      showToast("Đang khởi chạy trình duyệt Headless Chrome và bóc tách Fanpage...", "info");
+      showToast("Đang bóc tách thông tin liên hệ từ Fanpage Facebook...", "info");
       
       try {
         const res = await fetch('/api/leads/scan-facebook', {
@@ -2020,7 +2352,7 @@
         const data = await res.json();
         if (data.success) {
           showToast(data.message, "success");
-          await fetchLeads(data.newLeads.map(l => l.id));
+          await fetchLeads((data.newLeads || []).map(l => l.id));
           fetchStats();
         } else if (data.isLicenseError) {
           openLicenseGateModal(false, data);
@@ -2029,220 +2361,6 @@
         }
       } catch (err) {
         showToast("Lỗi cào Facebook: " + err.message, "error");
-      }
-    }
-
-    // ==========================================
-    // ADMIN PORTAL CLIENT JAVASCRIPT
-    // ==========================================
-    function openAdminModal() {
-      window.open('/admin', '_blank');
-    }
-
-    function closeAdminModal() {
-      document.getElementById('adminModal').classList.add('hidden');
-    }
-
-    async function submitAdminLogin() {
-      const password = document.getElementById('adminPasswordInput').value;
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password })
-      });
-      const data = await res.json();
-      if (data.success) {
-        adminToken = password;
-        showAdminDashboard();
-        showToast("Đăng nhập Admin thành công!", "success");
-      } else {
-        alert(data.message || "Mật khẩu không đúng!");
-      }
-    }
-
-    function showAdminDashboard() {
-      document.getElementById('adminLoginForm').classList.add('hidden');
-      document.getElementById('adminDashboardContent').classList.remove('hidden');
-      loadAdminLicenses();
-      loadAdminSettings();
-      lucide.createIcons();
-    }
-
-    function switchAdminSubTab(tabIdx) {
-      [1, 2, 3].forEach(i => {
-        document.getElementById(`adminSubTab${i}`).classList.toggle('hidden', i !== tabIdx);
-        const btn = document.getElementById(`adminTabBtn${i}`);
-        if (i === tabIdx) {
-          btn.className = "px-3.5 py-1.5 rounded-xl font-bold bg-indigo-50 text-indigo-700 border border-indigo-200";
-        } else {
-          btn.className = "px-3.5 py-1.5 rounded-xl font-bold text-slate-600 hover:bg-slate-100";
-        }
-      });
-      if (tabIdx === 2) loadAdminLicenses();
-    }
-
-    async function loadAdminLicenses() {
-      if (!adminToken) return;
-      const res = await fetch('/api/admin/licenses', {
-        headers: { 'X-Admin-Password': adminToken }
-      });
-      const data = await res.json();
-      if (data.success && data.licenses) {
-        document.getElementById('adminTotalKeysCount').innerText = data.licenses.length;
-        const tbody = document.getElementById('adminLicensesTableBody');
-        tbody.innerHTML = data.licenses.map(lic => {
-          const isExpired = lic.expiresAt && new Date(lic.expiresAt) < new Date();
-          const statusBadge = !lic.isActive 
-            ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-600 border border-rose-200">Đã Khóa</span>'
-            : isExpired 
-            ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Hết Hạn</span>'
-            : '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Hoạt Động</span>';
-
-          const expText = lic.expiresAt ? new Date(lic.expiresAt).toLocaleDateString('vi-VN') : 'Vĩnh viễn';
-          const isMasterKey = (lic.key === 'ADMIN-DEV5S-2026');
-          const devText = isMasterKey 
-            ? '<span class="text-indigo-700 font-extrabold bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">ĐA THIẾT BỊ (ADMIN)</span>'
-            : (lic.deviceId ? '<span class="text-emerald-600 font-bold">Đã Khóa Máy</span>' : '<span class="text-slate-400 italic">Chưa Kích Hoạt</span>');
-
-          return `
-            <tr class="hover:bg-slate-50">
-              <td class="p-2.5 font-mono font-bold text-indigo-700 select-all">${lic.key}</td>
-              <td class="p-2.5 font-semibold text-slate-900">${lic.clientName} ${lic.clientPhone ? `(${lic.clientPhone})` : ''}</td>
-              <td class="p-2.5 uppercase font-bold text-[10px]">${lic.planType}</td>
-              <td class="p-2.5 font-semibold">${expText}</td>
-              <td class="p-2.5 text-[11px]">${devText}</td>
-              <td class="p-2.5 font-mono">${lic.usedToday} / ${lic.maxDailyScrapes}</td>
-              <td class="p-2.5 text-center whitespace-nowrap">
-                <button onclick="copyText('${lic.key}', 'Đã copy Key!')" class="p-1 text-indigo-600 hover:bg-indigo-50 rounded" title="Copy Key"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-                <button onclick="adminToggleActive('${lic.key}', ${lic.isActive ? 0 : 1})" class="p-1 ${lic.isActive ? 'text-amber-600' : 'text-emerald-600'} hover:bg-slate-100 rounded" title="${lic.isActive ? 'Khóa Key' : 'Mở Khóa'}"><i data-lucide="${lic.isActive ? 'lock' : 'unlock'}" class="w-3.5 h-3.5"></i></button>
-                <button onclick="adminResetDevice('${lic.key}')" class="p-1 text-cyan-600 hover:bg-cyan-50 rounded" title="Reset Khóa Máy"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
-                <button onclick="adminDeleteLicense('${lic.key}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded" title="Xóa Key"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-              </td>
-            </tr>
-          `;
-        }).join('');
-        lucide.createIcons({ root: tbody });
-      }
-    }
-
-    async function submitCreateLicense() {
-      const clientName = document.getElementById('newClientName').value;
-      const clientPhone = document.getElementById('newClientPhone').value;
-      const planType = document.getElementById('newPlanType').value;
-      const maxDailyScrapes = document.getElementById('newMaxDaily').value;
-
-      const res = await fetch('/api/admin/licenses', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Admin-Password': adminToken
-        },
-        body: JSON.stringify({ clientName, clientPhone, planType, maxDailyScrapes })
-      });
-      const data = await res.json();
-      if (data.success && data.license) {
-        document.getElementById('newKeyResultBox').classList.remove('hidden');
-        document.getElementById('newKeyResultInput').value = data.license.key;
-        showToast("Tạo Key mới thành công!", "success");
-      }
-    }
-
-    function copyGeneratedKey() {
-      const key = document.getElementById('newKeyResultInput').value;
-      copyText(key, "Đã copy Key để gửi cho khách!");
-    }
-
-    async function adminToggleActive(key, newState) {
-      await fetch(`/api/admin/licenses/${key}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Admin-Password': adminToken
-        },
-        body: JSON.stringify({ isActive: newState })
-      });
-      loadAdminLicenses();
-    }
-
-    async function adminResetDevice(key) {
-      if (!confirm(`Reset khóa thiết bị cho Key ${key}? Khách sẽ có thể đăng nhập trên máy mới.`)) return;
-      await fetch(`/api/admin/licenses/${key}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Admin-Password': adminToken
-        },
-        body: JSON.stringify({ resetDevice: true })
-      });
-      showToast("Đã reset khóa thiết bị!", "success");
-      loadAdminLicenses();
-    }
-
-    async function adminDeleteLicense(key) {
-      if (!confirm(`Bạn có chắc muốn xóa Key ${key}?`)) return;
-      await fetch(`/api/admin/licenses/${key}`, {
-        method: 'DELETE',
-        headers: { 'X-Admin-Password': adminToken }
-      });
-      showToast("Đã xóa Key!", "success");
-      loadAdminLicenses();
-    }
-
-    async function loadAdminSettings() {
-      if (!adminToken) return;
-      const res = await fetch('/api/admin/settings', {
-        headers: { 'X-Admin-Password': adminToken }
-      });
-      const data = await res.json();
-      if (data.success && data.settings) {
-        const s = data.settings;
-        document.getElementById('setBankCode').value = s.bankCode || 'MB';
-        document.getElementById('setBankAccount').value = s.bankAccount || '0969999888';
-        document.getElementById('setBankName').value = s.bankName || 'NGUYEN VAN A';
-        document.getElementById('setHotline').value = s.hotline || '0969.999.888';
-        document.getElementById('setAdminPassword').value = s.adminPassword || 'admin888';
-      }
-    }
-
-    async function saveAdminSettings() {
-      const payload = {
-        bankCode: document.getElementById('setBankCode').value.trim(),
-        bankAccount: document.getElementById('setBankAccount').value.trim(),
-        bankName: document.getElementById('setBankName').value.trim(),
-        hotline: document.getElementById('setHotline').value.trim(),
-        adminPassword: document.getElementById('setAdminPassword').value.trim()
-      };
-      const res = await fetch('/api/admin/settings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Admin-Password': adminToken
-        },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (data.success) {
-        showToast("Đã lưu cấu hình thành công!", "success");
-        if (payload.adminPassword) adminToken = payload.adminPassword;
-      }
-    }
-
-    async function saveZaloSession() {
-      const cookie = document.getElementById('setZaloCookie').value.trim();
-      if (!cookie) return alert("Vui lòng dán Cookie Zalo!");
-      const res = await fetch('/api/admin/zalo/session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Admin-Password': adminToken
-        },
-        body: JSON.stringify({ cookie })
-      });
-      const data = await res.json();
-      if (data.success) {
-        showToast(data.message, "success");
-      } else {
-        alert(data.message);
       }
     }
   </script>
