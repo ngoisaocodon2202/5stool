@@ -78,7 +78,14 @@ class LicenseManager {
   }
 
   getMasterKey() {
-    return (process.env.ADMIN_MASTER_KEY || 'ADMIN-DEV5S-2026').trim().toUpperCase();
+    return (process.env.ADMIN_MASTER_KEY || 'ADMIN5S').trim().toUpperCase();
+  }
+
+  isMasterKey(key) {
+    if (!key) return false;
+    const clean = key.trim().toUpperCase();
+    const envMaster = (process.env.ADMIN_MASTER_KEY || '').trim().toUpperCase();
+    return clean === 'ADMIN5S' || clean === 'ADMIN-DEV5S-2026' || (envMaster && clean === envMaster);
   }
 
   getLockedGoogleMapsKey() {
@@ -88,7 +95,7 @@ class LicenseManager {
   ensureDefaultSettings() {
     const lockedMapsKey = this.getLockedGoogleMapsKey();
     const defaultSettings = {
-      adminPassword: process.env.ADMIN_PASSWORD || 'admin888',
+      adminPassword: process.env.ADMIN_PASSWORD || 'admindev5s',
       bankCode: 'MB',
       bankAccount: '789220206',
       bankName: 'NGUYEN QUOC KHAI',
@@ -108,34 +115,32 @@ class LicenseManager {
   }
 
   ensureInitialMasterKey() {
-    const adminMasterKey = this.getMasterKey();
+    const masterKeys = new Set([
+      'ADMIN5S',
+      'ADMIN-DEV5S-2026',
+      this.getMasterKey()
+    ]);
 
     try {
       this.db.prepare("DELETE FROM licenses WHERE key = 'LEAD-PRO-VIP-MASTER888'").run();
     } catch (e) {}
 
-    const existing = this.getLicense(adminMasterKey);
-    if (!existing) {
-      const stmt = this.db.prepare(`
-        INSERT INTO licenses (
-          key, clientName, clientPhone, planType, expiresAt, isActive, maxDailyScrapes, deviceId
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, NULL)
-      `);
-      stmt.run(
-        adminMasterKey,
-        'Admin Quản Trị Viên (Toàn Quyền Đa Thiết Bị)',
-        '0969999888',
-        'lifetime',
-        null,
-        1,
-        999999
-      );
-    } else {
-      this.db.prepare(`
-        UPDATE licenses 
-        SET deviceId = NULL, isActive = 1, planType = 'lifetime', expiresAt = NULL, maxDailyScrapes = 999999
-        WHERE key = ?
-      `).run(adminMasterKey);
+    for (const mKey of masterKeys) {
+      if (!mKey) continue;
+      const existing = this.getLicense(mKey);
+      if (!existing) {
+        this.db.prepare(`
+          INSERT INTO licenses (
+            key, clientName, clientPhone, planType, expiresAt, isActive, maxDailyScrapes, deviceId
+          ) VALUES (?, 'Admin Quản Trị Viên (Toàn Quyền Đa Thiết Bị)', '086.2034.101', 'lifetime', NULL, 1, 999999, NULL)
+        `).run(mKey);
+      } else {
+        this.db.prepare(`
+          UPDATE licenses 
+          SET deviceId = NULL, isActive = 1, planType = 'lifetime', expiresAt = NULL, maxDailyScrapes = 999999
+          WHERE key = ?
+        `).run(mKey);
+      }
     }
   }
 
@@ -227,10 +232,31 @@ class LicenseManager {
 
   // Auto-recover valid LEAD-* keys if Serverless instance cold-started
   ensureKeyRecoveredIfValidFormat(cleanKey) {
-    let license = this.getLicense(cleanKey);
+    if (!cleanKey) return null;
+    const clean = cleanKey.trim().toUpperCase();
+
+    // 1. Luôn bảo đảm Master Key (ADMIN5S / ADMIN-DEV5S-2026) tồn tại với quyền trọn đời, đa thiết bị
+    if (this.isMasterKey(clean)) {
+      let license = this.getLicense(clean);
+      if (!license) {
+        try {
+          this.db.prepare(`
+            INSERT OR REPLACE INTO licenses (
+              key, clientName, clientPhone, planType, expiresAt, isActive, maxDailyScrapes, deviceId
+            ) VALUES (?, 'Admin Quản Trị Viên (Toàn Quyền Đa Thiết Bị)', '086.2034.101', 'lifetime', NULL, 1, 999999, NULL)
+          `).run(clean);
+          license = this.getLicense(clean);
+        } catch (e) {
+          console.warn('[License] Auto-recover master key error:', e.message);
+        }
+      }
+      return license;
+    }
+
+    let license = this.getLicense(clean);
     if (license) return license;
 
-    const match = cleanKey.match(/^LEAD-(1D|30D|90D|365D|3Y|LIFE|VIP)-([A-Z0-9]{6,12})$/);
+    const match = clean.match(/^LEAD-(1D|30D|90D|365D|3Y|LIFE|VIP)-([A-Z0-9]{6,12})$/);
     if (match) {
       const tag = match[1];
       const { planType, maxDailyScrapes } = this.getPlanDefaultsFromTag(tag);
@@ -241,8 +267,8 @@ class LicenseManager {
             key, clientName, clientPhone, planType, expiresAt, isActive, maxDailyScrapes, deviceId
           ) VALUES (?, ?, ?, ?, ?, 1, ?, NULL)
         `);
-        stmt.run(cleanKey, `Khách Hàng (${tag})`, '', planType, expiresAt, maxDailyScrapes);
-        license = this.getLicense(cleanKey);
+        stmt.run(clean, `Khách Hàng (${tag})`, '', planType, expiresAt, maxDailyScrapes);
+        license = this.getLicense(clean);
       } catch (e) {
         console.warn('[License] Auto-recover error:', e.message);
       }
@@ -293,8 +319,7 @@ class LicenseManager {
       }
     }
 
-    const masterKey = this.getMasterKey();
-    const isAdminMaster = (cleanKey === masterKey);
+    const isAdminMaster = this.isMasterKey(cleanKey);
 
     if (!isAdminMaster && deviceId && deviceId.trim()) {
       const cleanDevId = deviceId.trim();

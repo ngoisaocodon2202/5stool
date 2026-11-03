@@ -287,7 +287,7 @@
         <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex items-center justify-between">
           <div class="min-w-0">
             <div class="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">Master Key</div>
-            <div class="text-xs sm:text-sm font-black font-mono text-purple-700 mt-1 truncate">DEV5S-2026</div>
+            <div class="text-xs sm:text-sm font-black font-mono text-purple-700 mt-1 truncate">ADMIN5S</div>
             <div class="text-[10px] text-purple-600 font-semibold mt-0.5 truncate">Vĩnh viễn</div>
           </div>
           <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shadow-inner shrink-0 ml-1">
@@ -1276,7 +1276,7 @@
       tbody.innerHTML = list.map(lic => {
         const isExpired = lic.expiresAt && new Date(lic.expiresAt) < new Date();
         const expText = lic.expiresAt ? new Date(lic.expiresAt).toLocaleDateString('vi-VN') : 'Vĩnh viễn';
-        const isMasterKey = (lic.key === 'ADMIN-DEV5S-2026');
+        const isMasterKey = (lic.key === 'ADMIN5S' || lic.key === 'ADMIN-DEV5S-2026');
 
         let devHtml = '';
         if (isMasterKey) {
@@ -1620,7 +1620,7 @@
     
     // LƯU BẢNG GIÁ NIÊM YẾT VÀO DATABASE
     async function saveCustomPrices() {
-      const token = adminToken || localStorage.getItem('lead_extractor_admin_token') || 'ADMIN-DEV5S-2026';
+      const token = adminToken || localStorage.getItem('lead_extractor_admin_token') || 'ADMIN5S';
 
       const payload = {
         price_trial_1d: document.getElementById('price_trial_1d')?.value.trim() || '50.000đ',
@@ -1939,7 +1939,7 @@
         document.getElementById('modalClientInfo').innerText = `${lic.clientName} ${lic.clientPhone ? '(' + lic.clientPhone + ')' : ''}`;
         document.getElementById('modalPlanExpiry').innerText = `${(lic.planType || 'VIP').toUpperCase()} • ${lic.expiresAt ? new Date(lic.expiresAt).toLocaleDateString('vi-VN') : 'Vĩnh viễn'}`;
 
-        const isMaster = (lic.key === 'ADMIN-DEV5S-2026');
+        const isMaster = (lic.key === 'ADMIN5S' || lic.key === 'ADMIN-DEV5S-2026');
         const statusPill = document.getElementById('modalDevStatusPill');
 
         if (isMaster) {

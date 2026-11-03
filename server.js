@@ -67,10 +67,10 @@ function requireLicense(req, res, next) {
       message: check.reason,
       paymentInfo: {
         bankCode: settings.bankCode || 'MB',
-        bankAccount: settings.bankAccount || '0969999888',
-        bankName: settings.bankName || 'NGUYEN VAN A',
-        hotline: settings.hotline || '0969.999.888',
-        zaloSupport: settings.zaloSupport || 'https://zalo.me/0969999888'
+        bankAccount: settings.bankAccount || '789220206',
+        bankName: settings.bankName || 'NGUYEN QUOC KHAI',
+        hotline: settings.hotline || '086.2034.101',
+        zaloSupport: settings.zaloSupport || 'https://zalo.me/0862034101'
       }
     });
   }
@@ -85,14 +85,13 @@ function requireLicense(req, res, next) {
 function requireAdmin(req, res, next) {
   const adminPassword = req.headers['x-admin-password'];
   const licenseKey = req.headers['x-license-key'];
-  const masterKey = (process.env.ADMIN_MASTER_KEY || 'ADMIN-DEV5S-2026').trim().toUpperCase();
-  const currentPassword = process.env.ADMIN_PASSWORD || db.licenseManager.getSetting('adminPassword') || 'admin888';
+  const currentPassword = process.env.ADMIN_PASSWORD || db.licenseManager.getSetting('adminPassword') || 'admindev5s';
 
-  if (licenseKey && licenseKey.trim().toUpperCase() === masterKey) {
+  if (licenseKey && db.licenseManager.isMasterKey(licenseKey)) {
     return next();
   }
 
-  if (adminPassword && (adminPassword === currentPassword || adminPassword.trim().toUpperCase() === masterKey)) {
+  if (adminPassword && (adminPassword === currentPassword || db.licenseManager.isMasterKey(adminPassword))) {
     return next();
   }
 
@@ -128,11 +127,11 @@ app.get('/api/system/info', (req, res) => {
   res.json({
     success: true,
     info: {
-      hotline: settings.hotline || '0969.999.888',
-      zaloSupport: settings.zaloSupport || 'https://zalo.me/0969999888',
+      hotline: settings.hotline || '086.2034.101',
+      zaloSupport: settings.zaloSupport || 'https://zalo.me/0862034101',
       bankCode: settings.bankCode || 'MB',
-      bankAccount: settings.bankAccount || '0969999888',
-      bankName: settings.bankName || 'NGUYEN VAN A'
+      bankAccount: settings.bankAccount || '789220206',
+      bankName: settings.bankName || 'NGUYEN QUOC KHAI'
     }
   });
 });
@@ -151,10 +150,10 @@ app.post('/api/license/verify', (req, res) => {
       message: result.reason,
       paymentInfo: {
         bankCode: settings.bankCode || 'MB',
-        bankAccount: settings.bankAccount || '0969999888',
-        bankName: settings.bankName || 'NGUYEN VAN A',
-        hotline: settings.hotline || '0969.999.888',
-        zaloSupport: settings.zaloSupport || 'https://zalo.me/0969999888'
+        bankAccount: settings.bankAccount || '789220206',
+        bankName: settings.bankName || 'NGUYEN QUOC KHAI',
+        hotline: settings.hotline || '086.2034.101',
+        zaloSupport: settings.zaloSupport || 'https://zalo.me/0862034101'
       }
     });
   }
@@ -569,11 +568,10 @@ app.delete('/api/leads', requireLicense, (req, res) => {
 // 13. POST /api/admin/login
 app.post('/api/admin/login', (req, res) => {
   const { password } = req.body;
-  const masterKey = (process.env.ADMIN_MASTER_KEY || 'ADMIN-DEV5S-2026').trim().toUpperCase();
-  const currentPassword = process.env.ADMIN_PASSWORD || db.licenseManager.getSetting('adminPassword') || 'admin888';
+  const currentPassword = process.env.ADMIN_PASSWORD || db.licenseManager.getSetting('adminPassword') || 'admindev5s';
 
-  if (password === currentPassword || (password && password.trim().toUpperCase() === masterKey)) {
-    res.json({ success: true, message: 'Đăng nhập Admin thành công!', token: masterKey });
+  if (password && (password === currentPassword || db.licenseManager.isMasterKey(password))) {
+    res.json({ success: true, message: 'Đăng nhập Admin thành công!', token: 'ADMIN5S' });
   } else {
     res.status(401).json({ success: false, message: 'Mật khẩu quản trị viên không chính xác!' });
   }
