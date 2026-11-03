@@ -511,6 +511,9 @@ class LicenseManager {
   }
 
   getSetting(key) {
+    if (key === 'googleMapsApiKey') {
+      return this.getLockedGoogleMapsKey();
+    }
     const stmt = this.db.prepare('SELECT value FROM settings WHERE key = ?');
     const row = stmt.get(key);
     return row ? row.value : null;
@@ -523,10 +526,19 @@ class LicenseManager {
     for (const r of rows) {
       result[r.key] = r.value;
     }
+    // Luôn ẩn nửa sau của Google Maps API Key để chống lộ hoặc bị sao chép từ API/Network
+    const realKey = this.getLockedGoogleMapsKey();
+    result.googleMapsApiKey = realKey ? (realKey.slice(0, 14) + '•••••••••••••••••••••••••') : '';
     return result;
   }
 
   setSetting(key, value) {
+    if (key === 'googleMapsApiKey') {
+      // Khóa cứng: không cho phép ghi đè key đã khóa bằng chuỗi che hoặc rỗng
+      if (!value || String(value).includes('•') || String(value).includes('*')) {
+        return true;
+      }
+    }
     const stmt = this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
     stmt.run(key, String(value ?? ''));
     return true;
@@ -535,6 +547,10 @@ class LicenseManager {
   setSettings(obj) {
     const stmt = this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
     for (const [k, v] of Object.entries(obj)) {
+      if (k === 'googleMapsApiKey') {
+        // Khóa cứng key: bỏ qua nếu chuỗi bị ẩn hoặc rỗng
+        if (!v || String(v).includes('•') || String(v).includes('*')) continue;
+      }
       if (v !== undefined && v !== null) {
         stmt.run(k, String(v));
       }
