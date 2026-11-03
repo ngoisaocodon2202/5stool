@@ -776,7 +776,7 @@
               <input 
                 id="setBankAccount" 
                 type="text" 
-                placeholder="0969999888" 
+                placeholder="789220206" 
                 class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
                 oninput="updateVietqrLivePreview()"
               />
@@ -786,7 +786,7 @@
               <input 
                 id="setBankName" 
                 type="text" 
-                placeholder="NGUYEN VAN A" 
+                placeholder="NGUYEN QUOC KHAI" 
                 class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-black uppercase text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
                 oninput="updateVietqrLivePreview()"
               />
@@ -799,7 +799,7 @@
               <input 
                 id="setHotline" 
                 type="text" 
-                placeholder="0969.999.888" 
+                placeholder="086.2034.101" 
                 class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-xs sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20" 
                 oninput="updateVietqrLivePreview()"
               />
@@ -888,16 +888,16 @@
           <div class="p-2.5 bg-white rounded-xl shadow-2xl">
             <img 
               id="vietqrPreviewImg" 
-              src="https://img.vietqr.io/image/MB-0969999888-compact2.png?amount=0&addInfo=MUA%20KEY%20LEAD&accountName=NGUYEN%20VAN%20A" 
+              src="https://api.vietqr.io/image/MB-789220206-compact2.png?amount=0&addInfo=MUA%20KEY%20LEAD&accountName=NGUYEN%20QUOC%20KHAI" 
               alt="Mã VietQR" 
               class="w-48 h-48 object-contain rounded-lg"
             />
           </div>
 
           <div class="space-y-0.5 text-xs">
-            <div class="font-extrabold text-sm text-white whitespace-nowrap" id="vietqrPreviewName">NGUYEN VAN A</div>
-            <div class="text-slate-400 font-mono whitespace-nowrap" id="vietqrPreviewBank">Ngân hàng: MB • STK: 0969999888</div>
-            <div class="text-[11px] text-cyan-400 font-semibold whitespace-nowrap" id="vietqrPreviewHotline">Hotline: 0969.999.888</div>
+            <div class="font-extrabold text-sm text-white whitespace-nowrap" id="vietqrPreviewName">NGUYEN QUOC KHAI</div>
+            <div class="text-slate-400 font-mono whitespace-nowrap" id="vietqrPreviewBank">Ngân hàng: MB • STK: 789220206</div>
+            <div class="text-[11px] text-cyan-400 font-semibold whitespace-nowrap" id="vietqrPreviewHotline">Hotline: 086.2034.101</div>
           </div>
 
           <p class="text-[11px] text-slate-400 max-w-xs whitespace-nowrap">
@@ -1427,7 +1427,7 @@
       const maxDaily = document.getElementById('newMaxDaily').value;
       const planText = PLAN_DATA[planVal] ? PLAN_DATA[planVal].name : 'Bản quyền 5S DEV.TOOL';
       const webUrl = window.location.origin;
-      const hotline = document.getElementById('setHotline')?.value || '0969.999.888';
+      const hotline = document.getElementById('setHotline')?.value || '086.2034.101';
 
       const msg = `🎉 THÔNG TIN BÀN GIAO BẢN QUYỀN 5S DEV.TOOL\n----------------------------------\n👤 Khách hàng: ${clientName}\n🌐 Link truy cập Tool: ${webUrl}\n🔑 Mã License Key: ${key}\n📦 Gói đăng ký: ${planText}\n🚀 Hạn mức khai thác: ${maxDaily >= 999999 ? 'Không giới hạn (Max Speed ∞)' : maxDaily + ' Leads'}\n----------------------------------\n👉 HƯỚNG DẪN SỬ DỤNG:\n1. Truy cập đường dẫn ${webUrl}\n2. Dán mã Key "${key}" vào ô kích hoạt bản quyền.\n3. Chọn Tỉnh/Thành phố (63 tỉnh), Ngành nghề và Nguồn cào để bắt đầu quét dữ liệu & kiểm tra Zalo Active!\n📞 Hotline/Zalo hỗ trợ kỹ thuật: ${hotline}`;
 
@@ -1440,7 +1440,7 @@
       const planText = PLAN_DATA[lic.planType] ? PLAN_DATA[lic.planType].name : lic.planType;
       const expText = lic.expiresAt ? new Date(lic.expiresAt).toLocaleDateString('vi-VN') : 'Vĩnh viễn (Trọn đời)';
       const webUrl = window.location.origin;
-      const hotline = document.getElementById('setHotline')?.value || '0969.999.888';
+      const hotline = document.getElementById('setHotline')?.value || '086.2034.101';
 
       const msg = `🎉 THÔNG TIN BÀN GIAO BẢN QUYỀN 5S DEV.TOOL\n----------------------------------\n👤 Khách hàng: ${lic.clientName}\n🌐 Link truy cập Tool: ${webUrl}\n🔑 Mã License Key: ${lic.key}\n📦 Gói đăng ký: ${planText}\n⏳ Hạn sử dụng: ${expText}\n🚀 Hạn mức khai thác: ${lic.maxDailyScrapes >= 999999 ? 'Không giới hạn (Max Speed ∞)' : lic.maxDailyScrapes + ' Leads'}\n----------------------------------\n👉 HƯỚNG DẪN KÍCH HOẠT:\nMở link ${webUrl} -> Dán mã "${lic.key}" -> Bấm Xác Nhận Kích Hoạt để sử dụng ngay!\n📞 Hỗ trợ kỹ thuật: ${hotline}`;
 
@@ -1559,9 +1559,9 @@
         if (data.success && data.settings) {
           const s = data.settings;
           if (document.getElementById('setBankCode')) document.getElementById('setBankCode').value = s.bankCode || 'MB';
-          if (document.getElementById('setBankAccount')) document.getElementById('setBankAccount').value = s.bankAccount || '0969999888';
-          if (document.getElementById('setBankName')) document.getElementById('setBankName').value = s.bankName || 'NGUYEN VAN A';
-          if (document.getElementById('setHotline')) document.getElementById('setHotline').value = s.hotline || '0969.999.888';
+          if (document.getElementById('setBankAccount')) document.getElementById('setBankAccount').value = s.bankAccount || '789220206';
+          if (document.getElementById('setBankName')) document.getElementById('setBankName').value = s.bankName || 'NGUYEN QUOC KHAI';
+          if (document.getElementById('setHotline')) document.getElementById('setHotline').value = s.hotline || '086.2034.101';
           if (document.getElementById('setAdminPassword')) document.getElementById('setAdminPassword').value = s.adminPassword || 'admin888';
           if (document.getElementById('setGoogleMapsApiKey')) document.getElementById('setGoogleMapsApiKey').value = s.googleMapsApiKey || 'AIzaSyAjo3HeJc•••••••••••••••••••••••••';
           
@@ -1680,9 +1680,9 @@
 
     function updateVietqrLivePreview() {
       const bankCode = (document.getElementById('setBankCode')?.value.trim() || 'MB').toUpperCase();
-      const bankAccount = document.getElementById('setBankAccount')?.value.trim() || '0969999888';
-      const bankName = (document.getElementById('setBankName')?.value.trim() || 'NGUYEN VAN A').toUpperCase();
-      const hotline = document.getElementById('setHotline')?.value.trim() || '0969.999.888';
+      const bankAccount = document.getElementById('setBankAccount')?.value.trim() || '789220206';
+      const bankName = (document.getElementById('setBankName')?.value.trim() || 'NGUYEN QUOC KHAI').toUpperCase();
+      const hotline = document.getElementById('setHotline')?.value.trim() || '086.2034.101';
 
       const qrUrl = `https://img.vietqr.io/image/${bankCode}-${bankAccount}-compact2.png?amount=0&addInfo=MUA%20KEY%20LEAD&accountName=${encodeURIComponent(bankName)}`;
       
