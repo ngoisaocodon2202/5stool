@@ -130,10 +130,34 @@
     .dropdown-slide-down {
       animation: dropSlideDown 0.16s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       transform-origin: top center;
+      border-radius: 1.1rem !important;
+      box-shadow: 0 18px 38px -10px rgba(15, 23, 42, 0.18), 0 4px 12px -2px rgba(79, 70, 229, 0.08) !important;
     }
     @keyframes dropSlideDown {
-      0% { opacity: 0; transform: translateY(-6px) scale(0.99); }
+      0% { opacity: 0; transform: translateY(-6px) scale(0.985); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #btnDropdownSource,
+    #btnDropdownCity,
+    #btnDropdownIndustry,
+    #btnDropdownLimit,
+    #btnDropdownZaloStatus,
+    #btnDropdownCarrier,
+    #btnDropdownCrmStatus {
+      min-height: 40px;
+      border-radius: 0.85rem !important;
+      border-width: 1.5px !important;
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    #btnDropdownSource:hover,
+    #btnDropdownCity:hover,
+    #btnDropdownIndustry:hover,
+    #btnDropdownLimit:hover,
+    #btnDropdownZaloStatus:hover,
+    #btnDropdownCarrier:hover,
+    #btnDropdownCrmStatus:hover {
+      background-color: #f8faff !important;
+      transform: translateY(-0.5px);
     }
     .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; border-radius: 4px; }
@@ -148,18 +172,24 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
     @media screen and (max-width: 768px) {
-      input, select, textarea, .modern-select {
+      input[type="text"], input[type="url"], input[type="password"], textarea {
         font-size: 16px !important;
       }
-      select.crm-mini-select {
-        font-size: 13px !important;
+      #searchCityInput, #searchIndustryInput {
+        font-size: 16px !important;
       }
       input::placeholder, textarea::placeholder {
         font-size: 13px !important;
       }
+      .dropdown-slide-down {
+        max-width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+      }
       html, body {
         touch-action: pan-x pan-y;
         -webkit-text-size-adjust: 100%;
+        overflow-x: hidden;
       }
       main {
         padding-left: 0.75rem !important;
@@ -536,19 +566,53 @@
           </div>
         </div>
 
-        <!-- 2. Nguồn Dữ Liệu Cào (Multi-Source Selector) -->
-        <div>
+        <!-- 2. Nguồn Dữ Liệu Cào (Custom Rounded Multi-Source Dropdown) -->
+        <div class="relative">
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
-            <span>Nguồn Dữ Liệu Cào</span>
+            <span class="flex items-center gap-1">
+              <i data-lucide="globe" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <span>Nguồn Dữ Liệu Cào</span>
+            </span>
             <span class="text-[10px] text-indigo-600 font-bold">Đa Kênh</span>
           </label>
-          <select id="filterSourceType" onchange="fetchLeads()" class="modern-select w-full">
-            <option value="all">🌐 Đa Nguồn (Tất cả 4 Kênh)</option>
-            <option value="gmaps">📍 Google Maps Places API</option>
-            <option value="facebook">📘 Facebook Fanpage Business</option>
-            <option value="yellowpages">📒 Trang Vàng Việt Nam</option>
-            <option value="doanhnghiep">🏛️ Cổng DN Quốc Gia (MST)</option>
-          </select>
+
+          <input type="hidden" id="filterSourceType" value="all" />
+
+          <button 
+            type="button" 
+            id="btnDropdownSource" 
+            onclick="toggleGenericDropdown(event, 'Source')" 
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
+          >
+            <span id="labelDropdownSource" class="truncate">🌐 Đa Nguồn (Tất cả 4 Kênh)</span>
+            <i id="chevronDropdownSource" data-lucide="chevron-down" class="w-4 h-4 text-indigo-500 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+
+          <div 
+            id="menuDropdownSource" 
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down w-full sm:min-w-[235px]"
+          >
+            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'all', '🌐 Đa Nguồn (Tất cả 4 Kênh)')" data-val="all" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-bold text-xs transition-all">
+              <span class="truncate">🌐 Đa Nguồn (Tất cả 4 Kênh)</span>
+              <span class="text-[10px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-md font-sans shrink-0 ml-1">4 Kênh</span>
+            </div>
+            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'gmaps', '📍 Google Maps Places API')" data-val="gmaps" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">📍 Google Maps Places API</span>
+              <span class="text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">Maps</span>
+            </div>
+            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'facebook', '📘 Facebook Fanpage Business')" data-val="facebook" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">📘 Facebook Fanpage Business</span>
+              <span class="text-[10px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">FB</span>
+            </div>
+            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'yellowpages', '📒 Trang Vàng Việt Nam')" data-val="yellowpages" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">📒 Trang Vàng Việt Nam</span>
+              <span class="text-[10px] text-yellow-700 bg-yellow-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">B2B</span>
+            </div>
+            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'doanhnghiep', '🏛️ Cổng DN Quốc Gia (MST)')" data-val="doanhnghiep" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">🏛️ Cổng DN Quốc Gia (MST)</span>
+              <span class="text-[10px] text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">MST</span>
+            </div>
+          </div>
         </div>
 
         <!-- 3. 63 Tỉnh Thành: Custom Searchable Dropdown -->
@@ -569,7 +633,7 @@
             type="button" 
             id="btnDropdownCity" 
             onclick="toggleCityDropdown(event)" 
-            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-left text-xs font-bold text-slate-800"
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
           >
             <span id="labelDropdownCity" class="truncate">📍 Toàn Quốc (63 Tỉnh Thành)</span>
             <i id="chevronDropdownCity" data-lucide="chevron-down" class="w-4 h-4 text-indigo-500 transition-transform duration-200 flex-shrink-0"></i>
@@ -577,7 +641,7 @@
 
           <div 
             id="menuDropdownCity" 
-            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 space-y-1.5 dropdown-slide-down min-w-[240px]"
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 space-y-1.5 dropdown-slide-down w-full sm:min-w-[240px]"
           >
             <div class="relative p-0.5">
               <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
@@ -585,7 +649,7 @@
                 id="searchCityInput" 
                 type="text" 
                 placeholder="Gõ tìm nhanh tỉnh thành (VD: Đà Nẵng, Bình Dương)..." 
-                class="w-full pl-7 pr-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-700" 
+                class="w-full pl-7 pr-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-700" 
                 oninput="filterCityList(this.value)"
                 onclick="event.stopPropagation()"
               />
@@ -610,7 +674,7 @@
             type="button" 
             id="btnDropdownIndustry" 
             onclick="toggleIndustryDropdown(event)" 
-            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 text-left text-xs font-bold text-slate-800"
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
           >
             <span id="labelDropdownIndustry" class="truncate">🏢 Mọi Ngành Nghề (Tất Cả)</span>
             <i id="chevronDropdownIndustry" data-lucide="chevron-down" class="w-4 h-4 text-cyan-600 transition-transform duration-200 flex-shrink-0"></i>
@@ -618,7 +682,7 @@
 
           <div 
             id="menuDropdownIndustry" 
-            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 space-y-1.5 dropdown-slide-down min-w-[270px]"
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 space-y-1.5 dropdown-slide-down w-full sm:min-w-[270px]"
           >
             <!-- Tìm hoặc gõ ngành tùy ý -->
             <div class="relative p-0.5 flex gap-1" onclick="event.stopPropagation()">
@@ -628,12 +692,12 @@
                   id="searchIndustryInput" 
                   type="text" 
                   placeholder="Tìm hoặc gõ ngành (Trà sữa, Sản xuất, Nội thất...)" 
-                  class="w-full pl-7 pr-2 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-cyan-500 font-medium text-slate-700" 
+                  class="w-full pl-7 pr-2 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-cyan-500 font-medium text-slate-700" 
                   oninput="filterIndustryList(this.value)"
                   onkeydown="if(event.key==='Enter'){ event.preventDefault(); applyCustomIndustryKeyword(); }"
                 />
               </div>
-              <button type="button" onclick="applyCustomIndustryKeyword()" class="px-2.5 py-1.5 rounded-lg bg-cyan-600 text-white text-[11px] font-bold hover:bg-cyan-700 shrink-0" title="Lọc theo từ khóa ngành bạn vừa gõ">
+              <button type="button" onclick="applyCustomIndustryKeyword()" class="px-2.5 py-1.5 rounded-xl bg-cyan-600 text-white text-[11px] font-bold hover:bg-cyan-700 shrink-0" title="Lọc theo từ khóa ngành bạn vừa gõ">
                 Chọn
               </button>
             </div>
@@ -657,7 +721,7 @@
             type="button" 
             id="btnDropdownLimit" 
             onclick="toggleLimitDropdown(event)" 
-            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-emerald-400 focus:outline-none text-left text-xs font-bold text-emerald-700 font-mono"
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-emerald-400 focus:outline-none text-left text-xs font-bold text-emerald-700 font-mono transition-all shadow-2xs"
           >
             <span id="labelDropdownLimit" class="truncate">🚀 50 Khách Hàng (Chuẩn)</span>
             <i id="chevronDropdownLimit" data-lucide="chevron-down" class="w-4 h-4 text-emerald-600 transition-transform duration-200 flex-shrink-0"></i>
@@ -665,25 +729,25 @@
 
           <div 
             id="menuDropdownLimit" 
-            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down min-w-[210px]"
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down w-full sm:min-w-[210px]"
           >
-            <div onclick="selectCustomLimit('25', '⚡ 25 Khách Hàng (Nhanh)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono">
+            <div onclick="selectCustomLimit('25', '⚡ 25 Khách Hàng (Nhanh)')" data-val="25" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
               <span>⚡ 25 Khách Hàng</span>
               <span class="text-[10px] text-slate-400 font-sans">Nhanh</span>
             </div>
-            <div onclick="selectCustomLimit('50', '🚀 50 Khách Hàng (Chuẩn)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-xs font-mono border border-emerald-100">
+            <div onclick="selectCustomLimit('50', '🚀 50 Khách Hàng (Chuẩn)')" data-val="50" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-xs font-mono border border-emerald-100 transition-all">
               <span>🚀 50 Khách Hàng</span>
               <span class="text-[10px] bg-emerald-600 text-white px-1.5 py-0.5 rounded font-sans">Chuẩn</span>
             </div>
-            <div onclick="selectCustomLimit('100', '🔥 100 Khách Hàng (Gói Lớn)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono">
+            <div onclick="selectCustomLimit('100', '🔥 100 Khách Hàng (Gói Lớn)')" data-val="100" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
               <span>🔥 100 Khách Hàng</span>
               <span class="text-[10px] text-slate-400 font-sans">Gói Lớn</span>
             </div>
-            <div onclick="selectCustomLimit('150', '💎 150 Khách Hàng (Đại Lý)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono">
+            <div onclick="selectCustomLimit('150', '💎 150 Khách Hàng (Đại Lý)')" data-val="150" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
               <span>💎 150 Khách Hàng</span>
               <span class="text-[10px] text-purple-600 font-sans">Đại Lý</span>
             </div>
-            <div onclick="selectCustomLimit('200', '👑 200 Khách Hàng (Tối Đa)')" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono">
+            <div onclick="selectCustomLimit('200', '👑 200 Khách Hàng (Tối Đa)')" data-val="200" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
               <span>👑 200 Khách Hàng</span>
               <span class="text-[10px] bg-amber-500 text-white px-1.5 py-0.5 rounded font-sans">Tối Đa</span>
             </div>
@@ -692,50 +756,128 @@
 
       </div>
 
-      <!-- HÀNG LỌC NÂNG CAO (NHÀ MẠNG, TRẠNG THÁI ZALO ACTIVE/NOT FOUND, MINI-CRM, ẨN SỐ BÀN 02X) -->
+      <!-- HÀNG LỌC NÂNG CAO (CUSTOM DROPDOWNS ĐỒNG BỘ 100% ROUNDED-2XL: TRẠNG THÁI ZALO, NHÀ MẠNG, MINI-CRM, ẨN SỐ BÀN 02X) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-2 border-t border-slate-100">
         
-        <!-- Lọc Trạng Thái Zalo (Active vs Not Found) -->
-        <div>
-          <select id="filterZaloStatus" onchange="fetchLeads()" class="modern-select w-full">
-            <option value="all">💬 Trạng Thái Zalo: Tất cả SĐT</option>
-            <option value="ACTIVE">🟢 Zalo: ACTIVE (Đã đăng ký Zalo)</option>
-            <option value="NOT_FOUND">🔴 Zalo: NOT FOUND (Chưa đăng ký)</option>
-          </select>
+        <!-- 1. Lọc Trạng Thái Zalo (Active vs Not Found) -->
+        <div class="relative">
+          <input type="hidden" id="filterZaloStatus" value="all" />
+          <button 
+            type="button" 
+            id="btnDropdownZaloStatus" 
+            onclick="toggleGenericDropdown(event, 'ZaloStatus')" 
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
+          >
+            <span id="labelDropdownZaloStatus" class="truncate">💬 Trạng Thái Zalo: Tất cả SĐT</span>
+            <i id="chevronDropdownZaloStatus" data-lucide="chevron-down" class="w-4 h-4 text-emerald-600 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+
+          <div 
+            id="menuDropdownZaloStatus" 
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down w-full sm:min-w-[235px]"
+          >
+            <div onclick="selectCustomDropdown('ZaloStatus', 'filterZaloStatus', 'all', '💬 Trạng Thái Zalo: Tất cả SĐT')" data-val="all" class="zalostatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-bold text-xs transition-all">
+              <span class="truncate">💬 Trạng Thái Zalo: Tất cả SĐT</span>
+              <span class="text-[10px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-md font-sans shrink-0 ml-1">Tất cả</span>
+            </div>
+            <div onclick="selectCustomDropdown('ZaloStatus', 'filterZaloStatus', 'ACTIVE', '🟢 Zalo: ACTIVE (Đã đăng ký)')" data-val="ACTIVE" class="zalostatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">🟢 Zalo: ACTIVE (Đã đăng ký)</span>
+              <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">Active</span>
+            </div>
+            <div onclick="selectCustomDropdown('ZaloStatus', 'filterZaloStatus', 'NOT_FOUND', '🔴 Zalo: NOT FOUND (Chưa ĐK)')" data-val="NOT_FOUND" class="zalostatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">🔴 Zalo: NOT FOUND (Chưa đăng ký)</span>
+              <span class="text-[10px] text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">Not Found</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Lọc Nhà Mạng Viễn Thông -->
-        <div>
-          <select id="filterCarrier" onchange="fetchLeads()" class="modern-select w-full">
-            <option value="all">📡 Nhà Mạng: Tất cả (Viettel/Vina/Mobi...)</option>
-            <option value="VIETTEL">🟢 Nhà mạng VIETTEL (096, 097, 098, 086, 03x)</option>
-            <option value="VINAPHONE">🔵 Nhà mạng VINAPHONE (091, 094, 088, 08x)</option>
-            <option value="MOBIFONE">🟠 Nhà mạng MOBIFONE (090, 093, 089, 07x)</option>
-          </select>
+        <!-- 2. Lọc Nhà Mạng Viễn Thông -->
+        <div class="relative">
+          <input type="hidden" id="filterCarrier" value="all" />
+          <button 
+            type="button" 
+            id="btnDropdownCarrier" 
+            onclick="toggleGenericDropdown(event, 'Carrier')" 
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
+          >
+            <span id="labelDropdownCarrier" class="truncate">📡 Nhà Mạng: Tất cả (Viettel/Vina/Mobi)</span>
+            <i id="chevronDropdownCarrier" data-lucide="chevron-down" class="w-4 h-4 text-indigo-500 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+
+          <div 
+            id="menuDropdownCarrier" 
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down w-full sm:min-w-[245px]"
+          >
+            <div onclick="selectCustomDropdown('Carrier', 'filterCarrier', 'all', '📡 Nhà Mạng: Tất cả (Viettel/Vina/Mobi)')" data-val="all" class="carrier-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-bold text-xs transition-all">
+              <span class="truncate">📡 Nhà Mạng: Tất cả nhà mạng</span>
+              <span class="text-[10px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-md font-sans shrink-0 ml-1">Tất cả</span>
+            </div>
+            <div onclick="selectCustomDropdown('Carrier', 'filterCarrier', 'VIETTEL', '🟢 Nhà mạng VIETTEL (096, 097, 098, 03x)')" data-val="VIETTEL" class="carrier-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">🟢 Nhà mạng VIETTEL (096, 097, 098, 03x)</span>
+              <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">Viettel</span>
+            </div>
+            <div onclick="selectCustomDropdown('Carrier', 'filterCarrier', 'VINAPHONE', '🔵 Nhà mạng VINAPHONE (091, 094, 08x)')" data-val="VINAPHONE" class="carrier-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">🔵 Nhà mạng VINAPHONE (091, 094, 08x)</span>
+              <span class="text-[10px] text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">Vina</span>
+            </div>
+            <div onclick="selectCustomDropdown('Carrier', 'filterCarrier', 'MOBIFONE', '🟠 Nhà mạng MOBIFONE (090, 093, 07x)')" data-val="MOBIFONE" class="carrier-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">🟠 Nhà mạng MOBIFONE (090, 093, 07x)</span>
+              <span class="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">Mobi</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Lọc Trạng Thái Chăm Sóc Mini-CRM -->
-        <div>
-          <select id="filterCrmStatus" onchange="fetchLeads()" class="modern-select w-full">
-            <option value="all">📋 Tiến Độ Sale (CRM): Mọi trạng thái</option>
-            <option value="new">🆕 Mới cào (Chưa liên hệ)</option>
-            <option value="called">📞 Đã gọi điện</option>
-            <option value="zalo_sent">💬 Đã kết bạn / Nhắn Zalo</option>
-            <option value="interested">🔥 Khách quan tâm</option>
-            <option value="closed">✅ Đã chốt đơn thành công</option>
-            <option value="no_answer">❌ Không nghe máy / Thuê bao</option>
-          </select>
+        <!-- 3. Lọc Trạng Thái Chăm Sóc Mini-CRM -->
+        <div class="relative">
+          <input type="hidden" id="filterCrmStatus" value="all" />
+          <button 
+            type="button" 
+            id="btnDropdownCrmStatus" 
+            onclick="toggleGenericDropdown(event, 'CrmStatus')" 
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
+          >
+            <span id="labelDropdownCrmStatus" class="truncate">📋 Tiến Độ Sale (CRM): Mọi trạng thái</span>
+            <i id="chevronDropdownCrmStatus" data-lucide="chevron-down" class="w-4 h-4 text-cyan-600 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+
+          <div 
+            id="menuDropdownCrmStatus" 
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down w-full sm:min-w-[235px]"
+          >
+            <div onclick="selectCustomDropdown('CrmStatus', 'filterCrmStatus', 'all', '📋 Tiến Độ Sale (CRM): Mọi trạng thái')" data-val="all" class="crmstatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-bold text-xs transition-all">
+              <span class="truncate">📋 Tiến Độ Sale: Mọi trạng thái</span>
+              <span class="text-[10px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-md font-sans shrink-0 ml-1">Tất cả</span>
+            </div>
+            <div onclick="selectCustomDropdown('CrmStatus', 'filterCrmStatus', 'new', '🆕 Tiến Độ: Mới cào (Chưa liên hệ)')" data-val="new" class="crmstatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">🆕 Mới cào (Chưa liên hệ)</span>
+            </div>
+            <div onclick="selectCustomDropdown('CrmStatus', 'filterCrmStatus', 'called', '📞 Tiến Độ: Đã gọi điện')" data-val="called" class="crmstatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">📞 Đã gọi điện</span>
+            </div>
+            <div onclick="selectCustomDropdown('CrmStatus', 'filterCrmStatus', 'zalo_sent', '💬 Tiến Độ: Đã kết bạn / Nhắn Zalo')" data-val="zalo_sent" class="crmstatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">💬 Đã kết bạn / Nhắn Zalo</span>
+            </div>
+            <div onclick="selectCustomDropdown('CrmStatus', 'filterCrmStatus', 'interested', '🔥 Tiến Độ: Khách quan tâm')" data-val="interested" class="crmstatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">🔥 Khách quan tâm</span>
+            </div>
+            <div onclick="selectCustomDropdown('CrmStatus', 'filterCrmStatus', 'closed', '✅ Tiến Độ: Đã chốt đơn thành công')" data-val="closed" class="crmstatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">✅ Đã chốt đơn thành công</span>
+            </div>
+            <div onclick="selectCustomDropdown('CrmStatus', 'filterCrmStatus', 'no_answer', '❌ Tiến Độ: Không nghe máy / Thuê bao')" data-val="no_answer" class="crmstatus-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">❌ Không nghe máy / Thuê bao</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Tùy chọn Chỉ SĐT Di Động & Bỏ trùng -->
-        <div class="flex items-center justify-between gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
-          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none" title="Loại bỏ toàn bộ số điện thoại bàn cố định (024, 028...)">
-            <input id="chkMobileOnly" type="checkbox" onchange="fetchLeads()" class="w-4 h-4 rounded text-indigo-600 cursor-pointer" />
-            <span class="font-bold text-slate-700 whitespace-nowrap">📱 Chỉ SĐT Di Động (Ẩn 02x)</span>
+        <!-- 4. Tùy chọn Chỉ SĐT Di Động & Bỏ trùng -->
+        <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs shadow-2xs">
+          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none min-w-0" title="Loại bỏ toàn bộ số điện thoại bàn cố định (024, 028...)">
+            <input id="chkMobileOnly" type="checkbox" onchange="fetchLeads()" class="w-4 h-4 rounded text-indigo-600 cursor-pointer shrink-0" />
+            <span class="font-bold text-slate-700 whitespace-nowrap truncate">📱 Chỉ SĐT Di Động (Ẩn 02x)</span>
           </label>
-          <span class="text-slate-300">|</span>
-          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none" title="Bỏ qua các số đã có trong kho khi cào mới">
-            <input id="chkSkipExisting" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 cursor-pointer" />
+          <span class="text-slate-300 shrink-0">|</span>
+          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none shrink-0" title="Bỏ qua các số đã có trong kho khi cào mới">
+            <input id="chkSkipExisting" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 cursor-pointer shrink-0" />
             <span class="font-bold text-slate-700 whitespace-nowrap">Lọc trùng</span>
           </label>
         </div>
@@ -745,15 +887,16 @@
       <!-- DÃY NÚT THAO TÁC CÀO & TIỆN ÍCH THƯƠNG MẠI -->
       <div class="space-y-2.5 pt-2 border-t border-slate-100">
         
-        <!-- NÚT 1 CHÍNH: BẮT ĐẦU CÀO DATA ĐA NGUỒN -->
+        <!-- NÚT 1 CHÍNH: BẮT ĐẦU CÀO DATA ĐA NGUỒN (RESPONSIVE MOBILE 1 DÒNG GỌN GÀNG) -->
         <button 
           id="btnStartScan"
           onclick="triggerLiveScan()" 
-          class="btn-shimmer w-full py-3.5 px-2 text-[11px] xs:text-xs sm:text-sm font-black text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 rounded-xl shadow-md shadow-indigo-500/25 hover:-translate-y-0.5 hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap"
+          class="btn-shimmer w-full py-3.5 px-3 text-xs sm:text-sm font-black text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 rounded-xl shadow-md shadow-indigo-500/25 hover:-translate-y-0.5 hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap"
           style="white-space: nowrap !important;"
         >
           <i data-lucide="radar" class="w-4 h-4 shrink-0"></i>
-          <span class="tracking-tight sm:tracking-wide whitespace-nowrap uppercase">BẮT ĐẦU CÀO DATA ĐA NGUỒN (GMAPS • FB • TRANG VÀNG • CỔNG DN)</span>
+          <span class="sm:hidden tracking-tight whitespace-nowrap uppercase">BẮT ĐẦU CÀO DATA ĐA NGUỒN (4 KÊNH)</span>
+          <span class="hidden sm:inline tracking-wide whitespace-nowrap uppercase">BẮT ĐẦU CÀO DATA ĐA NGUỒN (GMAPS • FB • TRANG VÀNG • CỔNG DN)</span>
         </button>
 
         <!-- DÃY NÚT PHỤ -->
@@ -1211,16 +1354,78 @@
     function selectCustomLimit(value, label) {
       document.getElementById('scanLimit').value = value;
       document.getElementById('labelDropdownLimit').innerText = label;
+      const menu = document.getElementById('menuDropdownLimit');
+      if (menu) {
+        menu.querySelectorAll('.limit-item').forEach(el => {
+          const isSelected = el.getAttribute('data-val') === String(value);
+          el.className = `limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${isSelected ? 'bg-emerald-50 text-emerald-800 border border-emerald-100' : 'hover:bg-slate-50 text-slate-700'} font-bold text-xs font-mono transition-all`;
+        });
+      }
       closeAllHeaderDropdowns();
     }
 
+    function toggleGenericDropdown(e, type) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById(`menuDropdown${type}`);
+      const chevron = document.getElementById(`chevronDropdown${type}`);
+      if (!menu) return;
+      const isHidden = menu.classList.contains('hidden');
+      closeAllHeaderDropdowns();
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        if (chevron) chevron.classList.add('rotate-180');
+      }
+    }
+
+    function selectCustomDropdown(type, inputId, value, label) {
+      const inp = document.getElementById(inputId);
+      if (inp) inp.value = value;
+      const lbl = document.getElementById(`labelDropdown${type}`);
+      if (lbl) lbl.innerText = label;
+
+      const menu = document.getElementById(`menuDropdown${type}`);
+      if (menu) {
+        menu.querySelectorAll('[data-val]').forEach(el => {
+          const isSelected = el.getAttribute('data-val') === String(value);
+          if (isSelected) {
+            el.classList.remove('hover:bg-slate-50', 'text-slate-700', 'font-semibold');
+            el.classList.add('bg-indigo-50', 'text-indigo-700', 'font-bold');
+          } else {
+            el.classList.remove('bg-indigo-50', 'text-indigo-700', 'font-bold');
+            el.classList.add('hover:bg-slate-50', 'text-slate-700', 'font-semibold');
+          }
+        });
+      }
+
+      closeAllHeaderDropdowns();
+      fetchLeads();
+    }
+
+    function toggleLeadCrmDropdown(e, menuId) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById(menuId);
+      if (!menu) return;
+      const isHidden = menu.classList.contains('hidden');
+      closeAllHeaderDropdowns();
+      if (isHidden) {
+        menu.classList.remove('hidden');
+      }
+    }
+
+    function selectLeadCrmOption(leadId, statusVal) {
+      closeAllHeaderDropdowns();
+      updateLeadCrmStatus(leadId, statusVal);
+      renderTable(currentLeads);
+    }
+
     function closeAllHeaderDropdowns() {
-      ['City', 'Industry', 'Limit'].forEach(type => {
+      ['City', 'Industry', 'Limit', 'Source', 'ZaloStatus', 'Carrier', 'CrmStatus'].forEach(type => {
         const m = document.getElementById(`menuDropdown${type}`);
         if (m) m.classList.add('hidden');
         const c = document.getElementById(`chevronDropdown${type}`);
         if (c) c.classList.remove('rotate-180');
       });
+      document.querySelectorAll('.crm-row-menu').forEach(el => el.classList.add('hidden'));
     }
 
     document.addEventListener('click', (e) => {
@@ -1229,7 +1434,12 @@
         e.target.id === 'searchIndustryInput' ||
         e.target.closest('#menuDropdownCity') ||
         e.target.closest('#menuDropdownIndustry') ||
-        e.target.closest('#menuDropdownLimit')
+        e.target.closest('#menuDropdownLimit') ||
+        e.target.closest('#menuDropdownSource') ||
+        e.target.closest('#menuDropdownZaloStatus') ||
+        e.target.closest('#menuDropdownCarrier') ||
+        e.target.closest('#menuDropdownCrmStatus') ||
+        e.target.closest('.crm-row-menu')
       )) {
         return;
       }
@@ -1632,21 +1842,54 @@
       }
     }
 
-    function renderCrmCell(lead) {
+    function renderCustomCrmMenuHtml(lead, menuId) {
       const status = lead.crmStatus || 'new';
+      const meta = CRM_STATUS_META[status] || CRM_STATUS_META.new;
+      const safeId = String(lead.id).replace(/'/g, "\\'");
+      const options = [
+        { val: 'new', label: '🆕 Mới cào' },
+        { val: 'called', label: '📞 Đã gọi' },
+        { val: 'zalo_sent', label: '💬 Đã nhắn Zalo' },
+        { val: 'interested', label: '🔥 Quan tâm' },
+        { val: 'closed', label: '✅ Đã chốt' },
+        { val: 'no_answer', label: '❌ K.Nghe máy' }
+      ];
+
+      const itemsHtml = options.map(opt => {
+        const isSel = opt.val === status;
+        return `
+          <div onclick="selectLeadCrmOption('${safeId}', '${opt.val}')" class="cursor-pointer flex items-center justify-between px-2.5 py-1.5 rounded-xl ${isSel ? 'bg-indigo-50 text-indigo-700 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold'} text-[11px] transition-all whitespace-nowrap">
+            <span>${opt.label}</span>
+            ${isSel ? '<i data-lucide="check" class="w-3 h-3 text-indigo-600 shrink-0 ml-1"></i>' : ''}
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="relative">
+          <button 
+            type="button" 
+            onclick="toggleLeadCrmDropdown(event, '${menuId}')" 
+            class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl border ${meta.cls} text-[11px] font-bold transition-all shadow-2xs"
+          >
+            <span class="truncate">${meta.label}</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70 shrink-0 ml-1"></i>
+          </button>
+          <div id="${menuId}" class="crm-row-menu hidden absolute left-0 right-0 top-full mt-1 z-40 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1 space-y-0.5 dropdown-slide-down min-w-[148px]">
+            ${itemsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCrmCell(lead) {
       const note = lead.crmNote || '';
       const safeId = String(lead.id).replace(/'/g, "\\'");
+      const domId = 'crmMenuDesk_' + String(lead.id).replace(/[^a-zA-Z0-9_-]/g, '_');
       return `
         <div class="space-y-1">
-          <select onchange="updateLeadCrmStatus('${safeId}', this.value)" class="crm-mini-select w-full">
-            <option value="new" ${status === 'new' ? 'selected' : ''}>🆕 Mới cào</option>
-            <option value="called" ${status === 'called' ? 'selected' : ''}>📞 Đã gọi</option>
-            <option value="zalo_sent" ${status === 'zalo_sent' ? 'selected' : ''}>💬 Đã nhắn Zalo</option>
-            <option value="interested" ${status === 'interested' ? 'selected' : ''}>🔥 Quan tâm</option>
-            <option value="closed" ${status === 'closed' ? 'selected' : ''}>✅ Đã chốt</option>
-            <option value="no_answer" ${status === 'no_answer' ? 'selected' : ''}>❌ K.Nghe máy</option>
-          </select>
-          <button onclick="promptLeadNote('${safeId}')" class="w-full text-left px-2 py-1 rounded bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-[10px] text-slate-600 truncate block" title="${note || 'Bấm để thêm ghi chú chăm sóc khách hàng'}">
+          ${renderCustomCrmMenuHtml(lead, domId)}
+          <button onclick="promptLeadNote('${safeId}')" class="w-full text-left px-2.5 py-1 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-[10px] text-slate-600 truncate block transition-all" title="${note || 'Bấm để thêm ghi chú chăm sóc khách hàng'}">
             📝 ${note ? `<b class="text-indigo-700">${note}</b>` : '<span class="italic text-slate-400">Thêm ghi chú...</span>'}
           </button>
         </div>
@@ -1812,18 +2055,11 @@
                 ` : ''}
               </div>
 
-              <!-- Mini-CRM on Mobile -->
+              <!-- Mini-CRM on Mobile (Custom Rounded Dropdown) -->
               <div class="grid grid-cols-2 gap-2">
-                <select onchange="updateLeadCrmStatus('${safeId}', this.value)" class="crm-mini-select w-full">
-                  <option value="new" ${lead.crmStatus === 'new' ? 'selected' : ''}>🆕 Mới cào</option>
-                  <option value="called" ${lead.crmStatus === 'called' ? 'selected' : ''}>📞 Đã gọi</option>
-                  <option value="zalo_sent" ${lead.crmStatus === 'zalo_sent' ? 'selected' : ''}>💬 Đã nhắn Zalo</option>
-                  <option value="interested" ${lead.crmStatus === 'interested' ? 'selected' : ''}>🔥 Quan tâm</option>
-                  <option value="closed" ${lead.crmStatus === 'closed' ? 'selected' : ''}>✅ Đã chốt</option>
-                  <option value="no_answer" ${lead.crmStatus === 'no_answer' ? 'selected' : ''}>❌ K.Nghe máy</option>
-                </select>
-                <button onclick="promptLeadNote('${safeId}')" class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-700 truncate text-left">
-                  📝 ${lead.crmNote || 'Ghi chú...'}
+                ${renderCustomCrmMenuHtml(lead, 'crmMenuMob_' + String(lead.id).replace(/[^a-zA-Z0-9_-]/g, '_'))}
+                <button onclick="promptLeadNote('${safeId}')" class="px-2.5 py-1.5 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-[11px] text-slate-700 truncate text-left transition-all">
+                  📝 ${lead.crmNote ? `<b class="text-indigo-700">${lead.crmNote}</b>` : '<span class="italic text-slate-400">Ghi chú...</span>'}
                 </button>
               </div>
 
@@ -1856,6 +2092,26 @@
       
       document.getElementById('labelDropdownCity').innerText = '📍 Toàn Quốc (63 Tỉnh Thành)';
       document.getElementById('labelDropdownIndustry').innerText = '🏢 Mọi Ngành Nghề (Tất Cả)';
+      document.getElementById('labelDropdownSource').innerText = '🌐 Đa Nguồn (Tất cả 4 Kênh)';
+      document.getElementById('labelDropdownZaloStatus').innerText = '💬 Trạng Thái Zalo: Tất cả SĐT';
+      document.getElementById('labelDropdownCarrier').innerText = '📡 Nhà Mạng: Tất cả (Viettel/Vina/Mobi)';
+      document.getElementById('labelDropdownCrmStatus').innerText = '📋 Tiến Độ Sale (CRM): Mọi trạng thái';
+
+      ['Source', 'ZaloStatus', 'Carrier', 'CrmStatus'].forEach(type => {
+        const menu = document.getElementById(`menuDropdown${type}`);
+        if (menu) {
+          menu.querySelectorAll('[data-val]').forEach(el => {
+            const isAll = el.getAttribute('data-val') === 'all';
+            if (isAll) {
+              el.classList.remove('hover:bg-slate-50', 'text-slate-700', 'font-semibold');
+              el.classList.add('bg-indigo-50', 'text-indigo-700', 'font-bold');
+            } else {
+              el.classList.remove('bg-indigo-50', 'text-indigo-700', 'font-bold');
+              el.classList.add('hover:bg-slate-50', 'text-slate-700', 'font-semibold');
+            }
+          });
+        }
+      });
       
       selectedCity = 'all';
       selectedIndustry = 'all';
