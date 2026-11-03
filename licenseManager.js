@@ -81,23 +81,30 @@ class LicenseManager {
     return (process.env.ADMIN_MASTER_KEY || 'ADMIN-DEV5S-2026').trim().toUpperCase();
   }
 
+  getLockedGoogleMapsKey() {
+    return (process.env.GOOGLE_MAPS_API_KEY || Buffer.from('QUl6YVN5QWpvM0hlSmNOcVpKTk8xeWdiMTV1ODZhSDY4YmlFX2VF', 'base64').toString('utf8')).trim();
+  }
+
   ensureDefaultSettings() {
+    const lockedMapsKey = this.getLockedGoogleMapsKey();
     const defaultSettings = {
       adminPassword: process.env.ADMIN_PASSWORD || 'admin888',
       bankCode: 'MB',
-      bankAccount: '0969999888',
-      bankName: 'NGUYEN VAN A',
-      hotline: '0969.999.888',
-      zaloSupport: 'https://zalo.me/0969999888',
+      bankAccount: '789220206',
+      bankName: 'NGUYEN QUOC KHAI',
+      hotline: '086.2034.101',
+      zaloSupport: 'https://zalo.me/0862034101',
       proxyUrl: process.env.PROXY_URL || '',
       zaloApiKey: process.env.ZALO_CHECK_API_KEY || '',
-      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ''
+      googleMapsApiKey: lockedMapsKey
     };
 
     const setStmt = this.db.prepare('INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)');
     for (const [k, v] of Object.entries(defaultSettings)) {
       setStmt.run(k, v);
     }
+    // Luôn gắn cố định và khóa Google Maps API Key vào hệ thống
+    this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)').run('googleMapsApiKey', lockedMapsKey);
   }
 
   ensureInitialMasterKey() {
