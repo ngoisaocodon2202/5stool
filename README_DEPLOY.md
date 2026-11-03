@@ -1,62 +1,75 @@
 # 🚀 HƯỚNG DẪN VẬN HÀNH & TRIỂN KHAI SAAS THƯƠNG MẠI
-## CÔNG CỤ CÀO DỮ LIỆU KHÁCH HÀNG B2B & QUẢN LÝ LICENSE BẢN QUYỀN V5.0
+## 5S DEV.TOOL - NỀN TẢNG SAAS QUÉT LEAD B2B & QUẢN TRỊ BẢN QUYỀN V5.5 PRO
 
 ---
 
-### 1. 🔑 CẤU HÌNH BẢO MẬT VÀ BIẾN MÔI TRƯỜNG (`.env`)
+### 1. 🔑 CẤU HÌNH BẢO MẬT VÀ BIẾN MÔI TRƯỜNG (`.env` / Vercel Environment Variables)
 
-Toàn bộ thông tin nhạy cảm đã được tách biệt vào file `.env` để bảo mật tuyệt đối khi triển khai:
+Toàn bộ thông tin nhạy cảm đã được tách biệt vào file `.env` (hoặc cài đặt trong mục **Environment Variables** trên Vercel):
 
-| Biến môi trường | Ý nghĩa | Mặc định trong `.env` |
+| Biến môi trường | Ý nghĩa | Mặc định gợi ý |
 | :--- | :--- | :--- |
-| `PORT` | Cổng HTTP Server | `3000` |
-| `ADMIN_MASTER_KEY` | Master License Key quyền cao nhất (Đa thiết bị vĩnh viễn) | `ADMIN-DEV5S-2026` *(khuyến nghị đổi)* |
-| `ADMIN_PASSWORD` | Mật khẩu truy cập Admin Portal | `admin888` *(khuyến nghị đổi)* |
-| `MAX_CONCURRENT_SCRAPERS` | Số trình duyệt cào song song tối đa (chống tràn RAM) | `2` |
-| `PROXY_URL` | Địa chỉ Proxy xoay IP (tùy chọn) | `(trống)` |
+| `PORT` | Cổng HTTP Server chạy Local/VPS | `3000` |
+| `ADMIN_MASTER_KEY` | Master License Key quyền tối cao (Vĩnh viễn, đa thiết bị) | `ADMIN-DEV5S-2026` |
+| `ADMIN_PASSWORD` | Mật khẩu truy cập Cổng Quản Trị Admin | `admin888` hoặc `admindev5s` |
+| `GOOGLE_MAPS_API_KEY` | Khóa Google Maps Places API (New/Legacy) | *(Đã khóa ngầm bảo vệ)* |
+| `MAX_CONCURRENT_SCRAPERS` | Số tiến trình cào song song tối đa (chống tràn RAM VPS) | `2` |
+| `PROXY_URL` | Địa chỉ Proxy xoay IP khi quét tải lớn (tùy chọn) | `(trống)` |
 | `ZALO_CHECK_API_KEY` | Khóa API Zalo Gateway bên thứ 3 (tùy chọn) | `(trống)` |
 
 ---
 
-### 2. 🌟 TÍNH NĂNG THƯƠNG MẠI HOÀN THIỆN (PHIÊN BẢN V5.0)
+### 2. 🌟 TÍNH NĂNG V5.5 PRO HOÀN THIỆN ĐÃ TÍCH HỢP
 
-1. **Bảo Mật & Phân Quyền Triệt Để (Security Hardened)**:
-   - Khách lạ truy cập lần đầu bắt buộc phải nhập License Key hoặc quét mã VietQR để mua gói, không có cửa hậu (backdoor).
-   - Cơ chế cấp quyền Admin qua Header bảo mật, không để lộ bí mật trên mã nguồn Frontend.
+1. **Quét Lead Đa Nguồn (Omni-Channel B2B)**:
+   - Google Maps Places API (Places New v1 & Classic).
+   - Facebook Fanpage Business & Group công khai.
+   - Trang Vàng Doanh Nghiệp Việt Nam (TrangVangVietnam.com).
+   - Cổng Thông Tin Doanh Nghiệp Quốc Gia (DoanhNghiep.biz).
+   - Kho dữ liệu đệm >3.200 doanh nghiệp đối soát thực bao phủ 63/63 tỉnh thành & 24+ ngành nghề thực chiến.
 
-2. **Cô Lập Dữ Liệu Khách Hàng (Multi-Tenancy)**:
-   - Mỗi khách hàng sở hữu kho dữ liệu riêng biệt theo License Key.
-   - Khách A không thể xem, lọc hay xóa dữ liệu của khách B. Admin có quyền xem tổng quan toàn hệ thống.
+2. **Kiểm Tra Zalo Chuẩn Xác (ACTIVE vs NOT FOUND)**:
+   - Cơ chế 3 tầng: Cổng ngoài -> Phiên Web (`zca-js`) -> Bộ phân giải HLR Telecom Resolver tự động phân loại số điện thoại có Zalo hay chưa kích hoạt/số cố định.
+   - Nhận diện nhà mạng Viettel, Vina, Mobi, Vietnamobile.
 
-3. **Cơ Chế Khóa Thiết Bị Chuẩn Xác (Hardware & Canvas Fingerprint)**:
-   - Định danh thiết bị dựa trên đặc trưng phần cứng: Canvas render signature, số nhân CPU, độ phân giải màn hình, múi giờ, ngôn ngữ.
-   - Khắc phục hoàn toàn việc bị đổi ID khi người dùng xóa cache/cookie, chống việc chia sẻ key dùng chung trên máy tính khác.
+3. **Mini-CRM & Kịch Bản Nhắn Zalo Cá Nhân Hóa**:
+   - Trực tiếp gắn nhãn tiến độ sale (Mới cào, Đã gọi, Đã nhắn Zalo, Quan tâm, Đã chốt, Không nghe máy) và ghi chú khách hàng.
+   - Nút **Chat Zalo** tự động điền sẵn tên người đại diện, tên công ty và lời chào chuyên nghiệp.
 
-4. **Kiểm Soát Hàng Đợi (Queue Concurrency) & Tối Ưu RAM**:
-   - Tích hợp hàng đợi điều phối, giới hạn tối đa `MAX_CONCURRENT_SCRAPERS` (mặc định 2) chạy đồng thời để bảo vệ VPS 1GB - 2GB RAM không bị crash OOM.
-   - Chặn tải hình ảnh, font chữ, CSS nặng trong Puppeteer giúp tốc độ tải tăng 200% và giảm 70% mức tiêu thụ RAM.
-   - Mở rộng kho dữ liệu đệm (`enterprisePool.js`) lên **hơn 220 doanh nghiệp thật** đa ngành nghề phủ khắp các tỉnh thành.
-
-5. **Xác Thực Zalo Thật & Nhận Diện Nhà Mạng**:
-   - Nhận diện 6 nhà mạng Việt Nam: Viettel, Vinaphone, Mobifone, Vietnamobile, Wintel, Gmobile.
-   - Tự động lọc sạch số cố định/bàn, chỉ giữ lại số di động để tiếp cận Zalo.
-   - Kiểm tra trạng thái kích hoạt Zalo qua Zalo Web (`zca-js`) hoặc Gateway API kèm link nhắn tin nhanh `https://zalo.me/[sđt]`.
-
-6. **Xuất File Tiện Ích Cho Người Dùng**:
-   - **Xuất Excel (`.xlsx`)**: Xử lý trực tiếp trên trình duyệt bằng SheetJS, tải về ngay lập tức với bảng dữ liệu định dạng chuẩn, không chiếm tài nguyên máy chủ.
-   - **Xuất Danh Bạ vCard (`.vcf`)**: Mở file trên điện thoại là danh bạ tự động lưu toàn bộ số, Zalo trên điện thoại tự động gợi ý kết bạn hàng loạt.
-
-7. **Tích Hợp Thanh Toán VietQR Tự Động**:
-   - Khi Key hết hạn hoặc khách mới truy cập, hệ thống tự động hiển thị popup bản quyền kèm **mã VietQR động**.
-   - Admin có thể thay đổi số tài khoản, ngân hàng thụ hưởng, hotline, link Zalo tư vấn bất kỳ lúc nào trong Admin Portal.
+4. **Quản Lý Bản Quyền Khóa Máy (Anti-Share)**:
+   - Ghim cố định thiết bị bằng thuật toán Canvas + Hardware Fingerprint.
+   - Khóa bản quyền theo gói: 1 Ngày, 1 Tháng, 3 Tháng, 1 Năm, 3 Năm, Vĩnh Viễn.
+   - Tự động sinh mã VietQR Napas247 cho khách quét thanh toán chuyển khoản nhận key ngay.
 
 ---
 
-### 3. 🖥️ HƯỚNG DẪN CHẠY TRÊN MÁY CÁ NHÂN (WINDOWS / MAC)
+### 3. ☁️ HƯỚNG DẪN TRIỂN KHAI LÊN VERCEL (VERCEL.APP)
+
+1. **Đẩy mã nguồn lên GitHub**:
+   - Repository: `https://github.com/ngoisaocodon2202/5stool.git` (nhánh `main`).
+2. **Import vào Vercel**:
+   - Vào [Vercel Dashboard](https://vercel.com/new).
+   - Chọn repo `5stool` và bấm **Deploy**.
+   - Cấu hình Framework Preset: **Other** (tự động nhận `vercel.json`).
+   - Node.js Version: **22.x**.
+3. **Thêm Environment Variables trên Vercel**:
+   - `ADMIN_MASTER_KEY`: `ADMIN-DEV5S-2026`
+   - `ADMIN_PASSWORD`: `admindev5s` (hoặc mật khẩu riêng của bạn)
+   - `GOOGLE_MAPS_API_KEY`: `AIzaSyAjo3HeJcNqZJNO1ygb15u86aH68biE_eE`
+
+---
+
+### 4. 🖥️ CHẠY LOCAL TRÊN MÁY TÍNH
 
 ```bash
 # 1. Cài đặt các thư viện cần thiết
 npm install
+
+# 2. Khởi chạy ứng dụng
+npm start
+# Hoặc: node server.js
+```
+Truy cập: `http://localhost:3000` (Giao diện Tool) hoặc `http://localhost:3000/admin` (Quản trị viên).
 
 # 2. Khởi chạy máy chủ
 node server.js
