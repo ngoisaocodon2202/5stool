@@ -105,11 +105,22 @@ function requireAdmin(req, res, next) {
 // PUBLIC & CLIENT LICENSE APIS
 // ==========================================
 
-// 1. GET /api/provinces - Full 63 Vietnam Provinces
+// 1. GET /api/provinces - Full 63 Vietnam Provinces & Districts Map
 app.get('/api/provinces', (req, res) => {
   res.json({
     success: true,
-    provinces: VIETNAM_PROVINCES
+    provinces: VIETNAM_PROVINCES,
+    districtsMap: scraper.getDistrictsMap()
+  });
+});
+
+// 1.05 GET /api/districts - Districts by Province
+app.get('/api/districts', (req, res) => {
+  const { city } = req.query;
+  res.json({
+    success: true,
+    city: city || 'all',
+    districts: scraper.getDistrictsForCity(city)
   });
 });
 
@@ -172,9 +183,9 @@ app.post('/api/license/verify', (req, res) => {
 // 4. GET /api/leads - Filter & Query (Tenant Isolated)
 app.get('/api/leads', requireLicense, (req, res) => {
   try {
-    const { city, industry, role, zaloOnly, zaloStatus, carrier, mobileOnly, crmStatus, sourceType, search } = req.query;
+    const { city, district, industry, customKeyword, role, zaloOnly, zaloStatus, carrier, mobileOnly, crmStatus, sourceType, search } = req.query;
     const tenantKey = req.license.key;
-    const leads = db.filter({ city, industry, role, zaloOnly, zaloStatus, carrier, mobileOnly, crmStatus, sourceType, search }, tenantKey);
+    const leads = db.filter({ city, district, industry, customKeyword, role, zaloOnly, zaloStatus, carrier, mobileOnly, crmStatus, sourceType, search }, tenantKey);
     const allCount = db.getStats(tenantKey).totalLeads;
 
     res.json({
@@ -224,15 +235,17 @@ app.get('/api/stats', (req, res) => {
 // 6. POST /api/leads/scan - Multi-Source Bulk Extraction
 app.post('/api/leads/scan', requireLicense, async (req, res) => {
   try {
-    const { city, industry, sourceType = 'all', targetGoal = 50, skipExisting = true } = req.body;
+    const { city, district = 'all', industry, customKeyword = '', sourceType = 'all', targetGoal = 50, skipExisting = true } = req.body;
     const goalNumber = Math.min(Math.max(parseInt(targetGoal) || 50, 5), 500);
     const tenantKey = req.license.key;
 
-    console.log(`[API /scan] [Tenant: ${tenantKey}] Quét đa nguồn (${sourceType}): ngành="${industry}", tỉnh="${city}", số lượng=${goalNumber}, lọc trùng=${skipExisting}`);
+    console.log(`[API /scan] [Tenant: ${tenantKey}] Quét đa nguồn (${sourceType}): ngành="${industry}", từ khóa riêng="${customKeyword}", quận/huyện="${district}", tỉnh="${city}", số lượng=${goalNumber}, lọc trùng=${skipExisting}`);
 
     const rawNewLeads = await scraper.scrapeRealEnterprises({
       keyword: (industry && industry !== 'all' && industry !== 'Mọi ngành nghề' && industry !== 'Mọi Ngành Nghề') ? industry : '',
+      customKeyword: customKeyword ? customKeyword.trim() : '',
       city: (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') ? city : '',
+      district: (district && district !== 'all' && district !== 'Tất cả Quận / Huyện' && district !== 'Tất cả Quận/Huyện') ? district : '',
       sourceType: sourceType || 'all',
       targetGoal: goalNumber,
       skipExisting: !!skipExisting,
@@ -246,7 +259,7 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
 
     const currentTotal = db.getStats(tenantKey).totalLeads;
     // Fetch properly scoped leads for the client
-    const savedTenantLeads = db.filter({ city, industry, sourceType }, tenantKey);
+    const savedTenantLeads = db.filter({ city, district, industry, customKeyword, sourceType }, tenantKey);
 
     res.json({
       success: true,

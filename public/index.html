@@ -139,6 +139,7 @@
     }
     #btnDropdownSource,
     #btnDropdownCity,
+    #btnDropdownDistrict,
     #btnDropdownIndustry,
     #btnDropdownLimit,
     #btnDropdownZaloStatus,
@@ -151,6 +152,7 @@
     }
     #btnDropdownSource:hover,
     #btnDropdownCity:hover,
+    #btnDropdownDistrict:hover,
     #btnDropdownIndustry:hover,
     #btnDropdownLimit:hover,
     #btnDropdownZaloStatus:hover,
@@ -565,30 +567,15 @@
         </div>
       </div>
 
-      <!-- HÀNG LỌC CHÍNH (5 CỘT TRÊN DESKTOP): TÌM KIẾM | NGUỒN CÀO | 63 TỈNH THÀNH | 24+ NGÀNH NGHỀ | SỐ LƯỢNG CÀO -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      <!-- HÀNG 1: THIẾT LẬP CÀO DỮ LIỆU ĐA NGUỒN (6 CỘT: NGUỒN | TỈNH/THÀNH | QUẬN/HUYỆN | NGÀNH GỢI Ý | TỪ KHÓA RIÊNG | SỐ LƯỢNG) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2.5">
         
-        <!-- 1. Tìm kiếm từ khóa -->
-        <div>
-          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Tìm kiếm nội bộ</label>
-          <div class="relative">
-            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-            <input 
-              id="filterSearch" 
-              type="text" 
-              placeholder="Tên công ty, SĐT, MST, ghi chú..." 
-              class="w-full pl-9 pr-3 py-2 text-xs font-semibold bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-              oninput="debounceSearch()"
-            />
-          </div>
-        </div>
-
-        <!-- 2. Nguồn Dữ Liệu Cào (Custom Rounded Multi-Source Dropdown) -->
+        <!-- 1. Nguồn Dữ Liệu Cào (Custom Rounded Multi-Source Dropdown) -->
         <div class="relative">
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
             <span class="flex items-center gap-1">
               <i data-lucide="globe" class="w-3.5 h-3.5 text-indigo-600"></i>
-              <span>Nguồn Dữ Liệu Cào</span>
+              <span>Nguồn Cào Lead</span>
             </span>
             <span class="text-[10px] text-indigo-600 font-bold">Đa Kênh</span>
           </label>
@@ -601,7 +588,7 @@
             onclick="toggleGenericDropdown(event, 'Source')" 
             class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
           >
-            <span id="labelDropdownSource" class="truncate">🌐 Đa Nguồn (Tất cả 4 Kênh)</span>
+            <span id="labelDropdownSource" class="truncate">🌐 Đa Nguồn (4 Kênh)</span>
             <i id="chevronDropdownSource" data-lucide="chevron-down" class="w-4 h-4 text-indigo-500 transition-transform duration-200 flex-shrink-0"></i>
           </button>
 
@@ -609,7 +596,7 @@
             id="menuDropdownSource" 
             class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down w-full sm:min-w-[235px]"
           >
-            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'all', '🌐 Đa Nguồn (Tất cả 4 Kênh)')" data-val="all" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-bold text-xs transition-all">
+            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'all', '🌐 Đa Nguồn (4 Kênh)')" data-val="all" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-bold text-xs transition-all">
               <span class="truncate">🌐 Đa Nguồn (Tất cả 4 Kênh)</span>
               <span class="text-[10px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-md font-sans shrink-0 ml-1">4 Kênh</span>
             </div>
@@ -632,7 +619,7 @@
           </div>
         </div>
 
-        <!-- 3. 63 Tỉnh Thành: Custom Searchable Dropdown -->
+        <!-- 2. 63 Tỉnh Thành: Custom Searchable Dropdown -->
         <div class="relative">
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
             <span class="flex items-center gap-1">
@@ -652,7 +639,7 @@
             onclick="toggleCityDropdown(event)" 
             class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
           >
-            <span id="labelDropdownCity" class="truncate">📍 Toàn Quốc (63 Tỉnh Thành)</span>
+            <span id="labelDropdownCity" class="truncate">📍 Toàn Quốc (63 Tỉnh)</span>
             <i id="chevronDropdownCity" data-lucide="chevron-down" class="w-4 h-4 text-indigo-500 transition-transform duration-200 flex-shrink-0"></i>
           </button>
 
@@ -665,7 +652,7 @@
               <input 
                 id="searchCityInput" 
                 type="text" 
-                placeholder="Gõ tìm nhanh tỉnh thành (VD: Đà Nẵng, Bình Dương)..." 
+                placeholder="Gõ tìm tỉnh thành (Đà Nẵng, Hải Phòng...)..." 
                 class="w-full pl-7 pr-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-700" 
                 oninput="filterCityList(this.value)"
                 onclick="event.stopPropagation()"
@@ -675,12 +662,53 @@
           </div>
         </div>
 
-        <!-- 4. Ngành Nghề Mục Tiêu (24+ Ngành + Nhập Từ Khóa Tùy Ý) -->
+        <!-- 3. QUẬN / HUYỆN: Custom Searchable Dropdown (Tự động nạp theo Tỉnh) -->
+        <div class="relative">
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
+            <span class="flex items-center gap-1">
+              <i data-lucide="map" class="w-3.5 h-3.5 text-blue-600"></i>
+              <span>Quận / Huyện</span>
+            </span>
+            <span id="badgeDistrictCount" class="text-[10px] text-blue-600 font-bold">Cấp Huyện</span>
+          </label>
+          
+          <input type="hidden" id="filterDistrict" value="all" />
+
+          <button 
+            type="button" 
+            id="btnDropdownDistrict" 
+            onclick="toggleDistrictDropdown(event)" 
+            class="w-full flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-xl hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-left text-xs font-bold text-slate-800 transition-all shadow-2xs"
+          >
+            <span id="labelDropdownDistrict" class="truncate">📍 Tất cả Quận / Huyện</span>
+            <i id="chevronDropdownDistrict" data-lucide="chevron-down" class="w-4 h-4 text-blue-500 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+
+          <div 
+            id="menuDropdownDistrict" 
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 space-y-1.5 dropdown-slide-down w-full sm:min-w-[240px]"
+          >
+            <div class="relative p-0.5">
+              <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input 
+                id="searchDistrictInput" 
+                type="text" 
+                placeholder="Gõ tìm quận huyện (Lê Chân, Đồ Sơn, Cát Bà...)..." 
+                class="w-full pl-7 pr-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 font-medium text-slate-700" 
+                oninput="filterDistrictList(this.value)"
+                onclick="event.stopPropagation()"
+              />
+            </div>
+            <div id="districtOptionsList" class="max-h-60 overflow-y-auto space-y-0.5 custom-scrollbar pr-1"></div>
+          </div>
+        </div>
+
+        <!-- 4. Ngành Nghề Gợi Ý (24+ Ngành thực chiến) -->
         <div class="relative">
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
             <span class="flex items-center gap-1">
               <i data-lucide="briefcase" class="w-3.5 h-3.5 text-cyan-600"></i>
-              <span>Ngành Nghề Kinh Doanh</span>
+              <span>Ngành Nghề Gợi Ý</span>
             </span>
             <span class="text-[10px] text-cyan-600 font-bold">24+ Ngành</span>
           </label>
@@ -701,20 +729,19 @@
             id="menuDropdownIndustry" 
             class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-2 space-y-1.5 dropdown-slide-down w-full sm:min-w-[270px]"
           >
-            <!-- Tìm hoặc gõ ngành tùy ý -->
             <div class="relative p-0.5 flex gap-1" onclick="event.stopPropagation()">
               <div class="relative flex-1">
                 <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
                 <input 
                   id="searchIndustryInput" 
                   type="text" 
-                  placeholder="Tìm hoặc gõ ngành (Trà sữa, Sản xuất, Nội thất...)" 
+                  placeholder="Tìm ngành gợi ý..." 
                   class="w-full pl-7 pr-2 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-cyan-500 font-medium text-slate-700" 
                   oninput="filterIndustryList(this.value)"
                   onkeydown="if(event.key==='Enter'){ event.preventDefault(); applyCustomIndustryKeyword(); }"
                 />
               </div>
-              <button type="button" onclick="applyCustomIndustryKeyword()" class="px-2.5 py-1.5 rounded-xl bg-cyan-600 text-white text-[11px] font-bold hover:bg-cyan-700 shrink-0" title="Lọc theo từ khóa ngành bạn vừa gõ">
+              <button type="button" onclick="applyCustomIndustryKeyword()" class="px-2.5 py-1.5 rounded-xl bg-cyan-600 text-white text-[11px] font-bold hover:bg-cyan-700 shrink-0" title="Chọn ngành">
                 Chọn
               </button>
             </div>
@@ -722,7 +749,36 @@
           </div>
         </div>
 
-        <!-- 5. Số Lượng Cào Mỗi Lần -->
+        <!-- 5. TỪ KHÓA TÙY CHỈNH RIÊNG (Tách riêng độc lập ra ngoài thanh công cụ) -->
+        <div class="relative">
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
+            <span class="flex items-center gap-1">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+              <span>Từ Khóa Riêng (Tự Do)</span>
+            </span>
+            <span class="text-[10px] text-amber-600 font-bold">Tùy Chọn</span>
+          </label>
+          <div class="relative">
+            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input 
+              id="filterCustomKeyword" 
+              type="text" 
+              placeholder="VD: Khách sạn 3 sao, Spa..." 
+              class="w-full pl-8 pr-7 py-2 text-xs font-bold bg-white border border-slate-200 rounded-xl hover:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 text-slate-800 transition-all shadow-2xs placeholder:font-normal placeholder:text-slate-400"
+              onkeydown="if(event.key==='Enter'){ event.preventDefault(); triggerLiveScan(); }"
+            />
+            <button 
+              type="button" 
+              onclick="document.getElementById('filterCustomKeyword').value=''; fetchLeads();" 
+              class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-600 p-0.5" 
+              title="Xóa từ khóa riêng"
+            >
+              <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6. Số Lượng Cào Mỗi Lần -->
         <div class="relative">
           <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between">
             <span class="flex items-center gap-1">
@@ -773,8 +829,23 @@
 
       </div>
 
-      <!-- HÀNG LỌC NÂNG CAO (CUSTOM DROPDOWNS ĐỒNG BỘ 100% ROUNDED-2XL: TRẠNG THÁI ZALO, NHÀ MẠNG, MINI-CRM, ẨN SỐ BÀN 02X) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-2 border-t border-slate-100">
+      <!-- HÀNG 2: BỘ LỌC DỮ LIỆU ĐÃ CÀO & PHÂN LOẠI LEAD (5 CỘT TRÊN DESKTOP: TÌM KHO | ZALO | NHÀ MẠNG | CRM | TÙY CHỌN SĐT) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 pt-2 border-t border-slate-100">
+        
+        <!-- 1. Tìm kiếm trong kho -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Tìm kiếm trong kho</label>
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input 
+              id="filterSearch" 
+              type="text" 
+              placeholder="Tên công ty, SĐT, MST, ghi chú..." 
+              class="w-full pl-9 pr-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-2xs"
+              oninput="debounceSearch()"
+            />
+          </div>
+        </div>
         
         <!-- 1. Lọc Trạng Thái Zalo (Active vs Not Found) -->
         <div class="relative">
@@ -1128,7 +1199,10 @@
     let searchDebounceTimer = null;
     let allProvincesList = [];
     let allIndustriesList = [];
+    let allDistrictsMap = {};
+    let currentDistrictsList = [];
     let selectedCity = 'all';
+    let selectedDistrict = 'all';
     let selectedIndustry = 'all';
     let lastImportedZaloResults = [];
 
@@ -1330,6 +1404,27 @@
       }
     }
 
+    function toggleDistrictDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('menuDropdownDistrict');
+      const chevron = document.getElementById('chevronDropdownDistrict');
+      if (!menu) return;
+      const isHidden = menu.classList.contains('hidden');
+      closeAllHeaderDropdowns();
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        if (chevron) chevron.classList.add('rotate-180');
+        setTimeout(() => {
+          const inp = document.getElementById('searchDistrictInput');
+          if (inp) {
+            inp.value = '';
+            renderDistrictDropdownItems(currentDistrictsList);
+            inp.focus();
+          }
+        }, 50);
+      }
+    }
+
     function toggleLimitDropdown(e) {
       if (e) e.stopPropagation();
       const menu = document.getElementById('menuDropdownLimit');
@@ -1346,8 +1441,101 @@
       selectedCity = value;
       document.getElementById('filterCity').value = value;
       document.getElementById('labelDropdownCity').innerText = label;
+      updateDistrictsForSelectedCity(value);
       closeAllHeaderDropdowns();
       fetchLeads();
+    }
+
+    function selectCustomDistrict(value, label) {
+      selectedDistrict = value;
+      document.getElementById('filterDistrict').value = value;
+      document.getElementById('labelDropdownDistrict').innerText = label;
+      closeAllHeaderDropdowns();
+      fetchLeads();
+    }
+
+    function updateDistrictsForSelectedCity(city) {
+      selectedDistrict = 'all';
+      const filterDistrictEl = document.getElementById('filterDistrict');
+      if (filterDistrictEl) filterDistrictEl.value = 'all';
+      const labelEl = document.getElementById('labelDropdownDistrict');
+      if (labelEl) labelEl.innerText = '📍 Tất cả Quận / Huyện';
+      
+      if (!city || city === 'all' || city === 'Toàn quốc' || city === 'Mọi Tỉnh Thành') {
+        currentDistrictsList = [];
+        const countBadge = document.getElementById('badgeDistrictCount');
+        if (countBadge) countBadge.innerText = 'Cấp Huyện';
+        renderDistrictDropdownItems([]);
+        return;
+      }
+
+      let list = allDistrictsMap[city] || [];
+      if (!list || list.length === 0) {
+        const norm = city.toLowerCase();
+        for (const [k, v] of Object.entries(allDistrictsMap)) {
+          if (k.toLowerCase() === norm || norm.includes(k.toLowerCase()) || k.toLowerCase().includes(norm)) {
+            list = v;
+            break;
+          }
+        }
+      }
+
+      currentDistrictsList = list || [];
+      const countBadge = document.getElementById('badgeDistrictCount');
+      if (countBadge) countBadge.innerText = `${currentDistrictsList.length} Quận/Huyện`;
+      renderDistrictDropdownItems(currentDistrictsList);
+    }
+
+    function renderDistrictDropdownItems(districts) {
+      const container = document.getElementById('districtOptionsList');
+      if (!container) return;
+
+      let html = `
+        <div onclick="selectCustomDistrict('all', '📍 Tất cả Quận / Huyện')" class="district-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${selectedDistrict === 'all' ? 'bg-blue-50 text-blue-700 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold'} text-xs transition-all">
+          <span>📍 Tất cả Quận / Huyện</span>
+          ${selectedDistrict === 'all' ? '<i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i>' : ''}
+        </div>
+      `;
+
+      if (!districts || districts.length === 0) {
+        if (selectedCity && selectedCity !== 'all') {
+          html += `
+            <div class="px-3 py-3 text-center text-xs text-slate-400 italic">
+              Đang quét tự do toàn tỉnh (${selectedCity})
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="px-3 py-3 text-center text-xs text-slate-400 italic">
+              Chọn Tỉnh/Thành trước để chọn theo từng Quận/Huyện
+            </div>
+          `;
+        }
+      } else {
+        districts.forEach(d => {
+          const isSelected = (selectedDistrict === d);
+          const safeD = d.replace(/'/g, "\\'");
+          html += `
+            <div onclick="selectCustomDistrict('${safeD}', '📍 ${safeD}')" class="district-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${isSelected ? 'bg-blue-50 text-blue-700 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold'} text-xs transition-all">
+              <span>📍 ${d}</span>
+              ${isSelected ? '<i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i>' : ''}
+            </div>
+          `;
+        });
+      }
+
+      container.innerHTML = html;
+      lucide.createIcons({ root: container });
+    }
+
+    function filterDistrictList(query) {
+      if (!query || !query.trim()) {
+        renderDistrictDropdownItems(currentDistrictsList);
+        return;
+      }
+      const q = query.trim().toLowerCase();
+      const filtered = (currentDistrictsList || []).filter(d => d.toLowerCase().includes(q));
+      renderDistrictDropdownItems(filtered);
     }
 
     function selectCustomIndustry(value, label) {
@@ -1436,7 +1624,7 @@
     }
 
     function closeAllHeaderDropdowns() {
-      ['City', 'Industry', 'Limit', 'Source', 'ZaloStatus', 'Carrier', 'CrmStatus'].forEach(type => {
+      ['City', 'District', 'Industry', 'Limit', 'Source', 'ZaloStatus', 'Carrier', 'CrmStatus'].forEach(type => {
         const m = document.getElementById(`menuDropdown${type}`);
         if (m) m.classList.add('hidden');
         const c = document.getElementById(`chevronDropdown${type}`);
@@ -1448,8 +1636,10 @@
     document.addEventListener('click', (e) => {
       if (e.target && (
         e.target.id === 'searchCityInput' ||
+        e.target.id === 'searchDistrictInput' ||
         e.target.id === 'searchIndustryInput' ||
         e.target.closest('#menuDropdownCity') ||
+        e.target.closest('#menuDropdownDistrict') ||
         e.target.closest('#menuDropdownIndustry') ||
         e.target.closest('#menuDropdownLimit') ||
         e.target.closest('#menuDropdownSource') ||
@@ -1469,18 +1659,22 @@
         const data = await res.json();
         if (data.success && data.provinces) {
           allProvincesList = data.provinces;
+          allDistrictsMap = data.districtsMap || {};
           renderCityDropdownItems(allProvincesList);
+          updateDistrictsForSelectedCity(selectedCity);
 
           const select = document.getElementById('filterCity');
-          select.innerHTML = '<option value="all">Toàn quốc</option>';
-          data.provinces.forEach(p => {
-            if (p !== 'Toàn quốc') {
-              const opt = document.createElement('option');
-              opt.value = p;
-              opt.innerText = p;
-              select.appendChild(opt);
-            }
-          });
+          if (select) {
+            select.innerHTML = '<option value="all">Toàn quốc</option>';
+            data.provinces.forEach(p => {
+              if (p !== 'Toàn quốc') {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.innerText = p;
+                select.appendChild(opt);
+              }
+            });
+          }
         }
       } catch (e) {}
     }
@@ -1751,6 +1945,8 @@
     function hasActiveFilters() {
       return (
         document.getElementById('filterCity').value !== 'all' ||
+        (document.getElementById('filterDistrict') && document.getElementById('filterDistrict').value !== 'all') ||
+        (document.getElementById('filterCustomKeyword') && document.getElementById('filterCustomKeyword').value.trim() !== '') ||
         document.getElementById('filterIndustry').value !== 'all' ||
         document.getElementById('filterSourceType').value !== 'all' ||
         document.getElementById('filterZaloStatus').value !== 'all' ||
@@ -1769,6 +1965,8 @@
       }
 
       const city = document.getElementById('filterCity').value;
+      const district = document.getElementById('filterDistrict') ? document.getElementById('filterDistrict').value : 'all';
+      const customKeyword = document.getElementById('filterCustomKeyword') ? document.getElementById('filterCustomKeyword').value.trim() : '';
       const industry = document.getElementById('filterIndustry').value;
       const sourceType = document.getElementById('filterSourceType').value;
       const zaloStatus = document.getElementById('filterZaloStatus').value;
@@ -1779,6 +1977,8 @@
 
       const params = new URLSearchParams();
       if (city !== 'all') params.append('city', city);
+      if (district && district !== 'all') params.append('district', district);
+      if (customKeyword) params.append('customKeyword', customKeyword);
       if (industry !== 'all') params.append('industry', industry);
       if (sourceType !== 'all') params.append('sourceType', sourceType);
       if (zaloStatus !== 'all') params.append('zaloStatus', zaloStatus);
@@ -2115,6 +2315,8 @@
 
     function resetFilters() {
       document.getElementById('filterCity').value = 'all';
+      if (document.getElementById('filterDistrict')) document.getElementById('filterDistrict').value = 'all';
+      if (document.getElementById('filterCustomKeyword')) document.getElementById('filterCustomKeyword').value = '';
       document.getElementById('filterIndustry').value = 'all';
       document.getElementById('filterSourceType').value = 'all';
       document.getElementById('filterZaloStatus').value = 'all';
@@ -2124,6 +2326,7 @@
       document.getElementById('filterSearch').value = '';
       
       document.getElementById('labelDropdownCity').innerText = '📍 Toàn Quốc (63 Tỉnh Thành)';
+      if (document.getElementById('labelDropdownDistrict')) document.getElementById('labelDropdownDistrict').innerText = '📍 Tất cả Quận / Huyện';
       document.getElementById('labelDropdownIndustry').innerText = '🏢 Mọi Ngành Nghề (Tất Cả)';
       document.getElementById('labelDropdownSource').innerText = '🌐 Đa Nguồn (Tất cả 4 Kênh)';
       document.getElementById('labelDropdownZaloStatus').innerText = '💬 Trạng Thái Zalo: Tất cả SĐT';
@@ -2147,8 +2350,10 @@
       });
       
       selectedCity = 'all';
+      selectedDistrict = 'all';
       selectedIndustry = 'all';
       renderCityDropdownItems(allProvincesList);
+      updateDistrictsForSelectedCity('all');
       renderIndustryDropdownItems(allIndustriesList);
 
       fetchLeads();
@@ -2176,12 +2381,16 @@
       scanPercent.innerText = '15%';
 
       const city = document.getElementById('filterCity').value;
+      const district = document.getElementById('filterDistrict') ? document.getElementById('filterDistrict').value : 'all';
+      const customKeyword = document.getElementById('filterCustomKeyword') ? document.getElementById('filterCustomKeyword').value.trim() : '';
       const industry = document.getElementById('filterIndustry').value;
       const sourceType = document.getElementById('filterSourceType').value;
       const targetGoal = document.getElementById('scanLimit').value;
       const skipExisting = document.getElementById('chkSkipExisting').checked;
 
-      statusText.innerText = `Đang quét đa nguồn (${sourceType.toUpperCase()}) • Ngành: ${industry === 'all' ? 'Tất cả' : industry} • Khu vực: ${city === 'all' ? '63 Tỉnh Thành' : city}...`;
+      const kwDesc = customKeyword || (industry === 'all' ? 'Tất cả' : industry);
+      const locDesc = (district && district !== 'all') ? `${district}, ${city}` : (city === 'all' ? '63 Tỉnh Thành' : city);
+      statusText.innerText = `Đang quét đa nguồn (${sourceType.toUpperCase()}) • Từ khóa: "${kwDesc}" • Khu vực: ${locDesc}...`;
 
       setTimeout(() => {
         if (isScanning) {
@@ -2194,7 +2403,7 @@
         const res = await fetch('/api/leads/scan', {
           method: 'POST',
           headers: getAuthHeaders(),
-          body: JSON.stringify({ city, industry, sourceType, targetGoal, skipExisting })
+          body: JSON.stringify({ city, district, customKeyword, industry, sourceType, targetGoal, skipExisting })
         });
         
         scanBar.style.width = '85%';

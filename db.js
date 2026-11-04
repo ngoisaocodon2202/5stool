@@ -252,6 +252,27 @@ class DatabaseManager {
       });
     }
 
+    // Filter by District (Quận / Huyện)
+    if (query.district && query.district !== 'all' && query.district !== 'Tất cả' && query.district !== 'Tất cả Quận / Huyện' && query.district !== 'Tất cả Quận/Huyện') {
+      const normQueryDist = removeAccents(query.district).replace(/^(quan|huyen|thanh pho|tp\.?|thi xa|tx\.?)\s+/i, '').trim();
+      rows = rows.filter(r => {
+        const normLeadAddr = removeAccents(r.address || '');
+        return normLeadAddr.includes(normQueryDist);
+      });
+    }
+
+    // Filter by Custom Keyword
+    if (query.customKeyword && query.customKeyword.trim()) {
+      const normKw = removeAccents(query.customKeyword.trim());
+      rows = rows.filter(r => {
+        const normComp = removeAccents(r.company || '');
+        const normInd = removeAccents(r.industry || '');
+        const normAddr = removeAccents(r.address || '');
+        const normNote = removeAccents(r.crmNote || '');
+        return normComp.includes(normKw) || normInd.includes(normKw) || normAddr.includes(normKw) || normNote.includes(normKw);
+      });
+    }
+
     // Filter by Industry using strict word-boundary & negative-keyword engine (matchesIndustry)
     if (query.industry && query.industry !== 'all' && query.industry !== 'Tất cả' && query.industry !== 'Mọi ngành nghề' && query.industry !== 'Mọi Ngành Nghề') {
       rows = rows.filter(r => matchesIndustry(query.industry, r.industry, r.company));

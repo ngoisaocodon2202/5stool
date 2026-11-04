@@ -8,6 +8,7 @@ const zaloChecker = require('./zaloChecker');
 const db = require('./db');
 const {
   INDUSTRY_CATALOG,
+  PROVINCE_GEO_DATA,
   getPoolLeads,
   getCarrier,
   matchesIndustry
@@ -342,6 +343,24 @@ class ScraperEngine {
     console.log(`[Scraper] Initialized with browser: ${this.browserPath}`);
   }
 
+  getDistrictsMap() {
+    const map = {};
+    for (const [p, data] of Object.entries(PROVINCE_GEO_DATA)) {
+      map[p] = data.districts || [];
+    }
+    return map;
+  }
+
+  getDistrictsForCity(city = '') {
+    if (!city || city === 'all' || city === 'Toàn quốc' || city === 'Mọi Tỉnh Thành') return [];
+    for (const [p, data] of Object.entries(PROVINCE_GEO_DATA)) {
+      if (p.toLowerCase() === city.toLowerCase() || removeVietnameseTones(p).toLowerCase() === removeVietnameseTones(city).toLowerCase()) {
+        return data.districts || [];
+      }
+    }
+    return [];
+  }
+
   async optimizePage(page) {
     try {
       await page.setRequestInterception(true);
@@ -387,6 +406,7 @@ class ScraperEngine {
   async scrapeGoogleMapsPlaces({
     keyword = '',
     city = '',
+    district = '',
     targetGoal = 50,
     existingDbPhones = new Set(),
     seenSessionPhones = new Set(),
@@ -396,7 +416,22 @@ class ScraperEngine {
     if (!apiKey || !apiKey.trim()) return;
 
     const cleanKey = apiKey.trim();
-    const searchQuery = `${keyword && keyword !== 'all' ? keyword : 'Công ty doanh nghiệp cửa hàng'} tại ${city && city !== 'all' ? city : 'Việt Nam'}`;
+    let locationPart = '';
+    const cleanCity = (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') ? city.trim() : '';
+    const cleanDist = (district && district !== 'all' && district !== 'Tất cả Quận / Huyện' && district !== 'Tất cả Quận/Huyện') ? district.trim() : '';
+
+    if (cleanDist && cleanCity) {
+      locationPart = `${cleanDist}, ${cleanCity}`;
+    } else if (cleanDist) {
+      locationPart = cleanDist;
+    } else if (cleanCity) {
+      locationPart = cleanCity;
+    } else {
+      locationPart = 'Việt Nam';
+    }
+
+    const kw = (keyword && keyword !== 'all' && keyword !== 'Mọi ngành nghề' && keyword !== 'Mọi Ngành Nghề') ? keyword.trim() : 'Công ty doanh nghiệp cửa hàng';
+    const searchQuery = `${kw} tại ${locationPart}`;
     console.log(`[Scraper Google Maps API] Đang truy vấn: ${searchQuery}`);
 
     // 1. Thử chuẩn Google Places API (New) v1 trước (như trên Google Cloud Console mới)
@@ -545,12 +580,21 @@ class ScraperEngine {
   async scrapeTrangVangLive({
     keyword = '',
     city = '',
+    district = '',
     targetGoal = 50,
     existingDbPhones = new Set(),
     seenSessionPhones = new Set(),
     leads = []
   }) {
-    const q = `${keyword && keyword !== 'all' ? keyword : 'cong ty'} ${city && city !== 'all' ? city : ''}`.trim();
+    let locationPart = '';
+    const cleanCity = (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') ? city.trim() : '';
+    const cleanDist = (district && district !== 'all' && district !== 'Tất cả Quận / Huyện' && district !== 'Tất cả Quận/Huyện') ? district.trim() : '';
+    if (cleanDist && cleanCity) locationPart = `${cleanDist} ${cleanCity}`;
+    else if (cleanDist) locationPart = cleanDist;
+    else if (cleanCity) locationPart = cleanCity;
+
+    const kw = (keyword && keyword !== 'all' && keyword !== 'Mọi ngành nghề' && keyword !== 'Mọi Ngành Nghề') ? keyword.trim() : 'cong ty';
+    const q = `${kw} ${locationPart}`.trim();
     const maxPages = 3;
 
     for (let page = 1; page <= maxPages; page++) {
@@ -761,6 +805,8 @@ class ScraperEngine {
   async _executeScrapeRealEnterprises({
     keyword = '',
     city = 'all',
+    district = 'all',
+    customKeyword = '',
     sourceType = 'all',
     targetGoal = 50,
     skipExisting = true,
@@ -768,9 +814,14 @@ class ScraperEngine {
     onProgress = null
   }) {
     const goalNumber = Math.min(Math.max(parseInt(targetGoal) || 50, 5), 500);
+    // Ưu tiên từ khóa người dùng tự nhập ở ô ngoài
+    const activeKeyword = (customKeyword && customKeyword.trim())
+      ? customKeyword.trim()
+      : (keyword && keyword !== 'all' && keyword !== 'Mọi ngành nghề' && keyword !== 'Mọi Ngành Nghề' ? keyword.trim() : '');
+
     console.log(`\n=======================================================`);
     console.log(`[Scraper Omni-Channel] Target: ${goalNumber} leads | Source: "${sourceType}" | Tenant: ${licenseKey || 'MASTER'}`);
-    console.log(`[Scraper Omni-Channel] Industry/Keyword: "${keyword || 'All'}", City: "${city || 'All'}"`);
+    console.log(`[Scraper Omni-Channel] Keyword: "${activeKeyword || 'Tất cả'}", District: "${district || 'Tất cả'}", City: "${city || 'Tất cả'}"`);
     console.log(`=======================================================`);
 
     const existingDbPhones = skipExisting ? db.getAllPhones(licenseKey) : new Set();
@@ -781,8 +832,9 @@ class ScraperEngine {
     if (sourceType === 'gmaps' || sourceType === 'all') {
       try {
         await this.scrapeGoogleMapsPlaces({
-          keyword,
+          keyword: activeKeyword,
           city,
+          district,
           targetGoal: goalNumber,
           existingDbPhones,
           seenSessionPhones,
@@ -795,8 +847,9 @@ class ScraperEngine {
     if ((sourceType === 'yellowpages' || sourceType === 'all') && leads.length < goalNumber) {
       try {
         await this.scrapeTrangVangLive({
-          keyword,
+          keyword: activeKeyword,
           city,
+          district,
           targetGoal: goalNumber,
           existingDbPhones,
           seenSessionPhones,
@@ -809,7 +862,7 @@ class ScraperEngine {
     if ((sourceType === 'doanhnghiep' || sourceType === 'all') && leads.length < goalNumber) {
       try {
         await this.scrapeDoanhNghiepBizLive({
-          keyword,
+          keyword: activeKeyword,
           city,
           targetGoal: goalNumber,
           existingDbPhones,
@@ -825,7 +878,7 @@ class ScraperEngine {
       const needed = goalNumber - leads.length;
       const poolLeads = getPoolLeads({
         city: city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành' ? city : null,
-        industry: keyword && keyword !== 'all' && keyword !== 'Mọi Ngành Nghề' && keyword !== 'Mọi ngành nghề' ? keyword : null,
+        industry: activeKeyword && activeKeyword !== 'all' && activeKeyword !== 'Mọi Ngành Nghề' && activeKeyword !== 'Mọi ngành nghề' ? activeKeyword : null,
         sourceType: sourceType || 'all',
         limit: needed,
         excludePhones: new Set([...existingDbPhones, ...seenSessionPhones])
