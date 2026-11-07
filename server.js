@@ -187,11 +187,13 @@ app.get('/api/leads', requireLicense, (req, res) => {
     const tenantKey = req.license.key;
     const leads = db.filter({ city, district, industry, customKeyword, role, zaloOnly, zaloStatus, carrier, mobileOnly, crmStatus, sourceType, search }, tenantKey);
     const allCount = db.getStats(tenantKey).totalLeads;
+    const districtCounts = db.getDistrictCounts(city, tenantKey);
 
     res.json({
       success: true,
       total: leads.length,
       allTotal: allCount,
+      districtCounts,
       leads: leads
     });
   } catch (err) {
@@ -260,6 +262,7 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
     const currentTotal = db.getStats(tenantKey).totalLeads;
     // Fetch properly scoped leads for the client
     const savedTenantLeads = db.filter({ city, district, industry, customKeyword, sourceType }, tenantKey);
+    const districtCounts = db.getDistrictCounts(city, tenantKey);
 
     res.json({
       success: true,
@@ -267,6 +270,7 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
       count: rawNewLeads.length,
       newLeads: rawNewLeads,
       tenantLeads: savedTenantLeads,
+      districtCounts,
       totalLeads: currentTotal,
       license: db.licenseManager.getLicense(tenantKey)
     });
@@ -729,7 +733,7 @@ app.post('/api/admin/restore', requireAdmin, (req, res) => {
 // 20. POST /api/admin/zalo/session
 app.post('/api/admin/zalo/session', requireAdmin, (req, res) => {
   try {
-    const { cookie, accountInfo, apiKey, apiUrl, zaloCookie, zaloApiKey, zaloApiUrl, googleMapsApiKey } = req.body;
+    const { cookie, accountInfo, apiKey, apiUrl, zaloCookie, zaloApiKey, zaloApiUrl, goongApiKey } = req.body;
     const finalCookie = cookie !== undefined ? cookie : zaloCookie;
     const finalApiKey = apiKey !== undefined ? apiKey : zaloApiKey;
     const finalApiUrl = apiUrl !== undefined ? apiUrl : zaloApiUrl;
@@ -740,7 +744,7 @@ app.post('/api/admin/zalo/session', requireAdmin, (req, res) => {
     }
     if (finalApiKey !== undefined) db.licenseManager.setSetting('zaloApiKey', finalApiKey || '');
     if (finalApiUrl !== undefined) db.licenseManager.setSetting('zaloApiUrl', finalApiUrl || '');
-    if (googleMapsApiKey !== undefined) db.licenseManager.setSetting('googleMapsApiKey', googleMapsApiKey || '');
+    if (goongApiKey !== undefined) db.licenseManager.setSetting('goongApiKey', goongApiKey || '');
 
     res.json({ success: true, message: 'Đã lưu cấu hình kết nối API & Cookie Zalo thành công!' });
   } catch (err) {

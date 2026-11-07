@@ -17,38 +17,38 @@
 
 ### Câu 1: Bao giờ mới tìm hết 5.000 khách sạn?
 
-#### 1. Cơ chế của các nền tảng dữ liệu (Google Maps, Trang Vàng, Cổng DN)
-* **Quy tắc trần kết quả (Search Cap):** Bất kỳ công cụ tìm kiếm nào (đặc biệt là Google Maps Places API) đều khống chế **tối đa 60 đến 100 kết quả** cho một câu truy vấn tìm kiếm đơn lẻ (ví dụ gõ: *"khách sạn tại Hải Phòng"*). Google sẽ ưu tiên trả về các địa điểm nổi bật nhất tại khu vực trung tâm, không trả một lúc 5.000 kết quả để tối ưu băng thông.
-* Do đó, nếu chỉ bấm tìm duy nhất một cụm từ *"khách sạn tại Hải Phòng"*, dù bấm 100 lần thì kết quả trả về cũng chỉ xoay quanh cụm 60-100 địa điểm quen thuộc.
+#### 1. Cơ chế của các nền tảng dữ liệu (Goong Maps VN, Trang Vàng, Cổng DN)
+* **Quy tắc trần kết quả (Search Cap):** Bất kỳ công cụ bản đồ nào (như Goong Maps API) đều trả về khoảng **20 địa điểm khớp nhất** cho một câu truy vấn đơn lẻ (ví dụ gõ: *"khách sạn Hải Phòng"*).
+* Do đó, nếu chỉ tìm chung chung cấp Tỉnh mà không chia nhỏ theo Quận/Huyện và từ khóa ngách thì sẽ bị giới hạn ở các địa điểm trung tâm.
 
 #### 2. Giải pháp kỹ thuật của Tool để lấy trọn vẹn 5.000 khách sạn
-* **Chiến thuật "Chia nhỏ lưới địa lý" (Subdivision / Geo-Grid Scanning):**
-  * Hải Phòng có **15 quận/huyện** (Lê Chân, Ngô Quyền, Hồng Bàng, Hải An, Đồ Sơn, Cát Hải, Thủy Nguyên, An Dương...) và hơn **217 phường/xã**.
-  * Để vét cạn toàn bộ 5.000 khách sạn, người dùng/hệ thống chia câu truy vấn theo từng cụm khu vực:
-    * Mẻ 1: *"Khách sạn Đồ Sơn"* -> Lấy toàn bộ ~150 khách sạn khu vực Đồ Sơn.
-    * Mẻ 2: *"Khách sạn Cát Bà"* hoặc *"Khách sạn Cát Hải"* -> Lấy toàn bộ khách sạn du lịch biển đảo.
-    * Mẻ 3: *"Khách sạn Lê Chân"*, *"Khách sạn Ngô Quyền"*, *"Khách sạn Thủy Nguyên"*...
-  * Mỗi phường/xã hoặc quận/huyện thường chỉ có từ 30 đến 150 khách sạn, hoàn toàn nằm trong ngưỡng thu thập trọn vẹn của 1 mẻ quét (200 leads/lần).
+* **Chiến thuật "Chia nhỏ lưới địa lý tự động" (Auto-Grid Deep Sweep & District Lock):**
+  * Hải Phòng có **15 quận/huyện** (Lê Chân, Đồ Sơn, Cát Hải - Cát Bà, Ngô Quyền, Hồng Bàng, Hải An, Thủy Nguyên, Kiến An...) và hơn **217 phường/xã**.
+  * Tool đã tích hợp sẵn **Dropdown chọn Quận/Huyện tự động** kèm **Bộ đếm số lượng đã cào trên từng Quận/Huyện**:
+    * Mẻ 1: Chọn *"Quận Đồ Sơn"* -> Hệ thống tự động mở rộng các biến thể (*Khách sạn, Nhà nghỉ, Resort, Villa, Homestay tại Đồ Sơn*) để vét trọn ~150 khách sạn khu vực Đồ Sơn.
+    * Mẻ 2: Chọn *"Huyện Cát Hải (Cát Bà)"* -> Lấy toàn bộ khách sạn du lịch biển đảo.
+    * Mẻ 3: Chọn *"Quận Lê Chân"*, *"Quận Ngô Quyền"*, *"TP. Thủy Nguyên"*...
+  * Hoặc khi chọn *"Tất cả Quận/Huyện"*, hệ thống **Auto-Grid** tự động chạy vòng lặp quét lần lượt qua tất cả các Quận/Huyện của tỉnh đó trong 1 lần bấm.
 
 #### 3. Dấu hiệu nhận biết khi nào đã QUÉT HẾT (Vét cạn dữ liệu):
-* Hệ thống có bộ đếm đối soát thời gian thực:
-  * Khi quét một khu vực mà hệ thống báo: **"Số lượng lead mới: 0"** (hoặc 100% kết quả trả về bị hệ thống loại bỏ vì đã tồn tại trong Database), điều đó xác nhận khu vực đó **đã được vét sạch hoàn toàn**.
-  * Bảng thống kê tổng hiển thị con số tích lũy: Ví dụ kho đã chạm mốc 4.800 - 5.000 leads Hải Phòng và không còn số điện thoại mới phát sinh.
+* Ngay trong Dropdown Quận/Huyện hiển thị **Bộ đếm trực tiếp** (ví dụ: `📍 Quận Đồ Sơn (145 đã cào)`).
+* Khi quét thêm một khu vực mà hệ thống lọc trùng 3 tầng báo không còn cơ sở mới phát sinh, điều đó xác nhận khu vực đó **đã được vét sạch hoàn toàn**.
 
 ---
 
 ### Câu 2: Làm sao để tìm KHÔNG bị trùng lặp khách sạn?
 
-Hệ thống đã được thiết kế sẵn **3 Lớp Phòng Thủ Chống Trùng Lặp (3-Tier Anti-Duplicate)** chạy tự động 100%:
+Hệ thống được trang bị **Cơ Chế Chống Trùng Lặp Đa Tầng (3-Key Anti-Duplicate)**:
 
 ```
-[Kết quả mới cào về]
+[Kết quả mới cào về từ Goong Maps / Trang Vàng / Cổng DN]
          │
          ▼
-[LỚP 1: Lọc thời gian thực trong lúc cào (Memory Set Filter)]
-   ├── Kiểm tra SĐT đã có trong DB của User chưa? (existingDbPhones)
-   ├── Kiểm tra SĐT đã xuất hiện trong phiên cào hiện tại chưa? (seenSessionPhones)
-   └── NẾU TRÙNG ➔ LOẠI BỎ NGAY LẬP TỨC (Không tốn hạn mức, không ghi đè)
+[LỚP 1: Đối soát 3 khóa định danh trong bộ nhớ (3-Key Memory Filter)]
+   ├── Khóa 1: Số điện thoại chuẩn hóa 10-11 số (existingDbPhones)
+   ├── Khóa 2: Mã số thuế doanh nghiệp (existingTaxCodes)
+   ├── Khóa 3: Tên thương hiệu chuẩn hóa + Tỉnh thành (companyFingerprints)
+   └── NẾU TRÙNG BẤT KỲ KHÓA NÀO ➔ LOẠI BỎ NGAY LẬP TỨC
          │
          ▼
 [LỚP 2: Ràng buộc tính duy nhất tại Database (SQLite Unique & Tenant Isolation)]
@@ -56,38 +56,28 @@ Hệ thống đã được thiết kế sẵn **3 Lớp Phòng Thủ Chống Tr�
    └── Dữ liệu mỗi tài khoản được cô lập độc lập (Tenant Key), không bị xung đột
          │
          ▼
-[LỚP 3: Nút bấm Khử Trùng Lặp 1-Click trên giao diện]
-   └── Cho phép User rà soát, loại bỏ bản ghi trùng lặp chỉ với 1 cú click chuột
+[LỚP 3: Tùy chọn Checkbox "Lọc trùng" trực tiếp trên thanh công cụ]
+   └── Tự động bỏ qua 100% các khách sạn/doanh nghiệp đã có trong kho khi cào mẻ mới
 ```
-
-* **Kết quả:** Dù bạn có bấm nút "Bắt đầu cào data" 50 lần cùng một từ khóa hay cùng một tỉnh thành, những khách sạn nào đã được lưu vào danh sách trước đó sẽ **không bao giờ bị lưu trùng lặp lại lần thứ hai**.
 
 ---
 
 ### Câu 3: Có thể thêm chức năng tìm kiếm theo từ khóa mong muốn không?
 
-👉 **TÌNH TRẠNG HIỆN TẠI: TOOL ĐÃ CÓ SẴN CHỨC NĂNG NÀY 100%!**
+👉 **ĐÃ TÍCH HỢP Ô NHẬP "TỪ KHÓA RIÊNG (TỰ DO)" ĐỘC LẬP TRÊN THANH CÔNG CỤ CHÍNH!**
 
-* **Cơ chế đã tích hợp:**
-  1. Trên thanh công cụ, tại mục **"Ngành Nghề Kinh Doanh"**: Ngoài 24 nhóm ngành gợi ý sẵn (Bất động sản, Khách sạn, Spa, Xây dựng...), khách hàng có thể **gõ trực tiếp bất kỳ từ khóa chuyên sâu nào** vào ô tìm kiếm:
-     * Ví dụ: Gõ *"Khách sạn 3 sao"*, *"Homestay Cát Bà"*, *"Khách sạn view biển"*, *"Resort nghỉ dưỡng"*, *"Nhà nghỉ bình dân"*...
-     * Nhấn phím **Enter** hoặc bấm nút **"Chọn"**.
-  2. Lõi xử lý phía Backend (`scraper.js`) sẽ tiếp nhận chính xác chuỗi từ khóa này và gửi truy vấn thẳng sang Google Maps Places API (`places.searchText`), Trang Vàng và Cổng Doanh Nghiệp Quốc Gia để bóc tách đúng ngách khách hàng mong muốn.
+* Khách hàng có thể gõ trực tiếp bất kỳ từ khóa ngách nào vào ô **"Từ Khóa Riêng (Tự Do)"** ngay trên màn hình chính:
+  * Ví dụ: *"Khách sạn 3 sao"*, *"Homestay Cát Bà"*, *"Resort nghỉ dưỡng"*, *"Nhà nghỉ bình dân"*, *"Spa dưỡng sinh"*...
+* Lõi xử lý phía Backend (`scraper.js`) tiếp nhận từ khóa này kết hợp với Quận/Huyện đang chọn và đẩy thẳng sang **Goong Maps API (`rsapi.goong.io`)**, Trang Vàng và Cổng Doanh Nghiệp Quốc Gia.
 
 ---
 
 ### Câu 4: Việc tìm này có ảnh hưởng tới App hoặc API không? Có giới hạn hay vấn đề gì không?
 
-#### 1. Về Google Maps Places API (Chi phí & Giới hạn):
-* **Hạn mức Google tặng miễn phí:** Mỗi tài khoản Google Cloud được tặng sẵn **200 USD miễn phí mỗi tháng** (tương đương ~5.000.000đ credit).
-* **Bài toán chi phí thực tế:**
-  * Giá API Google Places (New Text Search): khoảng **0.032$ / 1 lượt gọi** (mỗi lượt lấy về tối đa 20 địa điểm có đầy đủ Tên, SĐT, Địa chỉ, Đánh giá sao).
-  * Để quét 5.000 khách sạn: Cần khoảng 250 lượt gọi API -> Tổng chi phí chỉ khoảng **~8$ - 9$ (khoảng 200.000đ)**. Con số này nằm trọn vẹn trong khoản 200$ miễn phí mỗi tháng của Google.
-* **Cơ chế dự phòng an toàn (Hybrid Failover):**
-  * Trong trường hợp API Google Maps hết hạn mức hoặc chưa cấu hình Billing, hệ thống **không bao giờ bị dừng hoạt động** mà tự động chuyển sang **3 nguồn dự phòng miễn phí 100%**:
-    1. Trang Vàng Doanh Nghiệp Việt Nam (YellowPages)
-    2. Cổng Thông Tin Đăng Ký Doanh Nghiệp Quốc Gia
-    3. Kho dữ liệu Doanh nghiệp Pool 63 tỉnh thành tích hợp sẵn.
+#### 1. Về Goong Maps API (`goong.io`):
+* **Ưu thế vượt trội tại Việt Nam:** Hệ thống sử dụng **Goong Maps API (`rsapi.goong.io`)** chuyên biệt cho dữ liệu bản đồ và địa giới hành chính Việt Nam (`compound` chuẩn Phường/Xã, Quận/Huyện, Tỉnh/Thành).
+* **Tối ưu hạn mức:** Mỗi 1 request `/Place/AutoComplete` của Goong trả về ngay **20 địa điểm thật kèm địa chỉ đầy đủ** (1.000 request miễn phí/ngày tương đương khả năng quét tới **20.000 địa điểm/ngày**).
+* **Kết hợp Đa nguồn (Omni-Channel):** Bên cạnh Goong Maps, hệ thống tự động kết hợp cùng Trang Vàng Việt Nam, Cổng Doanh Nghiệp Quốc Gia và Kho Doanh Nghiệp 63 Tỉnh Thành để làm giàu đầy đủ Số Điện Thoại, Mã Số Thuế, Người Đại Diện và kiểm tra trạng thái Zalo (`ACTIVE` / `NOT FOUND`).
 
 #### 2. Về Hiệu năng & Tốc độ của Web App:
 * **Không làm đơ/lag server:** Tool đã có cơ chế **Scraper Rate Limiter** khống chế tối đa 2 tiến trình cào đồng thời, giải phóng RAM ngay sau khi hoàn thành.

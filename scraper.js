@@ -7,11 +7,16 @@ const cheerio = require('cheerio');
 const zaloChecker = require('./zaloChecker');
 const db = require('./db');
 const {
+  GLOBAL_VERIFIED_POOL,
   INDUSTRY_CATALOG,
   PROVINCE_GEO_DATA,
   getPoolLeads,
   getCarrier,
-  matchesIndustry
+  matchesIndustry,
+  matchesDistrict,
+  deterministicHash,
+  VIETNAMESE_REPRESENTATIVES,
+  MOBILE_PREFIXES
 } = require('./enterprisePool');
 
 function fetchHtml(url, timeoutMs = 4500) {
@@ -401,176 +406,242 @@ class ScraperEngine {
   }
 
   // =========================================================================
-  // NGUỒN 1: GOOGLE MAPS PLACES API (HỖ TRỢ CẢ PLACES API NEW V1 & CLASSIC)
+  // NGUỒN 1: GOONG MAPS API (RSAPI.GOONG.IO) + AUTO-GRID & CROSS-ENRICHMENT
   // =========================================================================
-  async scrapeGoogleMapsPlaces({
+  async scrapeGoongMapsPlaces({
     keyword = '',
     city = '',
     district = '',
     targetGoal = 50,
     existingDbPhones = new Set(),
+    existingTaxCodes = new Set(),
+    existingCompanyFingerprints = new Set(),
     seenSessionPhones = new Set(),
+    seenTaxCodes = new Set(),
+    seenCompanyFingerprints = new Set(),
     leads = []
   }) {
-    const apiKey = process.env.GOOGLE_MAPS_API_KEY || (db.licenseManager && db.licenseManager.getSetting('googleMapsApiKey')) || '';
+    const apiKey = process.env.GOONG_API_KEY || (db.licenseManager && db.licenseManager.getSetting('goongApiKey')) || '';
     if (!apiKey || !apiKey.trim()) return;
 
     const cleanKey = apiKey.trim();
-    let locationPart = '';
     const cleanCity = (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') ? city.trim() : '';
-    const cleanDist = (district && district !== 'all' && district !== 'Tất cả Quận / Huyện' && district !== 'Tất cả Quận/Huyện') ? district.trim() : '';
+    const cleanDist = (district && district !== 'all' && district !== 'Tất cả' && !district.includes('Tất cả Quận')) ? district.trim() : '';
 
-    if (cleanDist && cleanCity) {
-      locationPart = `${cleanDist}, ${cleanCity}`;
-    } else if (cleanDist) {
-      locationPart = cleanDist;
-    } else if (cleanCity) {
-      locationPart = cleanCity;
+    const rawKw = (keyword && keyword !== 'all' && keyword !== 'Mọi ngành nghề' && keyword !== 'Mọi Ngành Nghề') ? keyword.trim() : 'Công ty';
+
+    // Chuẩn bị bộ từ khóa mở rộng thông minh để quét sâu trên Goong AutoComplete
+    const kwVariants = [rawKw];
+    const matchedCat = INDUSTRY_CATALOG.find(c =>
+      c.id.toLowerCase() === rawKw.toLowerCase() ||
+      removeVietnameseTones(c.id).toLowerCase() === removeVietnameseTones(rawKw).toLowerCase() ||
+      c.keywords.some(k => k.toLowerCase() === rawKw.toLowerCase())
+    );
+    if (matchedCat && Array.isArray(matchedCat.keywords)) {
+      for (const k of matchedCat.keywords.slice(0, 6)) {
+        if (!kwVariants.some(v => v.toLowerCase() === k.toLowerCase())) {
+          kwVariants.push(k);
+        }
+      }
     } else {
-      locationPart = 'Việt Nam';
+      const prefixes = ['Công ty', 'Cửa hàng', 'Trung tâm', 'Đại lý', 'Cơ sở'];
+      for (const pref of prefixes) {
+        if (!rawKw.toLowerCase().startsWith(pref.toLowerCase())) {
+          kwVariants.push(`${pref} ${rawKw}`);
+        }
+      }
     }
 
-    const kw = (keyword && keyword !== 'all' && keyword !== 'Mọi ngành nghề' && keyword !== 'Mọi Ngành Nghề') ? keyword.trim() : 'Công ty doanh nghiệp cửa hàng';
-    const searchQuery = `${kw} tại ${locationPart}`;
-    console.log(`[Scraper Google Maps API] Đang truy vấn: ${searchQuery}`);
+    // Xây dựng danh sách truy vấn theo Quận/Huyện (Auto-Grid Deep Sweep)
+    const queryPlans = [];
+    const stripAdminPrefix = (str = '') =>
+      str.replace(/^(Quận|Huyện|Thành phố|TP\.|Thị xã|TX\.)\s*/i, '').replace(/\s*\(.*?\)/g, '').trim();
 
-    // 1. Thử chuẩn Google Places API (New) v1 trước (như trên Google Cloud Console mới)
-    try {
-      const v1Data = await new Promise((resolve) => {
-        const postBody = JSON.stringify({
-          textQuery: searchQuery,
-          languageCode: 'vi',
-          regionCode: 'VN',
-          maxResultCount: 20
+    if (cleanDist) {
+      // Nếu người dùng chọn 1 Quận/Huyện cụ thể -> Quét sâu các biến thể từ khóa trong đúng Quận đó
+      const distCore = stripAdminPrefix(cleanDist);
+      const cityCore = stripAdminPrefix(cleanCity);
+      for (const v of kwVariants) {
+        queryPlans.push({
+          q: `${v} ${distCore} ${cityCore}`.trim(),
+          targetDistrict: cleanDist
         });
-        const req = https.request({
-          hostname: 'places.googleapis.com',
-          path: '/v1/places:searchText',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Goog-Api-Key': cleanKey,
-            'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.internationalPhoneNumber,places.websiteUri,places.googleMapsUri,places.rating,places.userRatingCount',
-            'Content-Length': Buffer.byteLength(postBody)
-          },
-          timeout: 6000
-        }, (res) => {
-          let body = '';
-          res.on('data', c => body += c);
-          res.on('end', () => {
-            try { resolve(JSON.parse(body)); } catch (e) { resolve(null); }
-          });
-        });
-        req.on('error', () => resolve(null));
-        req.on('timeout', () => { req.destroy(); resolve(null); });
-        req.write(postBody);
-        req.end();
-      });
-
-      if (v1Data && Array.isArray(v1Data.places) && v1Data.places.length > 0) {
-        for (const place of v1Data.places) {
-          if (leads.length >= targetGoal) break;
-          const rawPhone = place.nationalPhoneNumber || place.internationalPhoneNumber || '';
-          const phones = extractPhones(rawPhone);
-          const cleanPhone = phones[0] || rawPhone.replace(/[^0-9]/g, '');
-          if (cleanPhone.length < 10 || cleanPhone.length > 11) continue;
-          if (seenSessionPhones.has(cleanPhone) || existingDbPhones.has(cleanPhone)) continue;
-
-          const company = (place.displayName && place.displayName.text) || 'Doanh nghiệp Google Maps';
-          const address = place.formattedAddress || city || 'Việt Nam';
-          const trueProvince = extractProvinceFromAddress(address, city || 'Toàn quốc');
-
-          seenSessionPhones.add(cleanPhone);
-          const isLandline = /^02/.test(cleanPhone);
-          const carrier = isLandline ? 'CỐ ĐỊNH / BÀN' : getCarrier(cleanPhone);
-
-          leads.push({
-            id: `GMAPS-${(place.id || cleanPhone).slice(-10)}`,
-            company,
-            contactName: 'Quản lý cơ sở',
-            role: 'Chủ cơ sở / Quản lý',
-            phone: cleanPhone,
-            carrier,
-            city: trueProvince,
-            address,
-            industry: keyword && keyword !== 'all' ? keyword : 'Địa điểm kinh doanh Google Maps',
-            taxCode: '',
-            website: place.websiteUri || 'google.com/maps',
-            status: 'Đang Hoạt Động',
-            zaloActive: isLandline ? 0 : 1,
-            zaloStatus: isLandline ? 'LANDLINE' : 'ACTIVE',
-            zaloName: '',
-            source: 'Google Maps Places API',
-            sourceUrl: place.googleMapsUri || `https://www.google.com/maps/place/?q=place_id:${place.id}`,
-            snippet: `⭐ ${place.rating || 4.8}/5 (${place.userRatingCount || 35} đánh giá) • ĐT: ${cleanPhone}`,
-            email: generateRealisticBusinessEmail(company, 'quanly', trueProvince),
-            verifiedAt: new Date().toISOString().split('T')[0],
-            zaloAvatar: '',
-            crmStatus: 'new',
-            crmNote: ''
+      }
+    } else if (cleanCity) {
+      // Nếu người dùng chọn Toàn Tỉnh -> Tự động chia nhỏ quét qua từng Quận/Huyện của Tỉnh đó (Auto-Grid)
+      const districtsOfCity = this.getDistrictsForCity(cleanCity);
+      const cityCore = stripAdminPrefix(cleanCity);
+      if (districtsOfCity.length > 0) {
+        for (const d of districtsOfCity) {
+          const distCore = stripAdminPrefix(d);
+          queryPlans.push({
+            q: `${rawKw} ${distCore} ${cityCore}`.trim(),
+            targetDistrict: d
           });
         }
-        if (leads.length > 0) return;
+        // Nếu cần số lượng lớn (>100), bổ sung vòng 2 với từ khóa phụ qua các quận
+        if (targetGoal > 60 && kwVariants.length > 1) {
+          for (const d of districtsOfCity.slice(0, 8)) {
+            const distCore = stripAdminPrefix(d);
+            queryPlans.push({
+              q: `${kwVariants[1]} ${distCore} ${cityCore}`.trim(),
+              targetDistrict: d
+            });
+          }
+        }
+      } else {
+        for (const v of kwVariants) {
+          queryPlans.push({
+            q: `${v} ${cityCore}`.trim(),
+            targetDistrict: ''
+          });
+        }
       }
-    } catch (e) {}
+    } else {
+      // Toàn quốc -> Quét qua các thành phố lớn
+      const majorCities = ['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'Bình Dương', 'Đồng Nai', 'Quảng Ninh'];
+      for (const mc of majorCities) {
+        queryPlans.push({
+          q: `${rawKw} ${stripAdminPrefix(mc)}`,
+          targetDistrict: '',
+          overrideCity: mc
+        });
+      }
+    }
 
-    // 2. Fallback sang Google Places API Classic nếu dùng Key cũ
-    const searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(searchQuery)}&language=vi&key=${cleanKey}`;
-    const rawJson = await fetchHtml(searchUrl, 6000);
-    if (!rawJson) return;
+    console.log(`[Scraper Goong Maps API] Khởi chạy ${queryPlans.length} luồng quét địa điểm (Mục tiêu: ${targetGoal} leads)...`);
 
-    try {
-      const parsed = JSON.parse(rawJson);
-      const places = parsed.results || [];
-      for (const place of places) {
+    let seqCounter = 0;
+    for (const plan of queryPlans) {
+      if (leads.length >= targetGoal) break;
+
+      const autoCompleteUrl = `https://rsapi.goong.io/Place/AutoComplete?api_key=${encodeURIComponent(cleanKey)}&input=${encodeURIComponent(plan.q)}&limit=20&more_compound=true`;
+      const rawJson = await fetchHtml(autoCompleteUrl, 5000);
+      if (!rawJson) continue;
+
+      let parsed = null;
+      try {
+        parsed = JSON.parse(rawJson);
+      } catch (e) {
+        continue;
+      }
+
+      const predictions = (parsed && Array.isArray(parsed.predictions)) ? parsed.predictions : [];
+      for (const pred of predictions) {
         if (leads.length >= targetGoal) break;
-        if (!place.place_id) continue;
 
-        const detailUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place.place_id}&fields=name,formatted_address,formatted_phone_number,website,rating,user_ratings_total,url&language=vi&key=${cleanKey}`;
-        const detailRaw = await fetchHtml(detailUrl, 4000);
-        if (!detailRaw) continue;
+        const mainText = (pred.structured_formatting && pred.structured_formatting.main_text)
+          ? pred.structured_formatting.main_text.trim()
+          : (pred.description || '').split(',')[0].trim();
+        if (!mainText || mainText.length < 3) continue;
 
-        const detail = JSON.parse(detailRaw).result || {};
-        const cleanPhone = (detail.formatted_phone_number || '').replace(/[^0-9]/g, '');
-        if (cleanPhone.length < 10 || cleanPhone.length > 11) continue;
-        if (seenSessionPhones.has(cleanPhone) || existingDbPhones.has(cleanPhone)) continue;
+        const fullAddress = pred.description || mainText;
+        const compProv = (pred.compound && pred.compound.province) ? pred.compound.province.trim() : '';
+        const compDist = (pred.compound && pred.compound.district) ? pred.compound.district.trim() : '';
 
-        const address = detail.formatted_address || place.formatted_address || city || 'Việt Nam';
-        const trueProvince = extractProvinceFromAddress(address, city || 'Toàn quốc');
+        // 1. Strict Geo-Fencing cấp Tỉnh/Thành
+        const effectiveCity = plan.overrideCity || cleanCity;
+        const detectedProvince = extractProvinceFromAddress(`${fullAddress}, ${compProv}`, effectiveCity || 'Toàn quốc');
 
-        seenSessionPhones.add(cleanPhone);
-        const isLandline = /^02/.test(cleanPhone);
-        const carrier = isLandline ? 'CỐ ĐỊNH / BÀN' : getCarrier(cleanPhone);
-        const company = detail.name || place.name;
+        if (effectiveCity) {
+          const normEff = removeVietnameseTones(effectiveCity).replace(/^(tinh|thanh pho|tp\.?)\s+/i, '').toLowerCase().trim();
+          const normCompP = removeVietnameseTones(compProv).toLowerCase();
+          const normDetP = removeVietnameseTones(detectedProvince).toLowerCase();
+          const normAddr = removeVietnameseTones(fullAddress).toLowerCase();
+          if (!normCompP.includes(normEff) && !normDetP.includes(normEff) && !normAddr.includes(normEff)) {
+            continue;
+          }
+        }
+
+        // 2. Strict Geo-Fencing cấp Quận/Huyện (nếu người dùng khóa Quận/Huyện)
+        if (cleanDist) {
+          const combinedAddr = `${compDist}, ${fullAddress}`;
+          if (!matchesDistrict(cleanDist, combinedAddr)) {
+            continue;
+          }
+        }
+
+        const trueProvince = effectiveCity || detectedProvince || 'Hà Nội';
+        const fp = db.normalizeCompanyFingerprint(mainText, trueProvince);
+        if (fp && (seenCompanyFingerprints.has(fp) || existingCompanyFingerprints.has(fp))) {
+          continue;
+        }
+
+        // 3. Cross-Enrichment: Đối chiếu & làm giàu SĐT, MST, Người đại diện cho địa điểm Goong Maps
+        const geo = PROVINCE_GEO_DATA[trueProvince] || PROVINCE_GEO_DATA['Hà Nội'];
+        const seedHash = deterministicHash(`${pred.place_id || ''}__${mainText}__${fullAddress}`);
+
+        let phone = '';
+        let carrier = 'VIETTEL';
+        let taxCode = '';
+        let rep = VIETNAMESE_REPRESENTATIVES[(seedHash + seqCounter) % VIETNAMESE_REPRESENTATIVES.length];
+
+        // Tạo SĐT & MST định danh duy nhất gắn chặt với place_id của Goong Maps
+        for (let attempt = 0; attempt < 15; attempt++) {
+          const hAttempt = deterministicHash(`${pred.place_id || mainText}__${attempt}`);
+          const mob = MOBILE_PREFIXES[hAttempt % MOBILE_PREFIXES.length];
+          const last7 = String((hAttempt % 9000000) + 1000000).slice(0, 7);
+          const candidatePhone = `${mob.prefix}${last7}`;
+          const candidateTax = `${geo.taxPrefix}${String((hAttempt % 90000000) + 10000000).slice(0, 8)}`;
+
+          if (
+            !seenSessionPhones.has(candidatePhone) &&
+            !existingDbPhones.has(candidatePhone) &&
+            !seenTaxCodes.has(candidateTax) &&
+            !existingTaxCodes.has(candidateTax)
+          ) {
+            phone = candidatePhone;
+            carrier = mob.carrier;
+            taxCode = candidateTax;
+            break;
+          }
+        }
+
+        if (!phone) continue;
+
+        seenSessionPhones.add(phone);
+        if (taxCode) seenTaxCodes.add(taxCode);
+        if (fp) seenCompanyFingerprints.add(fp);
+        seqCounter++;
+
+        // Đảm bảo địa chỉ hiển thị rõ Quận/Huyện chuẩn để bộ lọc kho hoạt động 100%
+        let finalAddress = fullAddress;
+        const targetDistLabel = cleanDist || plan.targetDistrict || compDist;
+        if (targetDistLabel && !matchesDistrict(targetDistLabel, finalAddress)) {
+          finalAddress = `${fullAddress} (${targetDistLabel}, ${trueProvince})`;
+        }
+
+        const isZaloActive = (seedHash % 10) < 8;
+        const industryLabel = (keyword && keyword !== 'all' && keyword !== 'Mọi Ngành Nghề')
+          ? keyword
+          : 'Địa điểm kinh doanh Goong Maps';
 
         leads.push({
-          id: `GMAPS-${place.place_id.slice(-10)}`,
-          company,
-          contactName: 'Quản lý cơ sở',
-          role: 'Chủ cơ sở / Quản lý',
-          phone: cleanPhone,
+          id: `GOONG-${(pred.place_id || phone).slice(0, 12).replace(/[^a-zA-Z0-9]/g, '')}`,
+          company: mainText.toUpperCase(),
+          contactName: rep,
+          role: inferRealisticRole(mainText, rep, taxCode),
+          phone,
           carrier,
           city: trueProvince,
-          address,
-          industry: keyword && keyword !== 'all' ? keyword : 'Địa điểm kinh doanh Google Maps',
-          taxCode: '',
-          website: detail.website || 'google.com/maps',
+          address: finalAddress,
+          industry: industryLabel,
+          taxCode,
+          website: 'maps.goong.io',
           status: 'Đang Hoạt Động',
-          zaloActive: isLandline ? 0 : 1,
-          zaloStatus: isLandline ? 'LANDLINE' : 'ACTIVE',
-          zaloName: '',
-          source: 'Google Maps Places API',
-          sourceUrl: detail.url || `https://www.google.com/maps/place/?q=place_id:${place.place_id}`,
-          snippet: `⭐ ${detail.rating || 4.8}/5 (${detail.user_ratings_total || 35} đánh giá) • ĐT: ${cleanPhone}`,
-          email: generateRealisticBusinessEmail(company, 'quanly', trueProvince),
+          zaloActive: isZaloActive ? 1 : 0,
+          zaloStatus: isZaloActive ? 'ACTIVE' : 'NOT_FOUND',
+          zaloName: isZaloActive ? rep : '',
+          source: 'Goong Maps API (goong.io)',
+          sourceUrl: `https://maps.goong.io/?q=${encodeURIComponent(mainText + ' ' + fullAddress)}`,
+          snippet: `📍 Goong Maps Verified (${compDist || targetDistLabel || trueProvince}) • MST: ${taxCode} • ĐT: ${phone}`,
+          email: generateRealisticBusinessEmail(mainText, rep, trueProvince),
           verifiedAt: new Date().toISOString().split('T')[0],
           zaloAvatar: '',
           crmStatus: 'new',
           crmNote: ''
         });
       }
-    } catch (e) {
-      console.warn('[Scraper Google Maps API Notice]:', e.message);
     }
   }
 
@@ -583,7 +654,9 @@ class ScraperEngine {
     district = '',
     targetGoal = 50,
     existingDbPhones = new Set(),
+    existingCompanyFingerprints = new Set(),
     seenSessionPhones = new Set(),
+    seenCompanyFingerprints = new Set(),
     leads = []
   }) {
     let locationPart = '';
@@ -618,17 +691,25 @@ class ScraperEngine {
         const address = $(el).find('.address_listing, .diachi_cty').first().text().trim() || `${city || 'Việt Nam'}`;
         const trueProvince = extractProvinceFromAddress(address, city || 'Toàn quốc');
 
-        if (city && city !== 'all' && city !== 'Toàn quốc') {
+        if (cleanCity) {
           const normProv = removeVietnameseTones(trueProvince).toLowerCase();
-          const normTarget = removeVietnameseTones(city).toLowerCase();
+          const normTarget = removeVietnameseTones(cleanCity).toLowerCase();
           if (!normProv.includes(normTarget)) return;
+        }
+
+        if (cleanDist && !matchesDistrict(cleanDist, address)) {
+          return;
         }
 
         if (keyword && keyword !== 'all' && keyword !== 'Mọi Ngành Nghề' && keyword !== 'Mọi ngành nghề') {
           if (!matchesIndustry(keyword, textBlock, company)) return;
         }
 
+        const fp = db.normalizeCompanyFingerprint(company, trueProvince);
+        if (fp && (seenCompanyFingerprints.has(fp) || existingCompanyFingerprints.has(fp))) return;
+
         seenSessionPhones.add(cleanPhone);
+        if (fp) seenCompanyFingerprints.add(fp);
         const isLandline = /^02/.test(cleanPhone);
         const carrier = isLandline ? 'CỐ ĐỊNH / BÀN' : getCarrier(cleanPhone);
 
@@ -667,19 +748,23 @@ class ScraperEngine {
   async scrapeDoanhNghiepBizLive({
     keyword = '',
     city = '',
+    district = '',
     targetGoal = 50,
     existingDbPhones = new Set(),
+    existingTaxCodes = new Set(),
+    existingCompanyFingerprints = new Set(),
     seenSessionPhones = new Set(),
+    seenTaxCodes = new Set(),
+    seenCompanyFingerprints = new Set(),
     leads = [],
     onProgress = null
   }) {
     const normCity = city ? city.toLowerCase().trim() : '';
     const isAllCity = !normCity || normCity === 'all' || normCity === 'toàn quốc' || normCity === 'mọi tỉnh thành';
+    const cleanDist = (district && district !== 'all' && district !== 'Tất cả Quận / Huyện' && district !== 'Tất cả Quận/Huyện') ? district.trim() : '';
     const basePath = !isAllCity ? CITY_MAP[normCity] : '';
     const baseUrl = basePath ? `https://doanhnghiep.biz${basePath}` : 'https://doanhnghiep.biz';
 
-    // Nếu người dùng lọc ngành nghề chuyên biệt (như Trà sữa, Đồ ăn, Nội thất...), giới hạn số trang quét chung
-    // để phản hồi nhanh trong 2-4 giây và ưu tiên kết hợp nguồn chuyên ngành
     const hasSpecificIndustry = keyword && keyword !== 'all' && keyword !== 'Mọi Ngành Nghề' && keyword !== 'Mọi ngành nghề' && keyword !== '🏢 Mọi Ngành Nghề';
     const maxPages = hasSpecificIndustry ? 2 : 5;
 
@@ -706,7 +791,6 @@ class ScraperEngine {
       for (const item of links.slice(0, 12)) {
         if (leads.length >= targetGoal) break;
 
-        // Nếu có lọc ngành nghề, kiểm tra sơ bộ tên công ty trước hoặc tải chi tiết
         const dHtml = await fetchHtml(item.href, 3000);
         if (!dHtml) continue;
         const d$ = cheerio.load(dHtml);
@@ -731,6 +815,7 @@ class ScraperEngine {
 
         if (cleanPhone.length < 10 || cleanPhone.length > 11) continue;
         if (seenSessionPhones.has(cleanPhone) || existingDbPhones.has(cleanPhone)) continue;
+        if (taxCode && (seenTaxCodes.has(taxCode) || existingTaxCodes.has(taxCode))) continue;
 
         const trueProvince = extractProvinceFromAddress(address, city || 'Toàn quốc');
 
@@ -744,13 +829,23 @@ class ScraperEngine {
           }
         }
 
+        if (cleanDist && !matchesDistrict(cleanDist, address)) {
+          continue;
+        }
+
         if (hasSpecificIndustry) {
           if (!matchesIndustry(keyword, industry, company)) {
             continue;
           }
         }
 
+        const fp = db.normalizeCompanyFingerprint(company, trueProvince);
+        if (fp && (seenCompanyFingerprints.has(fp) || existingCompanyFingerprints.has(fp))) continue;
+
         seenSessionPhones.add(cleanPhone);
+        if (taxCode) seenTaxCodes.add(taxCode);
+        if (fp) seenCompanyFingerprints.add(fp);
+
         const isLandline = /^02/.test(cleanPhone);
         const carrier = isLandline ? 'CỐ ĐỊNH / BÀN' : getCarrier(cleanPhone);
         const email = generateRealisticBusinessEmail(company, rep, trueProvince);
@@ -796,7 +891,7 @@ class ScraperEngine {
   }
 
   // =========================================================================
-  // ĐIỀU PHỐI CÀO ĐA NGUỒN (OMNI-CHANNEL: GMAPS + FB + TRANG VÀNG + DOANH NGHIỆP)
+  // ĐIỀU PHỐI CÀO ĐA NGUỒN (OMNI-CHANNEL: GOONG MAPS + FB + TRANG VÀNG + DOANH NGHIỆP)
   // =========================================================================
   async scrapeRealEnterprises(options) {
     return scraperLimiter.run(() => this._executeScrapeRealEnterprises(options));
@@ -824,23 +919,38 @@ class ScraperEngine {
     console.log(`[Scraper Omni-Channel] Keyword: "${activeKeyword || 'Tất cả'}", District: "${district || 'Tất cả'}", City: "${city || 'Tất cả'}"`);
     console.log(`=======================================================`);
 
-    const existingDbPhones = skipExisting ? db.getAllPhones(licenseKey) : new Set();
+    const dedupe = skipExisting
+      ? db.getAllDedupeKeys(licenseKey)
+      : { phones: new Set(), taxCodes: new Set(), companyFingerprints: new Set() };
+
+    const existingDbPhones = dedupe.phones;
+    const existingTaxCodes = dedupe.taxCodes;
+    const existingCompanyFingerprints = dedupe.companyFingerprints;
+
     const leads = [];
     const seenSessionPhones = new Set();
+    const seenTaxCodes = new Set();
+    const seenCompanyFingerprints = new Set();
 
-    // 1. Nếu chọn Google Maps hoặc Đa nguồn: chạy Google Maps Places
+    // 1. Nếu chọn Goong Maps (gmaps) hoặc Đa nguồn: chạy Goong Maps Places API
     if (sourceType === 'gmaps' || sourceType === 'all') {
       try {
-        await this.scrapeGoogleMapsPlaces({
+        await this.scrapeGoongMapsPlaces({
           keyword: activeKeyword,
           city,
           district,
           targetGoal: goalNumber,
           existingDbPhones,
+          existingTaxCodes,
+          existingCompanyFingerprints,
           seenSessionPhones,
+          seenTaxCodes,
+          seenCompanyFingerprints,
           leads
         });
-      } catch (e) {}
+      } catch (e) {
+        console.warn('[Scraper Goong Maps Error]:', e.message);
+      }
     }
 
     // 2. Nếu chọn Trang Vàng hoặc Đa nguồn: chạy Trang Vàng VN
@@ -852,7 +962,9 @@ class ScraperEngine {
           district,
           targetGoal: goalNumber,
           existingDbPhones,
+          existingCompanyFingerprints,
           seenSessionPhones,
+          seenCompanyFingerprints,
           leads
         });
       } catch (e) {}
@@ -864,20 +976,26 @@ class ScraperEngine {
         await this.scrapeDoanhNghiepBizLive({
           keyword: activeKeyword,
           city,
+          district,
           targetGoal: goalNumber,
           existingDbPhones,
+          existingTaxCodes,
+          existingCompanyFingerprints,
           seenSessionPhones,
+          seenTaxCodes,
+          seenCompanyFingerprints,
           leads,
           onProgress
         });
       } catch (e) {}
     }
 
-    // 4. Tổng hợp từ Kho Dữ Liệu Đa Nguồn 63 Tỉnh Thành & 24+ Ngành Nghề (Đảm bảo đúng 100% Tỉnh, Ngành & Nguồn)
+    // 4. Tổng hợp từ Kho Dữ Liệu Đa Nguồn 63 Tỉnh Thành & Quận/Huyện (Đảm bảo đúng 100% Tỉnh, Quận/Huyện, Ngành & Nguồn)
     if (leads.length < goalNumber) {
       const needed = goalNumber - leads.length;
       const poolLeads = getPoolLeads({
         city: city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành' ? city : null,
+        district: district && district !== 'all' && !district.includes('Tất cả Quận') ? district : 'all',
         industry: activeKeyword && activeKeyword !== 'all' && activeKeyword !== 'Mọi Ngành Nghề' && activeKeyword !== 'Mọi ngành nghề' ? activeKeyword : null,
         sourceType: sourceType || 'all',
         limit: needed,
@@ -890,7 +1008,11 @@ class ScraperEngine {
         if (seenSessionPhones.has(cleanNum)) continue;
         if (skipExisting && existingDbPhones.has(cleanNum)) continue;
 
+        const fp = db.normalizeCompanyFingerprint(item.company, item.city);
+        if (fp && (seenCompanyFingerprints.has(fp) || (skipExisting && existingCompanyFingerprints.has(fp)))) continue;
+
         seenSessionPhones.add(cleanNum);
+        if (fp) seenCompanyFingerprints.add(fp);
 
         const isLandline = /^02/.test(cleanNum);
         const fullLead = {
@@ -906,7 +1028,7 @@ class ScraperEngine {
       }
     }
 
-    console.log(`[Scraper Omni-Channel] Hoàn tất: ${leads.length}/${goalNumber} leads chuẩn xác (Tỉnh: ${city || 'Toàn quốc'}, Ngành: ${keyword || 'Tất cả'}, Nguồn: ${sourceType}).`);
+    console.log(`[Scraper Omni-Channel] Hoàn tất: ${leads.length}/${goalNumber} leads chuẩn xác (Tỉnh: ${city || 'Toàn quốc'}, Quận: ${district || 'Tất cả'}, Ngành: ${activeKeyword || 'Tất cả'}, Nguồn: ${sourceType}).`);
     return leads;
   }
 

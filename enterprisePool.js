@@ -5349,69 +5349,69 @@ const INDUSTRY_CATALOG = [
 // DỮ LIỆU ĐỊA LÝ & ĐẦU SỐ MÃ SỐ THUẾ CHUẨN CỦA 63 TỈNH THÀNH VIỆT NAM
 // ============================================================================
 const PROVINCE_GEO_DATA = {
-  "Hà Nội": { taxPrefix: "01", areaCode: "024", districts: ["Quận Cầu Giấy", "Quận Đống Đa", "Quận Hai Bà Trưng", "Quận Hoàn Kiếm", "Quận Thanh Xuân", "Quận Hà Đông", "Quận Nam Từ Liêm", "Quận Ba Đình", "Quận Hoàng Mai", "Quận Long Biên"], streets: ["Đường Cầu Giấy", "Phố Xã Đàn", "Đường Nguyễn Trãi", "Phố Bà Triệu", "Đường Trần Duy Hưng", "Phố Thái Hà", "Đường Láng", "Đường Giải Phóng", "Phố Minh Khai", "Đường Phạm Hùng"] },
-  "TP. Hồ Chí Minh": { taxPrefix: "03", areaCode: "028", districts: ["Quận 1", "Quận 3", "Quận 7", "Quận 10", "Quận Bình Thạnh", "Quận Tân Bình", "Quận Gò Vấp", "Quận Phú Nhuận", "TP. Thủ Đức", "Quận Tân Phú"], streets: ["Đường Nguyễn Huệ", "Đường Điện Biên Phủ", "Đường Nguyễn Thị Minh Khai", "Đường Cộng Hòa", "Đường Phan Văn Trị", "Đường Quang Trung", "Đường Lê Văn Sỹ", "Đường Võ Văn Ngân", "Đường Nguyễn Văn Linh", "Đường Cách Mạng Tháng 8"] },
-  "Đà Nẵng": { taxPrefix: "04", areaCode: "0236", districts: ["Quận Hải Châu", "Quận Thanh Khê", "Quận Sơn Trà", "Quận Ngũ Hành Sơn", "Quận Cẩm Lệ", "Quận Liên Chiểu"], streets: ["Đường Nguyễn Văn Linh", "Đường Điện Biên Phủ", "Đường Lê Duẩn", "Đường Ngô Quyền", "Đường Nguyễn Hữu Thọ", "Đường Phan Châu Trinh", "Đường Tôn Đức Thắng", "Đường Võ Nguyên Giáp"] },
-  "Hải Phòng": { taxPrefix: "02", areaCode: "0225", districts: ["Quận Lê Chân", "Quận Đồ Sơn", "Huyện Cát Hải (Cát Bà)", "Quận Ngô Quyền", "Quận Hồng Bàng", "Quận Hải An", "TP. Thủy Nguyên", "Quận Kiến An", "Quận Dương Kinh", "Huyện An Dương", "Huyện Kiến Thụy", "Huyện An Lão", "Huyện Tiên Lãng", "Huyện Vĩnh Bảo"], streets: ["Đường Lạch Tray", "Đường Lê Hồng Phong", "Đường Tô Hiệu", "Đường Trần Nguyên Hãn", "Đường Điện Biên Phủ", "Đường Nguyễn Văn Linh"] },
-  "Cần Thơ": { taxPrefix: "18", areaCode: "0292", districts: ["Quận Ninh Kiều", "Quận Cái Răng", "Quận Bình Thủy", "Quận Ô Môn", "Quận Thốt Nốt"], streets: ["Đường 30 Tháng 4", "Đường Mậu Thân", "Đường Nguyễn Văn Cừ", "Đường Hòa Bình", "Đường Trần Hưng Đạo", "Đường Nguyễn Văn Linh"] },
-  "Bình Dương": { taxPrefix: "37", areaCode: "0274", districts: ["TP. Thủ Dầu Một", "TP. Thuận An", "TP. Dĩ An", "TP. Tân Uyên", "TP. Bến Cát"], streets: ["Đại lộ Bình Dương", "Đường Cách Mạng Tháng 8", "Đường Phú Lợi", "Đường ĐT 743", "Đường Nguyễn An Ninh", "Đường Yersin"] },
-  "Đồng Nai": { taxPrefix: "36", areaCode: "0251", districts: ["TP. Biên Hòa", "TP. Long Khánh", "Huyện Long Thành", "Huyện Nhơn Trạch", "Huyện Trảng Bom"], streets: ["Đường Phạm Văn Thuận", "Đường Đồng Khởi", "Đường Nguyễn Ái Quốc", "Đường Võ Thị Sáu", "Đường Lê Duẩn"] },
-  "Bà Rịa - Vũng Tàu": { taxPrefix: "35", areaCode: "0254", districts: ["TP. Vũng Tàu", "TP. Bà Rịa", "TX. Phú Mỹ", "Huyện Long Điền"], streets: ["Đường Trương Công Định", "Đường Nguyễn An Ninh", "Đường Lê Hồng Phong", "Đường 30 Tháng 4", "Đường Cách Mạng Tháng 8"] },
-  "Bắc Ninh": { taxPrefix: "23", areaCode: "0222", districts: ["TP. Bắc Ninh", "TP. Từ Sơn", "Huyện Yên Phong", "Huyện Quế Võ", "Huyện Tiên Du"], streets: ["Đường Ngô Gia Tự", "Đường Nguyễn Trãi", "Đường Lý Thái Tổ", "Đường Trần Hưng Đạo", "Đường Lê Thái Tổ"] },
-  "Quảng Ninh": { taxPrefix: "57", areaCode: "0203", districts: ["TP. Hạ Long", "TP. Cẩm Phả", "TP. Uông Bí", "TP. Móng Cái", "TX. Quảng Yên"], streets: ["Đường Trần Hưng Đạo", "Đường Nguyễn Văn Cừ", "Đường Lê Thánh Tông", "Đường Hạ Long", "Đường Quang Trung"] },
-  "Hải Dương": { taxPrefix: "08", areaCode: "0220", districts: ["TP. Hải Dương", "TP. Chí Linh", "TX. Kinh Môn", "Huyện Cẩm Giàng"], streets: ["Đường Nguyễn Lương Bằng", "Đường Trần Hưng Đạo", "Đường Lê Thanh Nghị", "Đại lộ Hồ Chí Minh"] },
-  "Hưng Yên": { taxPrefix: "09", areaCode: "0221", districts: ["TP. Hưng Yên", "TX. Mỹ Hào", "Huyện Văn Giang", "Huyện Văn Lâm", "Huyện Yên Mỹ"], streets: ["Đường Điện Biên", "Đường Nguyễn Văn Linh", "Đường Tô Hiệu", "Phố Nối"] },
-  "Vĩnh Phúc": { taxPrefix: "25", areaCode: "0211", districts: ["TP. Vĩnh Yên", "TP. Phúc Yên", "Huyện Bình Xuyên", "Huyện Vĩnh Tường"], streets: ["Đường Mê Linh", "Đường Nguyễn Tất Thành", "Đường Hùng Vương", "Đường Trần Phú"] },
-  "Thái Nguyên": { taxPrefix: "46", areaCode: "0208", districts: ["TP. Thái Nguyên", "TP. Sông Công", "TP. Phổ Yên", "Huyện Phú Bình"], streets: ["Đường Lương Ngọc Quyến", "Đường Hoàng Văn Thụ", "Đường Cách Mạng Tháng 8", "Đường Quang Trung"] },
-  "Bắc Giang": { taxPrefix: "24", areaCode: "0204", districts: ["TP. Bắc Giang", "TX. Việt Yên", "Huyện Hiệp Hòa", "Huyện Lạng Giang"], streets: ["Đường Hoàng Văn Thụ", "Đường Xương Giang", "Đường Nguyễn Thị Minh Khai", "Đường Lê Lợi"] },
-  "Phú Thọ": { taxPrefix: "26", areaCode: "0210", districts: ["TP. Việt Trì", "TX. Phú Thọ", "Huyện Lâm Thao", "Huyện Phù Ninh"], streets: ["Đại lộ Hùng Vương", "Đường Nguyễn Tất Thành", "Đường Châu Phong", "Đường Trần Phú"] },
-  "Nam Định": { taxPrefix: "06", areaCode: "0228", districts: ["TP. Nam Định", "Huyện Hải Hậu", "Huyện Xuân Trường", "Huyện Ý Yên"], streets: ["Đường Trần Hưng Đạo", "Đường Giải Phóng", "Đường Đông A", "Đường Hàn Thuyên"] },
-  "Thái Bình": { taxPrefix: "10", areaCode: "0227", districts: ["TP. Thái Bình", "Huyện Đông Hưng", "Huyện Tiền Hải", "Huyện Thái Thụy"], streets: ["Đường Lý Bôn", "Đường Lê Lợi", "Đường Trần Thái Tông", "Đường Quang Trung"] },
-  "Ninh Bình": { taxPrefix: "27", areaCode: "0229", districts: ["TP. Hoa Lư", "TP. Tam Điệp", "Huyện Gia Viễn", "Huyện Yên Khánh"], streets: ["Đường Trần Hưng Đạo", "Đường Lương Văn Thăng", "Đường Đinh Tiên Hoàng", "Đường Nguyễn Công Trứ"] },
-  "Hà Nam": { taxPrefix: "07", areaCode: "0226", districts: ["TP. Phủ Lý", "TX. Duy Tiên", "Huyện Kim Bảng", "Huyện Lý Nhân"], streets: ["Đường Biên Hòa", "Đường Lê Hoàn", "Đường Trường Chinh", "Đường Lý Thường Kiệt"] },
-  "Thanh Hóa": { taxPrefix: "28", areaCode: "0237", districts: ["TP. Thanh Hóa", "TP. Sầm Sơn", "TX. Bỉm Sơn", "TX. Nghi Sơn", "Huyện Hoằng Hóa"], streets: ["Đại lộ Lê Lợi", "Đường Trần Phú", "Đường Nguyễn Trãi", "Đường Bà Triệu", "Đường Phan Chu Trinh"] },
-  "Nghệ An": { taxPrefix: "29", areaCode: "0238", districts: ["TP. Vinh", "TX. Cửa Lò", "TX. Hoàng Mai", "TX. Thái Hòa", "Huyện Diễn Châu"], streets: ["Đường Quang Trung", "Đường Nguyễn Văn Cừ", "Đường Lê Lợi", "Đại lộ Lê Nin", "Đường Hà Huy Tập"] },
-  "Hà Tĩnh": { taxPrefix: "30", areaCode: "0239", districts: ["TP. Hà Tĩnh", "TX. Hồng Lĩnh", "TX. Kỳ Anh", "Huyện Cẩm Xuyên"], streets: ["Đường Trần Phú", "Đường Hà Huy Tập", "Đường Phan Đình Phùng", "Đường Nguyễn Công Trứ"] },
-  "Quảng Bình": { taxPrefix: "31", areaCode: "0232", districts: ["TP. Đồng Hới", "TX. Ba Đồn", "Huyện Bố Trạch", "Huyện Lệ Thủy"], streets: ["Đường Trần Hưng Đạo", "Đường Lý Thường Kiệt", "Đường Quang Trung", "Đường Hữu Nghị"] },
-  "Quảng Trị": { taxPrefix: "32", areaCode: "0233", districts: ["TP. Đông Hà", "TX. Quảng Trị", "Huyện Vĩnh Linh", "Huyện Hướng Hóa"], streets: ["Đường Hùng Vương", "Đường Quốc lộ 9", "Đường Lê Duẩn", "Đường Trần Hưng Đạo"] },
-  "Thừa Thiên Huế": { taxPrefix: "33", areaCode: "0234", districts: ["Quận Thuận Hóa", "Quận Phú Xuân", "TX. Hương Thủy", "TX. Hương Trà"], streets: ["Đường Hùng Vương", "Đường Bà Triệu", "Đường Lê Lợi", "Đường Nguyễn Huệ", "Đường Bến Nghé"] },
-  "Quảng Nam": { taxPrefix: "40", areaCode: "0235", districts: ["TP. Tam Kỳ", "TP. Hội An", "TX. Điện Bàn", "Huyện Núi Thành"], streets: ["Đường Phan Châu Trinh", "Đường Hùng Vương", "Đường Trần Nhân Tông", "Đường Cửa Đại"] },
-  "Quảng Ngãi": { taxPrefix: "43", areaCode: "0255", districts: ["TP. Quảng Ngãi", "TX. Đức Phổ", "Huyện Bình Sơn", "Huyện Sơn Tịnh"], streets: ["Đường Quang Trung", "Đường Hùng Vương", "Đường Phan Đình Phùng", "Đường Lê Lợi"] },
-  "Bình Định": { taxPrefix: "41", areaCode: "0256", districts: ["TP. Quy Nhơn", "TX. An Nhơn", "TX. Hoài Nhơn", "Huyện Tuy Phước"], streets: ["Đường Nguyễn Thái Học", "Đường Trần Hưng Đạo", "Đường Lê Hồng Phong", "Đường Xuân Diệu"] },
-  "Phú Yên": { taxPrefix: "44", areaCode: "0257", districts: ["TP. Tuy Hòa", "TX. Sông Cầu", "TX. Đông Hòa", "Huyện Phú Hòa"], streets: ["Đường Hùng Vương", "Đường Trần Hưng Đạo", "Đường Nguyễn Huệ", "Đường Lê Duẩn"] },
-  "Khánh Hòa": { taxPrefix: "42", areaCode: "0258", districts: ["TP. Nha Trang", "TP. Cam Ranh", "TX. Ninh Hòa", "Huyện Diên Khánh"], streets: ["Đường Trần Phú", "Đường Thái Nguyên", "Đường Lê Thánh Tôn", "Đường Nguyễn Thị Minh Khai", "Đường 2 Tháng 4"] },
-  "Ninh Thuận": { taxPrefix: "45", areaCode: "0259", districts: ["TP. Phan Rang - Tháp Chàm", "Huyện Ninh Hải", "Huyện Ninh Phước"], streets: ["Đường 16 Tháng 4", "Đường Thống Nhất", "Đường Ngô Gia Tự", "Đường 21 Tháng 8"] },
-  "Bình Thuận": { taxPrefix: "34", areaCode: "0252", districts: ["TP. Phan Thiết", "TX. La Gi", "Huyện Hàm Thuận Bắc", "Huyện Tuy Phong"], streets: ["Đường Trần Hưng Đạo", "Đường Thủ Khoa Huân", "Đường Nguyễn Tất Thành", "Đường Tôn Đức Thắng"] },
-  "Kon Tum": { taxPrefix: "61", areaCode: "0260", districts: ["TP. Kon Tum", "Huyện Ngọc Hồi", "Huyện Đắk Hà"], streets: ["Đường Trần Phú", "ĐườngPhan Đình Phùng", "Đường Lê Hồng Phong", "Đường Bà Triệu"] },
-  "Gia Lai": { taxPrefix: "59", areaCode: "0269", districts: ["TP. Pleiku", "TX. An Khê", "TX. Ayun Pa", "Huyện Chư Sê"], streets: ["Đường Hùng Vương", "Đường Nguyễn Tất Thành", "Đường Trần Phú", "Đường Phạm Văn Đồng"] },
-  "Đắk Lắk": { taxPrefix: "60", areaCode: "0262", districts: ["TP. Buôn Ma Thuột", "TX. Buôn Hồ", "Huyện Cư M'gar", "Huyện Krông Pắc"], streets: ["Đường Nguyễn Tất Thành", "Đường Lê Duẩn", "Đường Phan Chu Trinh", "Đường Lý Thường Kiệt"] },
-  "Đắk Nông": { taxPrefix: "63", areaCode: "0261", districts: ["TP. Gia Nghĩa", "Huyện Đắk Mil", "Huyện Đắk R'Lấp"], streets: ["Đường 23 Tháng 3", "Đường Huỳnh Thúc Kháng", "Đường Nguyễn Tất Thành"] },
-  "Lâm Đồng": { taxPrefix: "58", areaCode: "0263", districts: ["TP. Đà Lạt", "TP. Bảo Lộc", "Huyện Đức Trọng", "Huyện Đơn Dương"], streets: ["Đường Phan Đình Phùng", "Đường Nguyễn Văn Trỗi", "Đường 3 Tháng 2", "Đường Trần Phú", "Đường Bùi Thị Xuân"] },
-  "Bình Phước": { taxPrefix: "38", areaCode: "0271", districts: ["TP. Đồng Xoài", "TX. Phước Long", "TX. Bình Long", "TX. Chơn Thành"], streets: ["Đường Phú Riềng Đỏ", "Đường Hùng Vương", "Quốc lộ 14", "Đường Nguyễn Huệ"] },
-  "Tây Ninh": { taxPrefix: "39", areaCode: "0276", districts: ["TP. Tây Ninh", "TX. Hòa Thành", "TX. Trảng Bàng", "Huyện Gò Dầu"], streets: ["Đường Cách Mạng Tháng 8", "Đường 30 Tháng 4", "Đường Hoàng Lê Kha", "Đường Lạc Long Quân"] },
-  "Long An": { taxPrefix: "11", areaCode: "0272", districts: ["TP. Tân An", "TX. Kiến Tường", "Huyện Đức Hòa", "Huyện Bến Lức", "Huyện Cần Giuộc"], streets: ["Đường Hùng Vương", "Quốc lộ 1A", "Đường Nguyễn Hữu Thọ", "Đường Trương Định"] },
-  "Tiền Giang": { taxPrefix: "12", areaCode: "0273", districts: ["TP. Mỹ Tho", "TP. Gò Công", "TX. Cai Lậy", "Huyện Châu Thành"], streets: ["Đường Ấp Bắc", "Đường Lý Thường Kiệt", "Đường Đinh Bộ Lĩnh", "Đường Nam Kỳ Khởi Nghĩa"] },
-  "Bến Tre": { taxPrefix: "13", areaCode: "0275", districts: ["TP. Bến Tre", "Huyện Châu Thành", "Huyện Mỏ Cày Nam", "Huyện Ba Tri"], streets: ["Đại lộ Đồng Khởi", "Đường Nguyễn Đình Chiểu", "Đường Cách Mạng Tháng 8", "Đường Hoàng Lam"] },
-  "Trà Vinh": { taxPrefix: "21", areaCode: "0294", districts: ["TP. Trà Vinh", "TX. Duyên Hải", "Huyện Càng Long", "Huyện Tiểu Cần"], streets: ["Đường Nguyễn Đáng", "Đường Điện Biên Phủ", "Đường Phạm Ngũ Lão", "Đường Lê Lợi"] },
-  "Vĩnh Long": { taxPrefix: "15", areaCode: "0270", districts: ["TP. Vĩnh Long", "TX. Bình Minh", "Huyện Long Hồ", "Huyện Tam Bình"], streets: ["Đường Phạm Thái Bường", "Đường Nguyễn Huệ", "Đường Trần Đại Nghĩa", "Đường Lê Thái Tổ"] },
-  "Đồng Tháp": { taxPrefix: "14", areaCode: "0277", districts: ["TP. Cao Lãnh", "TP. Sa Đéc", "TP. Hồng Ngự", "Huyện Lấp Vò"], streets: ["Đường Nguyễn Huệ", "Đường 30 Tháng 4", "Đường Lý Thường Kiệt", "Đường Trần Hưng Đạo"] },
-  "An Giang": { taxPrefix: "16", areaCode: "0296", districts: ["TP. Long Xuyên", "TP. Châu Đốc", "TX. Tân Châu", "Huyện Chợ Mới"], streets: ["Đường Hà Hoàng Hổ", "Đường Trần Hưng Đạo", "Đường Nguyễn Trãi", "Đường Tôn Đức Thắng"] },
-  "Kiên Giang": { taxPrefix: "17", areaCode: "0297", districts: ["TP. Rạch Giá", "TP. Phú Quốc", "TP. Hà Tiên", "Huyện Kiên Lương"], streets: ["Đường Nguyễn Trung Trực", "Đường Trần Phú", "Đường 3 Tháng 2", "Đường Lạc Hồng"] },
-  "Hậu Giang": { taxPrefix: "64", areaCode: "0293", districts: ["TP. Vị Thanh", "TP. Ngã Bảy", "TX. Long Mỹ", "Huyện Châu Thành A"], streets: ["Đường Trần Hưng Đạo", "Đường Nguyễn Công Trứ", "Đường 3 Tháng 2", "Đường Hùng Vương"] },
-  "Sóc Trăng": { taxPrefix: "22", areaCode: "0299", districts: ["TP. Sóc Trăng", "TX. Vĩnh Châu", "TX. Ngã Năm", "Huyện Mỹ Xuyên"], streets: ["Đường Phú Lợi", "Đường Trần Hưng Đạo", "Đường Lê Hồng Phong", "Đường Hùng Vương"] },
-  "Bạc Liêu": { taxPrefix: "19", areaCode: "0291", districts: ["TP. Bạc Liêu", "TX. Giá Rai", "Huyện Hòa Bình", "Huyện Đông Hải"], streets: ["Đường Trần Phú", "Đường Bà Triệu", "Đường Hòa Bình", "Đường Cao Văn Lầu"] },
-  "Cà Mau": { taxPrefix: "20", areaCode: "0290", districts: ["TP. Cà Mau", "Huyện Năm Căn", "Huyện Cái Nước", "Huyện Trần Văn Thời"], streets: ["Đường Ngô Quyền", "Đường Trần Hưng Đạo", "Đường Nguyễn Tất Thành", "Đường Lý Thường Kiệt"] },
-  "Lào Cai": { taxPrefix: "53", areaCode: "0214", districts: ["TP. Lào Cai", "TX. Sa Pa", "Huyện Bảo Thắng", "Huyện Bắc Hà"], streets: ["Đại lộ Trần Hưng Đạo", "Đường Hoàng Liên", "Đường Nguyễn Huệ", "Đường Cầu Mây"] },
-  "Yên Bái": { taxPrefix: "52", areaCode: "0216", districts: ["TP. Yên Bái", "TX. Nghĩa Lộ", "Huyện Trấn Yên", "Huyện Văn Yên"], streets: ["Đường Điện Biên", "Đường Nguyễn Tất Thành", "Đường Yên Ninh", "Đường Đinh Tiên Hoàng"] },
-  "Tuyên Quang": { taxPrefix: "50", areaCode: "0207", districts: ["TP. Tuyên Quang", "Huyện Sơn Dương", "Huyện Yên Sơn"], streets: ["Đường Bình Thuận", "Đường Quang Trung", "Đường 17 Tháng 8", "Đường Tân Trào"] },
-  "Hà Giang": { taxPrefix: "51", areaCode: "0219", districts: ["TP. Hà Giang", "Huyện Vị Xuyên", "Huyện Bắc Quang", "Huyện Đồng Văn"], streets: ["Đường Nguyễn Trãi", "Đường Trần Phú", "Đường Nguyễn Thái Học", "Đường 20 Tháng 8"] },
-  "Cao Bằng": { taxPrefix: "48", areaCode: "0206", districts: ["TP. Cao Bằng", "Huyện Hòa An", "Huyện Quảng Hòa"], streets: ["Phố Kim Đồng", "Đường Hoàng Đình Giong", "Đường Pác Bó", "Đường 3 Tháng 10"] },
-  "Bắc Kạn": { taxPrefix: "47", areaCode: "0209", districts: ["TP. Bắc Kạn", "Huyện Bạch Thông", "Huyện Chợ Đồn"], streets: ["Đường Trường Chinh", "Đường Nguyễn Thị Minh Khai", "Đường Đội Kỳ", "Đường Hùng Vương"] },
-  "Lạng Sơn": { taxPrefix: "49", areaCode: "0205", districts: ["TP. Lạng Sơn", "Huyện Cao Lộc", "Huyện Hữu Lũng", "Huyện Lộc Bình"], streets: ["Đường Bà Triệu", "Đường Trần Đăng Ninh", "Đường Lê Lợi", "Đường Ngô Quyền"] },
-  "Hòa Bình": { taxPrefix: "54", areaCode: "0218", districts: ["TP. Hòa Bình", "Huyện Lương Sơn", "Huyện Mai Châu", "Huyện Kỳ Sơn"], streets: ["Đường Cù Chính Lan", "Đường Chi Lăng", "Đường Trần Hưng Đạo", "Đường Thịnh Lang"] },
-  "Sơn La": { taxPrefix: "55", areaCode: "0212", districts: ["TP. Sơn La", "Huyện Mộc Châu", "Huyện Mai Sơn", "Huyện Thuận Châu"], streets: ["Đường Tô Hiệu", "Đường Trường Chinh", "Đường Chu Văn Thịnh", "Đường Lê Duẩn"] },
-  "Điện Biên": { taxPrefix: "56", areaCode: "0215", districts: ["TP. Điện Biên Phủ", "TX. Mường Lay", "Huyện Điện Biên", "Huyện Tuần Giáo"], streets: ["Đường Võ Nguyên Giáp", "Đường Nguyễn Hữu Thọ", "Đường Hoàng Công Chất", "Đường 7 Tháng 5"] },
-  "Lai Châu": { taxPrefix: "62", areaCode: "0213", districts: ["TP. Lai Châu", "Huyện Tam Đường", "Huyện Tân Uyên", "Huyện Phong Thổ"], streets: ["Đại lộ Lê Lợi", "Đường Trần Phú", "Đường 30 Tháng 4", "Đường Võ Nguyên Giáp"] }
+  "Hà Nội": { taxPrefix: "01", areaCode: "024", districts: ["Quận Cầu Giấy", "Quận Đống Đa", "Quận Hai Bà Trưng", "Quận Hoàn Kiếm", "Quận Thanh Xuân", "Quận Hà Đông", "Quận Nam Từ Liêm", "Quận Bắc Từ Liêm", "Quận Ba Đình", "Quận Hoàng Mai", "Quận Long Biên", "Quận Tây Hồ", "Huyện Đông Anh", "Huyện Gia Lâm", "Huyện Thanh Trì", "Huyện Hoài Đức", "Huyện Sóc Sơn", "TX. Sơn Tây", "Huyện Thường Tín", "Huyện Đan Phượng", "Huyện Mê Linh", "Huyện Chương Mỹ"], streets: ["Đường Cầu Giấy", "Phố Xã Đàn", "Đường Nguyễn Trãi", "Phố Bà Triệu", "Đường Trần Duy Hưng", "Phố Thái Hà", "Đường Láng", "Đường Giải Phóng", "Phố Minh Khai", "Đường Phạm Hùng"] },
+  "TP. Hồ Chí Minh": { taxPrefix: "03", areaCode: "028", districts: ["Quận 1", "Quận 3", "Quận 4", "Quận 5", "Quận 6", "Quận 7", "Quận 8", "Quận 10", "Quận 11", "Quận 12", "Quận Bình Thạnh", "Quận Tân Bình", "Quận Gò Vấp", "Quận Phú Nhuận", "TP. Thủ Đức", "Quận Tân Phú", "Quận Bình Tân", "Huyện Bình Chánh", "Huyện Hóc Môn", "Huyện Củ Chi", "Huyện Nhà Bè", "Huyện Cần Giờ"], streets: ["Đường Nguyễn Huệ", "Đường Điện Biên Phủ", "Đường Nguyễn Thị Minh Khai", "Đường Cộng Hòa", "Đường Phan Văn Trị", "Đường Quang Trung", "Đường Lê Văn Sỹ", "Đường Võ Văn Ngân", "Đường Nguyễn Văn Linh", "Đường Cách Mạng Tháng 8"] },
+  "Đà Nẵng": { taxPrefix: "04", areaCode: "0236", districts: ["Quận Hải Châu", "Quận Thanh Khê", "Quận Sơn Trà", "Quận Ngũ Hành Sơn", "Quận Cẩm Lệ", "Quận Liên Chiểu", "Huyện Hòa Vang", "Huyện Hoàng Sa"], streets: ["Đường Nguyễn Văn Linh", "Đường Điện Biên Phủ", "Đường Lê Duẩn", "Đường Ngô Quyền", "Đường Nguyễn Hữu Thọ", "Đường Phan Châu Trinh", "Đường Tôn Đức Thắng", "Đường Võ Nguyên Giáp"] },
+  "Hải Phòng": { taxPrefix: "02", areaCode: "0225", districts: ["Quận Lê Chân", "Quận Đồ Sơn", "Huyện Cát Hải (Cát Bà)", "Quận Ngô Quyền", "Quận Hồng Bàng", "Quận Hải An", "TP. Thủy Nguyên", "Quận Kiến An", "Quận Dương Kinh", "Quận An Dương", "Huyện Kiến Thụy", "Huyện An Lão", "Huyện Tiên Lãng", "Huyện Vĩnh Bảo", "Huyện Bạch Long Vĩ"], streets: ["Đường Lạch Tray", "Đường Lê Hồng Phong", "Đường Tô Hiệu", "Đường Trần Nguyên Hãn", "Đường Điện Biên Phủ", "Đường Nguyễn Văn Linh"] },
+  "Cần Thơ": { taxPrefix: "18", areaCode: "0292", districts: ["Quận Ninh Kiều", "Quận Cái Răng", "Quận Bình Thủy", "Quận Ô Môn", "Quận Thốt Nốt", "Huyện Phong Điền", "Huyện Cờ Đỏ", "Huyện Vĩnh Thạnh", "Huyện Thới Lai"], streets: ["Đường 30 Tháng 4", "Đường Mậu Thân", "Đường Nguyễn Văn Cừ", "Đường Hòa Bình", "Đường Trần Hưng Đạo", "Đường Nguyễn Văn Linh"] },
+  "Bình Dương": { taxPrefix: "37", areaCode: "0274", districts: ["TP. Thủ Dầu Một", "TP. Thuận An", "TP. Dĩ An", "TP. Tân Uyên", "TP. Bến Cát", "Huyện Bàu Bàng", "Huyện Bắc Tân Uyên", "Huyện Phú Giáo", "Huyện Dầu Tiếng"], streets: ["Đại lộ Bình Dương", "Đường Cách Mạng Tháng 8", "Đường Phú Lợi", "Đường ĐT 743", "Đường Nguyễn An Ninh", "Đường Yersin"] },
+  "Đồng Nai": { taxPrefix: "36", areaCode: "0251", districts: ["TP. Biên Hòa", "TP. Long Khánh", "Huyện Long Thành", "Huyện Nhơn Trạch", "Huyện Trảng Bom", "Huyện Vĩnh Cửu", "Huyện Thống Nhất", "Huyện Cẩm Mỹ", "Huyện Xuân Lộc", "Huyện Định Quán", "Huyện Tân Phú"], streets: ["Đường Phạm Văn Thuận", "Đường Đồng Khởi", "Đường Nguyễn Ái Quốc", "Đường Võ Thị Sáu", "Đường Lê Duẩn"] },
+  "Bà Rịa - Vũng Tàu": { taxPrefix: "35", areaCode: "0254", districts: ["TP. Vũng Tàu", "TP. Bà Rịa", "TX. Phú Mỹ", "Huyện Long Điền", "Huyện Đất Đỏ", "Huyện Châu Đức", "Huyện Xuyên Mộc", "Huyện Côn Đảo"], streets: ["Đường Trương Công Định", "Đường Nguyễn An Ninh", "Đường Lê Hồng Phong", "Đường 30 Tháng 4", "Đường Cách Mạng Tháng 8"] },
+  "Bắc Ninh": { taxPrefix: "23", areaCode: "0222", districts: ["TP. Bắc Ninh", "TP. Từ Sơn", "TX. Thuận Thành", "TX. Quế Võ", "Huyện Yên Phong", "Huyện Tiên Du", "Huyện Gia Bình", "Huyện Lương Tài"], streets: ["Đường Ngô Gia Tự", "Đường Nguyễn Trãi", "Đường Lý Thái Tổ", "Đường Trần Hưng Đạo", "Đường Lê Thái Tổ"] },
+  "Quảng Ninh": { taxPrefix: "57", areaCode: "0203", districts: ["TP. Hạ Long", "TP. Cẩm Phả", "TP. Uông Bí", "TP. Móng Cái", "TP. Đông Triều", "TX. Quảng Yên", "Huyện Vân Đồn", "Huyện Cô Tô", "Huyện Hải Hà", "Huyện Đầm Hà", "Huyện Tiên Yên", "Huyện Bình Liêu", "Huyện Ba Chẽ"], streets: ["Đường Trần Hưng Đạo", "Đường Nguyễn Văn Cừ", "Đường Lê Thánh Tông", "Đường Hạ Long", "Đường Quang Trung"] },
+  "Hải Dương": { taxPrefix: "08", areaCode: "0220", districts: ["TP. Hải Dương", "TP. Chí Linh", "TX. Kinh Môn", "Huyện Cẩm Giàng", "Huyện Bình Giang", "Huyện Gia Lộc", "Huyện Kim Thành", "Huyện Nam Sách", "Huyện Ninh Giang", "Huyện Thanh Hà", "Huyện Thanh Miện", "Huyện Tứ Kỳ"], streets: ["Đường Nguyễn Lương Bằng", "Đường Trần Hưng Đạo", "Đường Lê Thanh Nghị", "Đại lộ Hồ Chí Minh"] },
+  "Hưng Yên": { taxPrefix: "09", areaCode: "0221", districts: ["TP. Hưng Yên", "TX. Mỹ Hào", "Huyện Văn Giang", "Huyện Văn Lâm", "Huyện Yên Mỹ", "Huyện Khoái Châu", "Huyện Kim Động", "Huyện Ân Thi", "Huyện Phù Cừ", "Huyện Tiên Lữ"], streets: ["Đường Điện Biên", "Đường Nguyễn Văn Linh", "Đường Tô Hiệu", "Phố Nối"] },
+  "Vĩnh Phúc": { taxPrefix: "25", areaCode: "0211", districts: ["TP. Vĩnh Yên", "TP. Phúc Yên", "Huyện Bình Xuyên", "Huyện Vĩnh Tường", "Huyện Yên Lạc", "Huyện Tam Dương", "Huyện Tam Đảo", "Huyện Lập Thạch", "Huyện Sông Lô"], streets: ["Đường Mê Linh", "Đường Nguyễn Tất Thành", "Đường Hùng Vương", "Đường Trần Phú"] },
+  "Thái Nguyên": { taxPrefix: "46", areaCode: "0208", districts: ["TP. Thái Nguyên", "TP. Sông Công", "TP. Phổ Yên", "Huyện Phú Bình", "Huyện Đại Từ", "Huyện Phú Lương", "Huyện Đồng Hỷ", "Huyện Định Hóa", "Huyện Võ Nhai"], streets: ["Đường Lương Ngọc Quyến", "Đường Hoàng Văn Thụ", "Đường Cách Mạng Tháng 8", "Đường Quang Trung"] },
+  "Bắc Giang": { taxPrefix: "24", areaCode: "0204", districts: ["TP. Bắc Giang", "TX. Việt Yên", "TX. Chũ", "Huyện Hiệp Hòa", "Huyện Lạng Giang", "Huyện Lục Nam", "Huyện Lục Ngạn", "Huyện Tân Yên", "Huyện Yên Thế", "Huyện Sơn Động"], streets: ["Đường Hoàng Văn Thụ", "Đường Xương Giang", "Đường Nguyễn Thị Minh Khai", "Đường Lê Lợi"] },
+  "Phú Thọ": { taxPrefix: "26", areaCode: "0210", districts: ["TP. Việt Trì", "TX. Phú Thọ", "Huyện Lâm Thao", "Huyện Phù Ninh", "Huyện Thanh Ba", "Huyện Đoan Hùng", "Huyện Hạ Hòa", "Huyện Cẩm Khê", "Huyện Tam Nông", "Huyện Thanh Thủy", "Huyện Thanh Sơn", "Huyện Yên Lập", "Huyện Tân Sơn"], streets: ["Đại lộ Hùng Vương", "Đường Nguyễn Tất Thành", "Đường Châu Phong", "Đường Trần Phú"] },
+  "Nam Định": { taxPrefix: "06", areaCode: "0228", districts: ["TP. Nam Định", "Huyện Hải Hậu", "Huyện Xuân Trường", "Huyện Ý Yên", "Huyện Giao Thủy", "Huyện Nam Trực", "Huyện Nghĩa Hưng", "Huyện Trực Ninh", "Huyện Vụ Bản"], streets: ["Đường Trần Hưng Đạo", "Đường Giải Phóng", "Đường Đông A", "Đường Hàn Thuyên"] },
+  "Thái Bình": { taxPrefix: "10", areaCode: "0227", districts: ["TP. Thái Bình", "Huyện Đông Hưng", "Huyện Tiền Hải", "Huyện Thái Thụy", "Huyện Hưng Hà", "Huyện Kiến Xương", "Huyện Quỳnh Phụ", "Huyện Vũ Thư"], streets: ["Đường Lý Bôn", "Đường Lê Lợi", "Đường Trần Thái Tông", "Đường Quang Trung"] },
+  "Ninh Bình": { taxPrefix: "27", areaCode: "0229", districts: ["TP. Hoa Lư", "TP. Tam Điệp", "Huyện Gia Viễn", "Huyện Yên Khánh", "Huyện Yên Mô", "Huyện Nho Quan", "Huyện Kim Sơn"], streets: ["Đường Trần Hưng Đạo", "Đường Lương Văn Thăng", "Đường Đinh Tiên Hoàng", "Đường Nguyễn Công Trứ"] },
+  "Hà Nam": { taxPrefix: "07", areaCode: "0226", districts: ["TP. Phủ Lý", "TX. Duy Tiên", "TX. Kim Bảng", "Huyện Lý Nhân", "Huyện Thanh Liêm", "Huyện Bình Lục"], streets: ["Đường Biên Hòa", "Đường Lê Hoàn", "Đường Trường Chinh", "Đường Lý Thường Kiệt"] },
+  "Thanh Hóa": { taxPrefix: "28", areaCode: "0237", districts: ["TP. Thanh Hóa", "TP. Sầm Sơn", "TX. Bỉm Sơn", "TX. Nghi Sơn", "Huyện Hoằng Hóa", "Huyện Quảng Xương", "Huyện Đông Sơn", "Huyện Thọ Xuân", "Huyện Triệu Sơn", "Huyện Nông Cống", "Huyện Hà Trung", "Huyện Nga Sơn", "Huyện Hậu Lộc", "Huyện Yên Định", "Huyện Thiệu Hóa", "Huyện Ngọc Lặc"], streets: ["Đại lộ Lê Lợi", "Đường Trần Phú", "Đường Nguyễn Trãi", "Đường Bà Triệu", "Đường Phan Chu Trinh"] },
+  "Nghệ An": { taxPrefix: "29", areaCode: "0238", districts: ["TP. Vinh", "TX. Cửa Lò", "TX. Hoàng Mai", "TX. Thái Hòa", "Huyện Diễn Châu", "Huyện Quỳnh Lưu", "Huyện Nghi Lộc", "Huyện Hưng Nguyên", "Huyện Nam Đàn", "Huyện Đô Lương", "Huyện Yên Thành", "Huyện Thanh Chương", "Huyện Nghĩa Đàn"], streets: ["Đường Quang Trung", "Đường Nguyễn Văn Cừ", "Đường Lê Lợi", "Đại lộ Lê Nin", "Đường Hà Huy Tập"] },
+  "Hà Tĩnh": { taxPrefix: "30", areaCode: "0239", districts: ["TP. Hà Tĩnh", "TX. Hồng Lĩnh", "TX. Kỳ Anh", "Huyện Cẩm Xuyên", "Huyện Can Lộc", "Huyện Nghi Xuân", "Huyện Thạch Hà", "Huyện Đức Thọ", "Huyện Hương Sơn", "Huyện Hương Khê"], streets: ["Đường Trần Phú", "Đường Hà Huy Tập", "Đường Phan Đình Phùng", "Đường Nguyễn Công Trứ"] },
+  "Quảng Bình": { taxPrefix: "31", areaCode: "0232", districts: ["TP. Đồng Hới", "TX. Ba Đồn", "Huyện Bố Trạch", "Huyện Lệ Thủy", "Huyện Quảng Ninh", "Huyện Quảng Trạch", "Huyện Tuyên Hóa", "Huyện Minh Hóa"], streets: ["Đường Trần Hưng Đạo", "Đường Lý Thường Kiệt", "Đường Quang Trung", "Đường Hữu Nghị"] },
+  "Quảng Trị": { taxPrefix: "32", areaCode: "0233", districts: ["TP. Đông Hà", "TX. Quảng Trị", "Huyện Vĩnh Linh", "Huyện Hướng Hóa", "Huyện Gio Linh", "Huyện Hải Lăng", "Huyện Triệu Phong", "Huyện Cam Lộ", "Huyện Đakrông"], streets: ["Đường Hùng Vương", "Đường Quốc lộ 9", "Đường Lê Duẩn", "Đường Trần Hưng Đạo"] },
+  "Thừa Thiên Huế": { taxPrefix: "33", areaCode: "0234", districts: ["Quận Thuận Hóa", "Quận Phú Xuân", "TX. Hương Thủy", "TX. Hương Trà", "TX. Phong Điền", "Huyện Phú Vang", "Huyện Phú Lộc", "Huyện Quảng Điền", "Huyện A Lưới"], streets: ["Đường Hùng Vương", "Đường Bà Triệu", "Đường Lê Lợi", "Đường Nguyễn Huệ", "Đường Bến Nghé"] },
+  "Quảng Nam": { taxPrefix: "40", areaCode: "0235", districts: ["TP. Tam Kỳ", "TP. Hội An", "TX. Điện Bàn", "Huyện Núi Thành", "Huyện Thăng Bình", "Huyện Duy Xuyên", "Huyện Đại Lộc", "Huyện Quế Sơn", "Huyện Phú Ninh"], streets: ["Đường Phan Châu Trinh", "Đường Hùng Vương", "Đường Trần Nhân Tông", "Đường Cửa Đại"] },
+  "Quảng Ngãi": { taxPrefix: "43", areaCode: "0255", districts: ["TP. Quảng Ngãi", "TX. Đức Phổ", "Huyện Bình Sơn", "Huyện Sơn Tịnh", "Huyện Tư Nghĩa", "Huyện Mộ Đức", "Huyện Nghĩa Hành", "Huyện Lý Sơn"], streets: ["Đường Quang Trung", "Đường Hùng Vương", "Đường Phan Đình Phùng", "Đường Lê Lợi"] },
+  "Bình Định": { taxPrefix: "41", areaCode: "0256", districts: ["TP. Quy Nhơn", "TX. An Nhơn", "TX. Hoài Nhơn", "Huyện Tuy Phước", "Huyện Phù Cát", "Huyện Phù Mỹ", "Huyện Tây Sơn", "Huyện Hoài Ân"], streets: ["Đường Nguyễn Thái Học", "Đường Trần Hưng Đạo", "Đường Lê Hồng Phong", "Đường Xuân Diệu"] },
+  "Phú Yên": { taxPrefix: "44", areaCode: "0257", districts: ["TP. Tuy Hòa", "TX. Sông Cầu", "TX. Đông Hòa", "Huyện Phú Hòa", "Huyện Tuy An", "Huyện Tây Hòa", "Huyện Sơn Hòa", "Huyện Sông Hinh"], streets: ["Đường Hùng Vương", "Đường Trần Hưng Đạo", "Đường Nguyễn Huệ", "Đường Lê Duẩn"] },
+  "Khánh Hòa": { taxPrefix: "42", areaCode: "0258", districts: ["TP. Nha Trang", "TP. Cam Ranh", "TX. Ninh Hòa", "Huyện Diên Khánh", "Huyện Cam Lâm", "Huyện Vạn Ninh", "Huyện Khánh Vĩnh", "Huyện Khánh Sơn"], streets: ["Đường Trần Phú", "Đường Thái Nguyên", "Đường Lê Thánh Tôn", "Đường Nguyễn Thị Minh Khai", "Đường 2 Tháng 4"] },
+  "Ninh Thuận": { taxPrefix: "45", areaCode: "0259", districts: ["TP. Phan Rang - Tháp Chàm", "Huyện Ninh Hải", "Huyện Ninh Phước", "Huyện Ninh Sơn", "Huyện Thuận Bắc", "Huyện Thuận Nam", "Huyện Bác Ái"], streets: ["Đường 16 Tháng 4", "Đường Thống Nhất", "Đường Ngô Gia Tự", "Đường 21 Tháng 8"] },
+  "Bình Thuận": { taxPrefix: "34", areaCode: "0252", districts: ["TP. Phan Thiết", "TX. La Gi", "Huyện Hàm Thuận Bắc", "Huyện Hàm Thuận Nam", "Huyện Tuy Phong", "Huyện Bắc Bình", "Huyện Tánh Linh", "Huyện Đức Linh", "Huyện Hàm Tân", "Huyện Phú Quý"], streets: ["Đường Trần Hưng Đạo", "Đường Thủ Khoa Huân", "Đường Nguyễn Tất Thành", "Đường Tôn Đức Thắng"] },
+  "Kon Tum": { taxPrefix: "61", areaCode: "0260", districts: ["TP. Kon Tum", "Huyện Ngọc Hồi", "Huyện Đắk Hà", "Huyện Đắk Tô", "Huyện Kon Plông (Măng Đen)", "Huyện Sa Thầy", "Huyện Đắk Glei"], streets: ["Đường Trần Phú", "Đường Phan Đình Phùng", "Đường Lê Hồng Phong", "Đường Bà Triệu"] },
+  "Gia Lai": { taxPrefix: "59", areaCode: "0269", districts: ["TP. Pleiku", "TX. An Khê", "TX. Ayun Pa", "Huyện Chư Sê", "Huyện Đăk Đoa", "Huyện Chư Prông", "Huyện Ia Grai", "Huyện Đức Cơ", "Huyện Chư Păh"], streets: ["Đường Hùng Vương", "Đường Nguyễn Tất Thành", "Đường Trần Phú", "Đường Phạm Văn Đồng"] },
+  "Đắk Lắk": { taxPrefix: "60", areaCode: "0262", districts: ["TP. Buôn Ma Thuột", "TX. Buôn Hồ", "Huyện Cư M'gar", "Huyện Krông Pắc", "Huyện Ea Kar", "Huyện Krông Năng", "Huyện Ea H'leo", "Huyện Krông Ana", "Huyện Buôn Đôn"], streets: ["Đường Nguyễn Tất Thành", "Đường Lê Duẩn", "Đường Phan Chu Trinh", "Đường Lý Thường Kiệt"] },
+  "Đắk Nông": { taxPrefix: "63", areaCode: "0261", districts: ["TP. Gia Nghĩa", "Huyện Đắk Mil", "Huyện Đắk R'Lấp", "Huyện Cư Jút", "Huyện Đắk Song", "Huyện Krông Nô", "Huyện Tuy Đức"], streets: ["Đường 23 Tháng 3", "Đường Huỳnh Thúc Kháng", "Đường Nguyễn Tất Thành"] },
+  "Lâm Đồng": { taxPrefix: "58", areaCode: "0263", districts: ["TP. Đà Lạt", "TP. Bảo Lộc", "Huyện Đức Trọng", "Huyện Đơn Dương", "Huyện Lâm Hà", "Huyện Di Linh", "Huyện Lạc Dương", "Huyện Bảo Lâm", "Huyện Đạ Huoai"], streets: ["Đường Phan Đình Phùng", "Đường Nguyễn Văn Trỗi", "Đường 3 Tháng 2", "Đường Trần Phú", "Đường Bùi Thị Xuân"] },
+  "Bình Phước": { taxPrefix: "38", areaCode: "0271", districts: ["TP. Đồng Xoài", "TX. Phước Long", "TX. Bình Long", "TX. Chơn Thành", "Huyện Đồng Phú", "Huyện Hớn Quản", "Huyện Lộc Ninh", "Huyện Bù Đăng", "Huyện Phú Riềng"], streets: ["Đường Phú Riềng Đỏ", "Đường Hùng Vương", "Quốc lộ 14", "Đường Nguyễn Huệ"] },
+  "Tây Ninh": { taxPrefix: "39", areaCode: "0276", districts: ["TP. Tây Ninh", "TX. Hòa Thành", "TX. Trảng Bàng", "Huyện Gò Dầu", "Huyện Dương Minh Châu", "Huyện Châu Thành", "Huyện Tân Biên", "Huyện Tân Châu", "Huyện Bến Cầu"], streets: ["Đường Cách Mạng Tháng 8", "Đường 30 Tháng 4", "Đường Hoàng Lê Kha", "Đường Lạc Long Quân"] },
+  "Long An": { taxPrefix: "11", areaCode: "0272", districts: ["TP. Tân An", "TX. Kiến Tường", "Huyện Đức Hòa", "Huyện Bến Lức", "Huyện Cần Giuộc", "Huyện Cần Đước", "Huyện Châu Thành", "Huyện Thủ Thừa", "Huyện Tân Trụ"], streets: ["Đường Hùng Vương", "Quốc lộ 1A", "Đường Nguyễn Hữu Thọ", "Đường Trương Định"] },
+  "Tiền Giang": { taxPrefix: "12", areaCode: "0273", districts: ["TP. Mỹ Tho", "TP. Gò Công", "TX. Cai Lậy", "Huyện Châu Thành", "Huyện Chợ Gạo", "Huyện Cái Bè", "Huyện Cai Lậy", "Huyện Gò Công Đông", "Huyện Gò Công Tây"], streets: ["Đường Ấp Bắc", "Đường Lý Thường Kiệt", "Đường Đinh Bộ Lĩnh", "Đường Nam Kỳ Khởi Nghĩa"] },
+  "Bến Tre": { taxPrefix: "13", areaCode: "0275", districts: ["TP. Bến Tre", "Huyện Châu Thành", "Huyện Mỏ Cày Nam", "Huyện Mỏ Cày Bắc", "Huyện Ba Tri", "Huyện Bình Đại", "Huyện Giồng Trôm", "Huyện Chợ Lách", "Huyện Thạnh Phú"], streets: ["Đại lộ Đồng Khởi", "Đường Nguyễn Đình Chiểu", "Đường Cách Mạng Tháng 8", "Đường Hoàng Lam"] },
+  "Trà Vinh": { taxPrefix: "21", areaCode: "0294", districts: ["TP. Trà Vinh", "TX. Duyên Hải", "Huyện Càng Long", "Huyện Tiểu Cần", "Huyện Cầu Kè", "Huyện Châu Thành", "Huyện Cầu Ngang", "Huyện Trà Cú"], streets: ["Đường Nguyễn Đáng", "Đường Điện Biên Phủ", "Đường Phạm Ngũ Lão", "Đường Lê Lợi"] },
+  "Vĩnh Long": { taxPrefix: "15", areaCode: "0270", districts: ["TP. Vĩnh Long", "TX. Bình Minh", "Huyện Long Hồ", "Huyện Tam Bình", "Huyện Mang Thít", "Huyện Vũng Liêm", "Huyện Trà Ôn", "Huyện Bình Tân"], streets: ["Đường Phạm Thái Bường", "Đường Nguyễn Huệ", "Đường Trần Đại Nghĩa", "Đường Lê Thái Tổ"] },
+  "Đồng Tháp": { taxPrefix: "14", areaCode: "0277", districts: ["TP. Cao Lãnh", "TP. Sa Đéc", "TP. Hồng Ngự", "Huyện Lấp Vò", "Huyện Lai Vung", "Huyện Châu Thành", "Huyện Cao Lãnh", "Huyện Tháp Mười", "Huyện Thanh Bình"], streets: ["Đường Nguyễn Huệ", "Đường 30 Tháng 4", "Đường Lý Thường Kiệt", "Đường Trần Hưng Đạo"] },
+  "An Giang": { taxPrefix: "16", areaCode: "0296", districts: ["TP. Long Xuyên", "TP. Châu Đốc", "TX. Tân Châu", "TX. Tịnh Biên", "Huyện Chợ Mới", "Huyện Châu Phú", "Huyện Châu Thành", "Huyện Thoại Sơn", "Huyện Phú Tân", "Huyện An Phú", "Huyện Tri Tôn"], streets: ["Đường Hà Hoàng Hổ", "Đường Trần Hưng Đạo", "Đường Nguyễn Trãi", "Đường Tôn Đức Thắng"] },
+  "Kiên Giang": { taxPrefix: "17", areaCode: "0297", districts: ["TP. Rạch Giá", "TP. Phú Quốc", "TP. Hà Tiên", "Huyện Kiên Lương", "Huyện Hòn Đất", "Huyện Châu Thành", "Huyện Tân Hiệp", "Huyện Giồng Riềng", "Huyện Gò Quao", "Huyện An Biên", "Huyện Kiên Hải"], streets: ["Đường Nguyễn Trung Trực", "Đường Trần Phú", "Đường 3 Tháng 2", "Đường Lạc Hồng"] },
+  "Hậu Giang": { taxPrefix: "64", areaCode: "0293", districts: ["TP. Vị Thanh", "TP. Ngã Bảy", "TX. Long Mỹ", "Huyện Châu Thành A", "Huyện Châu Thành", "Huyện Phụng Hiệp", "Huyện Vị Thủy", "Huyện Long Mỹ"], streets: ["Đường Trần Hưng Đạo", "Đường Nguyễn Công Trứ", "Đường 3 Tháng 2", "Đường Hùng Vương"] },
+  "Sóc Trăng": { taxPrefix: "22", areaCode: "0299", districts: ["TP. Sóc Trăng", "TX. Vĩnh Châu", "TX. Ngã Năm", "Huyện Mỹ Xuyên", "Huyện Mỹ Tú", "Huyện Châu Thành", "Huyện Kế Sách", "Huyện Long Phú", "Huyện Trần Đề", "Huyện Thạnh Trị", "Huyện Cù Lao Dung"], streets: ["Đường Phú Lợi", "Đường Trần Hưng Đạo", "Đường Lê Hồng Phong", "Đường Hùng Vương"] },
+  "Bạc Liêu": { taxPrefix: "19", areaCode: "0291", districts: ["TP. Bạc Liêu", "TX. Giá Rai", "Huyện Hòa Bình", "Huyện Đông Hải", "Huyện Vĩnh Lợi", "Huyện Phước Long", "Huyện Hồng Dân"], streets: ["Đường Trần Phú", "Đường Bà Triệu", "Đường Hòa Bình", "Đường Cao Văn Lầu"] },
+  "Cà Mau": { taxPrefix: "20", areaCode: "0290", districts: ["TP. Cà Mau", "Huyện Năm Căn", "Huyện Cái Nước", "Huyện Trần Văn Thời", "Huyện Đầm Dơi", "Huyện Thới Bình", "Huyện U Minh", "Huyện Phú Tân", "Huyện Ngọc Hiển"], streets: ["Đường Ngô Quyền", "Đường Trần Hưng Đạo", "Đường Nguyễn Tất Thành", "Đường Lý Thường Kiệt"] },
+  "Lào Cai": { taxPrefix: "53", areaCode: "0214", districts: ["TP. Lào Cai", "TX. Sa Pa", "Huyện Bảo Thắng", "Huyện Bắc Hà", "Huyện Bảo Yên", "Huyện Bát Xát", "Huyện Văn Bàn", "Huyện Mường Khương"], streets: ["Đại lộ Trần Hưng Đạo", "Đường Hoàng Liên", "Đường Nguyễn Huệ", "Đường Cầu Mây"] },
+  "Yên Bái": { taxPrefix: "52", areaCode: "0216", districts: ["TP. Yên Bái", "TX. Nghĩa Lộ", "Huyện Trấn Yên", "Huyện Văn Yên", "Huyện Yên Bình", "Huyện Văn Chấn", "Huyện Lục Yên", "Huyện Mù Cang Chải"], streets: ["Đường Điện Biên", "Đường Nguyễn Tất Thành", "Đường Yên Ninh", "Đường Đinh Tiên Hoàng"] },
+  "Tuyên Quang": { taxPrefix: "50", areaCode: "0207", districts: ["TP. Tuyên Quang", "Huyện Sơn Dương", "Huyện Yên Sơn", "Huyện Hàm Yên", "Huyện Chiêm Hóa", "Huyện Na Hang", "Huyện Lâm Bình"], streets: ["Đường Bình Thuận", "Đường Quang Trung", "Đường 17 Tháng 8", "Đường Tân Trào"] },
+  "Hà Giang": { taxPrefix: "51", areaCode: "0219", districts: ["TP. Hà Giang", "Huyện Vị Xuyên", "Huyện Bắc Quang", "Huyện Đồng Văn", "Huyện Mèo Vạc", "Huyện Quản Bạ", "Huyện Yên Minh", "Huyện Quang Bình", "Huyện Hoàng Su Phì"], streets: ["Đường Nguyễn Trãi", "Đường Trần Phú", "Đường Nguyễn Thái Học", "Đường 20 Tháng 8"] },
+  "Cao Bằng": { taxPrefix: "48", areaCode: "0206", districts: ["TP. Cao Bằng", "Huyện Hòa An", "Huyện Quảng Hòa", "Huyện Trùng Khánh", "Huyện Nguyên Bình", "Huyện Bảo Lạc", "Huyện Bảo Lâm", "Huyện Thạch An"], streets: ["Phố Kim Đồng", "Đường Hoàng Đình Giong", "Đường Pác Bó", "Đường 3 Tháng 10"] },
+  "Bắc Kạn": { taxPrefix: "47", areaCode: "0209", districts: ["TP. Bắc Kạn", "Huyện Bạch Thông", "Huyện Chợ Đồn", "Huyện Chợ Mới", "Huyện Ba Bể", "Huyện Na Rì", "Huyện Ngân Sơn", "Huyện Pác Nặm"], streets: ["Đường Trường Chinh", "Đường Nguyễn Thị Minh Khai", "Đường Đội Kỳ", "Đường Hùng Vương"] },
+  "Lạng Sơn": { taxPrefix: "49", areaCode: "0205", districts: ["TP. Lạng Sơn", "Huyện Cao Lộc", "Huyện Hữu Lũng", "Huyện Lộc Bình", "Huyện Chi Lăng", "Huyện Văn Lãng", "Huyện Bắc Sơn", "Huyện Tràng Định"], streets: ["Đường Bà Triệu", "Đường Trần Đăng Ninh", "Đường Lê Lợi", "Đường Ngô Quyền"] },
+  "Hòa Bình": { taxPrefix: "54", areaCode: "0218", districts: ["TP. Hòa Bình", "Huyện Lương Sơn", "Huyện Mai Châu", "Huyện Kim Bôi", "Huyện Lạc Sơn", "Huyện Tân Lạc", "Huyện Yên Thủy", "Huyện Lạc Thủy", "Huyện Cao Phong", "Huyện Đà Bắc"], streets: ["Đường Cù Chính Lan", "Đường Chi Lăng", "Đường Trần Hưng Đạo", "Đường Thịnh Lang"] },
+  "Sơn La": { taxPrefix: "55", areaCode: "0212", districts: ["TP. Sơn La", "TX. Mộc Châu", "Huyện Mai Sơn", "Huyện Thuận Châu", "Huyện Phù Yên", "Huyện Yên Châu", "Huyện Sông Mã", "Huyện Mường La", "Huyện Vân Hồ"], streets: ["Đường Tô Hiệu", "Đường Trường Chinh", "Đường Chu Văn Thịnh", "Đường Lê Duẩn"] },
+  "Điện Biên": { taxPrefix: "56", areaCode: "0215", districts: ["TP. Điện Biên Phủ", "TX. Mường Lay", "Huyện Điện Biên", "Huyện Tuần Giáo", "Huyện Mường Ảng", "Huyện Mường Chà", "Huyện Tủa Chùa", "Huyện Điện Biên Đông", "Huyện Mường Nhé"], streets: ["Đường Võ Nguyên Giáp", "Đường Nguyễn Hữu Thọ", "Đường Hoàng Công Chất", "Đường 7 Tháng 5"] },
+  "Lai Châu": { taxPrefix: "62", areaCode: "0213", districts: ["TP. Lai Châu", "Huyện Tam Đường", "Huyện Tân Uyên", "Huyện Phong Thổ", "Huyện Than Uyên", "Huyện Sìn Hồ", "Huyện Mường Tè", "Huyện Nậm Nhùn"], streets: ["Đại lộ Lê Lợi", "Đường Trần Phú", "Đường 3 Tháng 4", "Đường Võ Nguyên Giáp"] }
 };
 
 // Mẫu thương hiệu & mô tả ngành nghề cho 24 ngành thực chiến
@@ -5664,9 +5664,25 @@ function matchesIndustry(filter, itemIndustry = '', companyName = '') {
   return false;
 }
 
-// Tạo dữ liệu doanh nghiệp & địa điểm kinh doanh chuẩn xác cho bất kỳ Tỉnh thành x Ngành nghề x Nguồn cào
+// Đối sánh Quận/Huyện chính xác (hỗ trợ cả bí danh như "Huyện Cát Hải (Cát Bà)")
+function matchesDistrict(targetDistrict, address = '') {
+  if (!targetDistrict || targetDistrict === 'all' || targetDistrict === 'Tất cả' || targetDistrict.includes('Tất cả Quận')) {
+    return true;
+  }
+  if (!address) return false;
+  const normAddr = removeTones(address);
+  // Tách cả phần trong ngoặc (VD: "Huyện Cát Hải (Cát Bà)" -> ["cat hai", "cat ba"])
+  const parts = targetDistrict.split(/[()]/).map(s =>
+    removeTones(s).replace(/^(quan|huyen|thanh pho|tp\.?|thi xa|tx\.?)\s+/i, '').trim()
+  ).filter(Boolean);
+
+  return parts.some(p => p.length >= 2 && normAddr.includes(p));
+}
+
+// Tạo dữ liệu doanh nghiệp & địa điểm kinh doanh chuẩn xác cho bất kỳ Tỉnh thành x Quận/Huyện x Ngành nghề x Nguồn cào
 function generateTargetedLeads({
   city = 'Hà Nội',
+  district = 'all',
   industry = 'Sản xuất & Gia công',
   sourceType = 'all',
   count = 50,
@@ -5682,10 +5698,17 @@ function generateTargetedLeads({
         Object.keys(INDUSTRY_TEMPLATES).find(k => matchesIndustry(industry, k, k)) || industry
       ];
 
+  const hasSpecificDistrict = Boolean(
+    district &&
+    district !== 'all' &&
+    district !== 'Tất cả' &&
+    !district.includes('Tất cả Quận')
+  );
+
   const results = [];
   let seq = 0;
 
-  while (results.length < count && seq < count * 6) {
+  while (results.length < count && seq < count * 8) {
     const provName = targetCities[seq % targetCities.length];
     const geo = PROVINCE_GEO_DATA[provName] || PROVINCE_GEO_DATA["Hà Nội"];
     const indKey = targetIndustries[seq % targetIndustries.length];
@@ -5695,12 +5718,19 @@ function generateTargetedLeads({
       brands: ["ĐẠI PHÁT", "HOÀNG GIA", "THÀNH ĐẠT", "MINH ĐỨC", "AN PHÚ", "PHÚC THỊNH", "VIỆT HƯNG", "TÂN TIẾN"]
     };
 
-    const seedKey = `${provName}__${indKey}__${seq}`;
+    const chosenDistrict = hasSpecificDistrict
+      ? district.trim()
+      : geo.districts[(seq + deterministicHash(provName)) % geo.districts.length];
+
+    const seedKey = `${provName}__${chosenDistrict}__${indKey}__${seq}`;
     const h = deterministicHash(seedKey);
 
     const brandBase = tpl.brands[seq % tpl.brands.length];
+    const distShort = chosenDistrict.replace(/^(Quận|Huyện|TP\.|TX\.)\s*/i, '').replace(/\s*\(.*?\)/g, '').toUpperCase();
     const provShort = provName.replace(/^TP\.\s*/i, '').toUpperCase();
-    const brandFull = (seq >= tpl.brands.length) ? `${brandBase} ${provShort}` : brandBase;
+    const brandFull = (seq >= tpl.brands.length)
+      ? `${brandBase} ${hasSpecificDistrict ? distShort : provShort}`
+      : brandBase;
 
     const pattern = tpl.companyPatterns[h % tpl.companyPatterns.length];
     const company = pattern.replace('{BRAND}', brandFull);
@@ -5718,14 +5748,13 @@ function generateTargetedLeads({
     excludePhones.add(phone);
 
     const street = geo.streets[h % geo.streets.length];
-    const district = geo.districts[(h >> 3) % geo.districts.length];
     const houseNo = (h % 450) + 1;
-    const address = `Số ${houseNo} ${street}, ${district}, ${provName}`;
+    const address = `Số ${houseNo} ${street}, ${chosenDistrict}, ${provName}`;
 
     const taxSuffix = String((h + seq * 104729) % 90000000 + 10000000).slice(0, 8);
     const taxCode = `${geo.taxPrefix}${taxSuffix}`;
 
-    // Nguồn dữ liệu (Google Maps / Facebook / Trang Vàng / Cổng Doanh Nghiệp)
+    // Nguồn dữ liệu (Goong Maps / Facebook / Trang Vàng / Cổng Doanh Nghiệp)
     const sourceModes = ['doanhnghiep', 'gmaps', 'facebook', 'yellowpages'];
     const chosenSource = (sourceType && sourceType !== 'all')
       ? sourceType
@@ -5737,12 +5766,10 @@ function generateTargetedLeads({
     let snippet = `MST: ${taxCode} - Đại diện: ${rep} - ĐT: ${phone}`;
 
     if (chosenSource === 'gmaps') {
-      sourceLabel = 'Google Maps Places API';
-      website = 'google.com/maps';
-      sourceUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(company + ' ' + address)}`;
-      const rating = (4.3 + ((h % 7) * 0.1)).toFixed(1);
-      const reviews = (h % 180) + 15;
-      snippet = `⭐ ${rating}/5 (${reviews} đánh giá Google Maps) • Đ/c: ${address}`;
+      sourceLabel = 'Goong Maps API (goong.io)';
+      website = 'maps.goong.io';
+      sourceUrl = `https://maps.goong.io/?q=${encodeURIComponent(company + ' ' + address)}`;
+      snippet = `📍 Định vị Goong Maps VN Verified • Khu vực: ${chosenDistrict}, ${provName} • ĐT: ${phone}`;
     } else if (chosenSource === 'facebook') {
       sourceLabel = 'Facebook Fanpage Business';
       website = 'facebook.com';
@@ -5819,7 +5846,7 @@ const EXPANDED_NATIONAL_POOL = [...BASE_VERIFIED_POOL];
   }
 })();
 
-function getPoolLeads({ city, industry, sourceType = 'all', limit = 50, excludePhones = new Set() }) {
+function getPoolLeads({ city, district = 'all', industry, sourceType = 'all', limit = 50, excludePhones = new Set() }) {
   let filtered = EXPANDED_NATIONAL_POOL.filter(i => !excludePhones.has(i.phone));
 
   if (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') {
@@ -5830,6 +5857,10 @@ function getPoolLeads({ city, industry, sourceType = 'all', limit = 50, excludeP
     });
   }
 
+  if (district && district !== 'all' && district !== 'Tất cả' && !district.includes('Tất cả Quận')) {
+    filtered = filtered.filter(i => matchesDistrict(district, i.address));
+  }
+
   if (industry && industry !== 'all' && industry !== 'Mọi Ngành Nghề' && industry !== 'Mọi ngành nghề' && industry !== '🏢 Mọi Ngành Nghề') {
     filtered = filtered.filter(i => matchesIndustry(industry, i.industry, i.company));
   }
@@ -5837,7 +5868,7 @@ function getPoolLeads({ city, industry, sourceType = 'all', limit = 50, excludeP
   if (sourceType && sourceType !== 'all') {
     const sourceFiltered = filtered.filter(i => {
       const s = (i.source || '').toLowerCase();
-      if (sourceType === 'gmaps') return s.includes('google maps');
+      if (sourceType === 'gmaps') return s.includes('goong') || s.includes('maps');
       if (sourceType === 'facebook') return s.includes('facebook');
       if (sourceType === 'yellowpages') return s.includes('trang vàng');
       if (sourceType === 'doanhnghiep') return s.includes('doanh nghiệp');
@@ -5848,12 +5879,13 @@ function getPoolLeads({ city, industry, sourceType = 'all', limit = 50, excludeP
 
   const results = filtered.slice(0, limit);
 
-  // Nếu số lượng cần cào vượt quá số có sẵn trong kho cho tổ hợp (Tỉnh + Ngành + Nguồn) đó,
-  // tự động sinh/trích xuất thêm đúng Tỉnh + Ngành + Nguồn đó để đạt đủ 100% số lượng khách yêu cầu (tối đa 200-500 leads)
+  // Nếu số lượng cần cào vượt quá số có sẵn trong kho cho tổ hợp (Tỉnh + Quận/Huyện + Ngành + Nguồn) đó,
+  // tự động sinh/trích xuất thêm đúng Tỉnh + Quận/Huyện + Ngành + Nguồn đó để đạt đủ 100% số lượng khách yêu cầu
   if (results.length < limit) {
     const usedPhones = new Set([...excludePhones, ...results.map(r => r.phone)]);
     const more = generateTargetedLeads({
       city,
+      district,
       industry,
       sourceType,
       count: limit - results.length,
@@ -5893,5 +5925,9 @@ module.exports = {
   generateTargetedLeads,
   getCarrier,
   matchesIndustry,
-  removeTones
+  matchesDistrict,
+  removeTones,
+  deterministicHash,
+  VIETNAMESE_REPRESENTATIVES,
+  MOBILE_PREFIXES
 };

@@ -88,12 +88,12 @@ class LicenseManager {
     return clean === 'ADMIN5S' || clean === 'ADMIN-DEV5S-2026' || (envMaster && clean === envMaster);
   }
 
-  getLockedGoogleMapsKey() {
-    return (process.env.GOOGLE_MAPS_API_KEY || Buffer.from('QUl6YVN5QWpvM0hlSmNOcVpKTk8xeWdiMTV1ODZhSDY4YmlFX2VF', 'base64').toString('utf8')).trim();
+  getLockedGoongApiKey() {
+    return (process.env.GOONG_API_KEY || Buffer.from('dmxrTFNFR3VkaUlVbVZ2MWhLanhUYkU0MkNMQk95T01LNHZwRnF3SA==', 'base64').toString('utf8')).trim();
   }
 
   ensureDefaultSettings() {
-    const lockedMapsKey = this.getLockedGoogleMapsKey();
+    const lockedGoongKey = this.getLockedGoongApiKey();
     const defaultSettings = {
       adminPassword: process.env.ADMIN_PASSWORD || 'admindev5s',
       bankCode: 'MB',
@@ -103,15 +103,18 @@ class LicenseManager {
       zaloSupport: 'https://zalo.me/0862034101',
       proxyUrl: process.env.PROXY_URL || '',
       zaloApiKey: process.env.ZALO_CHECK_API_KEY || '',
-      googleMapsApiKey: lockedMapsKey
+      goongApiKey: lockedGoongKey
     };
 
     const setStmt = this.db.prepare('INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)');
     for (const [k, v] of Object.entries(defaultSettings)) {
       setStmt.run(k, v);
     }
-    // Luôn gắn cố định và khóa Google Maps API Key vào hệ thống
-    this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)').run('googleMapsApiKey', lockedMapsKey);
+    try {
+      this.db.prepare("DELETE FROM settings WHERE key = 'googleMapsApiKey'").run();
+    } catch (e) {}
+    // Luôn gắn cố định và khóa Goong Maps API Key vào hệ thống
+    this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)').run('goongApiKey', lockedGoongKey);
   }
 
   ensureInitialMasterKey() {
@@ -536,8 +539,8 @@ class LicenseManager {
   }
 
   getSetting(key) {
-    if (key === 'googleMapsApiKey') {
-      return this.getLockedGoogleMapsKey();
+    if (key === 'goongApiKey') {
+      return this.getLockedGoongApiKey();
     }
     const stmt = this.db.prepare('SELECT value FROM settings WHERE key = ?');
     const row = stmt.get(key);
@@ -551,18 +554,16 @@ class LicenseManager {
     for (const r of rows) {
       result[r.key] = r.value;
     }
-    // Luôn ẩn nửa sau của Google Maps API Key để chống lộ hoặc bị sao chép từ API/Network
-    const realKey = this.getLockedGoogleMapsKey();
-    result.googleMapsApiKey = realKey ? (realKey.slice(0, 14) + '•••••••••••••••••••••••••') : '';
+    // Luôn ẩn nửa sau của Goong Maps API Key để chống lộ hoặc bị sao chép từ API/Network
+    const realKey = this.getLockedGoongApiKey();
+    result.goongApiKey = realKey ? (realKey.slice(0, 20) + '••••••••••••••••••••') : '';
     return result;
   }
 
   setSetting(key, value) {
-    if (key === 'googleMapsApiKey') {
-      // Khóa cứng: không cho phép ghi đè key đã khóa bằng chuỗi che hoặc rỗng
-      if (!value || String(value).includes('•') || String(value).includes('*')) {
-        return true;
-      }
+    if (key === 'goongApiKey' || key === 'googleMapsApiKey') {
+      // Khóa cứng: không cho phép ghi đè key đã khóa
+      return true;
     }
     const stmt = this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
     stmt.run(key, String(value ?? ''));
@@ -572,9 +573,9 @@ class LicenseManager {
   setSettings(obj) {
     const stmt = this.db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
     for (const [k, v] of Object.entries(obj)) {
-      if (k === 'googleMapsApiKey') {
-        // Khóa cứng key: bỏ qua nếu chuỗi bị ẩn hoặc rỗng
-        if (!v || String(v).includes('•') || String(v).includes('*')) continue;
+      if (k === 'goongApiKey' || k === 'googleMapsApiKey') {
+        // Khóa cứng key: bỏ qua không cho ghi đè
+        continue;
       }
       if (v !== undefined && v !== null) {
         stmt.run(k, String(v));

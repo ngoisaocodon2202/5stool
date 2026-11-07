@@ -820,7 +820,7 @@
               <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between whitespace-nowrap">
                 <span class="flex items-center gap-1.5">
                   <i data-lucide="map-pin" class="w-3.5 h-3.5 text-indigo-600"></i>
-                  <span>Google Maps Places API Key</span>
+                  <span>Goong Maps API Key (goong.io)</span>
                 </span>
                 <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1">
                   <i data-lucide="lock" class="w-2.5 h-2.5 text-emerald-700"></i>
@@ -829,25 +829,25 @@
               </label>
               <div class="relative">
                 <input 
-                  id="setGoogleMapsApiKey" 
+                  id="setGoongApiKey" 
                   type="text" 
                   readonly
                   disabled
-                  value="AIzaSyAjo3HeJc•••••••••••••••••••••••••"
+                  value="vlkLSEGudiIUmVv1hKjx••••••••••••••••••••"
                   oncopy="return false;"
                   oncut="return false;"
                   onpaste="return false;"
                   oncontextmenu="return false;"
                   class="w-full pl-3.5 pr-32 py-2.5 bg-slate-100 border border-slate-300 rounded-xl font-mono text-xs sm:text-sm text-slate-700 font-bold select-none cursor-not-allowed tracking-wider shadow-inner" 
                   style="-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none;"
-                  title="Key đã được khóa cứng trên hệ thống máy chủ và bảo vệ chống sao chép"
+                  title="Goong API Key đã được khóa cứng trên hệ thống máy chủ và bảo vệ chống sao chép"
                 />
                 <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 select-none pointer-events-none">
                   <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
                   <span>Chống Sao Chép</span>
                 </div>
               </div>
-              <span class="text-[10px] text-slate-400 mt-1 block">Đã ẩn 50% ký tự đuôi và kích hoạt lớp bảo vệ chống trộm cắp key.</span>
+              <span class="text-[10px] text-slate-400 mt-1 block">Đã khóa cứng Goong API Key, ẩn 50% ký tự đuôi và bảo vệ chống sao chép.</span>
             </div>
             <div>
               <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap">Sao Lưu & Khôi Phục Database (.JSON)</label>
@@ -1563,7 +1563,7 @@
           if (document.getElementById('setBankName')) document.getElementById('setBankName').value = s.bankName || 'NGUYEN QUOC KHAI';
           if (document.getElementById('setHotline')) document.getElementById('setHotline').value = s.hotline || '086.2034.101';
           if (document.getElementById('setAdminPassword')) document.getElementById('setAdminPassword').value = s.adminPassword || 'admin888';
-          if (document.getElementById('setGoogleMapsApiKey')) document.getElementById('setGoogleMapsApiKey').value = s.googleMapsApiKey || 'AIzaSyAjo3HeJc•••••••••••••••••••••••••';
+          if (document.getElementById('setGoongApiKey')) document.getElementById('setGoongApiKey').value = s.goongApiKey || 'vlkLSEGudiIUmVv1hKjx••••••••••••••••••••';
           
           // Điền giá tiền tùy chỉnh đã lưu trong Database
           if (s.price_trial_1d && document.getElementById('price_trial_1d')) document.getElementById('price_trial_1d').value = s.price_trial_1d;
@@ -1706,7 +1706,7 @@
         bankName: document.getElementById('setBankName').value.trim(),
         hotline: document.getElementById('setHotline').value.trim(),
         adminPassword: document.getElementById('setAdminPassword').value.trim(),
-        googleMapsApiKey: 'AIzaSyAjo3HeJc•••••••••••••••••••••••••',
+        goongApiKey: 'vlkLSEGudiIUmVv1hKjx••••••••••••••••••••',
         price_trial_1d: document.getElementById('price_trial_1d')?.value.trim() || '50.000đ',
         price_month_1m: document.getElementById('price_month_1m')?.value.trim() || '499.000đ',
         price_month_3m: document.getElementById('price_month_3m')?.value.trim() || '1.290.000đ',

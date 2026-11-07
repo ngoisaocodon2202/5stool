@@ -2,9 +2,19 @@ const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
 const fs = require('fs');
 const LicenseManager = require('./licenseManager');
-const { matchesIndustry, removeTones, PROVINCE_GEO_DATA } = require('./enterprisePool');
+const { matchesIndustry, matchesDistrict, removeTones, PROVINCE_GEO_DATA } = require('./enterprisePool');
 
 const removeAccents = removeTones;
+
+function normalizeCompanyFingerprint(company = '', city = '') {
+  if (!company) return '';
+  const cleanComp = removeTones(company)
+    .replace(/\b(cong ty|doanh nghiep|tap doan|tnhh|co phan|cp|mtv|mot thanh vien|thuong mai|dich vu|san xuat|xay dung|dau tu|phat trien|viet nam|chi nhanh|van phong dai dien)\b/gi, ' ')
+    .replace(/[^a-z0-9]/g, '');
+  if (cleanComp.length < 3) return '';
+  const cleanCity = removeTones(city || '').replace(/[^a-z0-9]/g, '');
+  return `${cleanComp}__${cleanCity}`;
+}
 function extractProvinceFromAddress(addr = '') {
   if (!addr) return null;
   const normAddr = removeTones(addr);
@@ -141,6 +151,10 @@ class DatabaseManager {
     return String(licenseKey).trim().toUpperCase();
   }
 
+  normalizeCompanyFingerprint(company = '', city = '') {
+    return normalizeCompanyFingerprint(company, city);
+  }
+
   buildScopedId(rawId, phone, tenantKey) {
     const cleanPhone = String(phone || '').replace(/[^0-9]/g, '');
     const baseId = rawId ? String(rawId).replace(/^([A-Z0-9-]+)__/, '') : `LD-${cleanPhone || Date.now()}`;
@@ -191,6 +205,55 @@ class DatabaseManager {
     const stmt = this.db.prepare('SELECT phone FROM leads WHERE licenseKey = ?');
     const rows = stmt.all(tenantKey);
     return new Set(rows.map(r => String(r.phone || '').replace(/[^0-9]/g, '')));
+  }
+
+  getAllDedupeKeys(licenseKey = null) {
+    const tenantKey = this.normalizeTenantKey(licenseKey);
+    const stmt = this.db.prepare('SELECT phone, taxCode, company, city FROM leads WHERE licenseKey = ?');
+    const rows = stmt.all(tenantKey);
+    const phones = new Set();
+    const taxCodes = new Set();
+    const companyFingerprints = new Set();
+
+    for (const r of rows) {
+      const p = String(r.phone || '').replace(/[^0-9]/g, '');
+      if (p) phones.add(p);
+      const t = String(r.taxCode || '').trim();
+      if (t && t.length >= 8) taxCodes.add(t);
+      const fp = normalizeCompanyFingerprint(r.company, r.city);
+      if (fp) companyFingerprints.add(fp);
+    }
+    return { phones, taxCodes, companyFingerprints };
+  }
+
+  getDistrictCounts(city = 'all', licenseKey = null) {
+    const tenantKey = this.normalizeTenantKey(licenseKey);
+    const counts = {};
+    if (!city || city === 'all' || city === 'Toàn quốc' || city === 'Mọi Tỉnh Thành') {
+      return counts;
+    }
+    const geo = PROVINCE_GEO_DATA[city] || Object.entries(PROVINCE_GEO_DATA).find(([k]) => removeAccents(k) === removeAccents(city))?.[1];
+    if (!geo || !Array.isArray(geo.districts)) return counts;
+
+    const normQueryCity = removeAccents(city).replace(/^(tinh|thanh pho|tp\.?)\s+/i, '').trim();
+    const stmt = this.db.prepare('SELECT city, address FROM leads WHERE licenseKey = ?');
+    const rows = stmt.all(tenantKey).filter(r => {
+      const c = removeAccents(r.city || '');
+      const a = removeAccents(r.address || '');
+      return c.includes(normQueryCity) || a.includes(normQueryCity);
+    });
+
+    for (const d of geo.districts) {
+      counts[d] = 0;
+    }
+    for (const r of rows) {
+      for (const d of geo.districts) {
+        if (matchesDistrict(d, r.address || '')) {
+          counts[d] = (counts[d] || 0) + 1;
+        }
+      }
+    }
+    return counts;
   }
 
   getByPhone(phone, licenseKey = null) {
@@ -254,11 +317,7 @@ class DatabaseManager {
 
     // Filter by District (Quận / Huyện)
     if (query.district && query.district !== 'all' && query.district !== 'Tất cả' && query.district !== 'Tất cả Quận / Huyện' && query.district !== 'Tất cả Quận/Huyện') {
-      const normQueryDist = removeAccents(query.district).replace(/^(quan|huyen|thanh pho|tp\.?|thi xa|tx\.?)\s+/i, '').trim();
-      rows = rows.filter(r => {
-        const normLeadAddr = removeAccents(r.address || '');
-        return normLeadAddr.includes(normQueryDist);
-      });
+      rows = rows.filter(r => matchesDistrict(query.district, r.address || ''));
     }
 
     // Filter by Custom Keyword
@@ -278,13 +337,13 @@ class DatabaseManager {
       rows = rows.filter(r => matchesIndustry(query.industry, r.industry, r.company));
     }
 
-    // Filter by Source Type (gmaps, facebook, yellowpages, doanhnghiep)
+    // Filter by Source Type (gmaps -> Goong Maps, facebook, yellowpages, doanhnghiep)
     if (query.sourceType && query.sourceType !== 'all') {
       const st = query.sourceType.toLowerCase();
       rows = rows.filter(r => {
         const s = removeAccents(r.source || '');
         const u = (r.sourceUrl || '').toLowerCase();
-        if (st === 'gmaps') return s.includes('google maps') || u.includes('google.com/maps');
+        if (st === 'gmaps') return s.includes('goong') || s.includes('maps') || u.includes('goong.io') || u.includes('google.com/maps');
         if (st === 'facebook') return s.includes('facebook') || u.includes('facebook.com');
         if (st === 'yellowpages') return s.includes('trang vang') || u.includes('trangvangvietnam');
         if (st === 'doanhnghiep') return s.includes('cong thong tin') || s.includes('doanh nghiep') || s.includes('masothue') || u.includes('doanhnghiep.biz');

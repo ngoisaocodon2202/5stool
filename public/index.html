@@ -600,9 +600,9 @@
               <span class="truncate">🌐 Đa Nguồn (Tất cả 4 Kênh)</span>
               <span class="text-[10px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-md font-sans shrink-0 ml-1">4 Kênh</span>
             </div>
-            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'gmaps', '📍 Google Maps Places API')" data-val="gmaps" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
-              <span class="truncate">📍 Google Maps Places API</span>
-              <span class="text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">Maps</span>
+            <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'gmaps', '📍 Goong Maps VN (goong.io)')" data-val="gmaps" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
+              <span class="truncate">📍 Goong Maps VN (goong.io)</span>
+              <span class="text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">Goong</span>
             </div>
             <div onclick="selectCustomDropdown('Source', 'filterSourceType', 'facebook', '📘 Facebook Fanpage Business')" data-val="facebook" class="source-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all">
               <span class="truncate">📘 Facebook Fanpage Business</span>
@@ -984,7 +984,7 @@
         >
           <i data-lucide="radar" class="w-4 h-4 shrink-0"></i>
           <span class="sm:hidden tracking-tight whitespace-nowrap uppercase">BẮT ĐẦU CÀO DATA ĐA NGUỒN (4 KÊNH)</span>
-          <span class="hidden sm:inline tracking-wide whitespace-nowrap uppercase">BẮT ĐẦU CÀO DATA ĐA NGUỒN (GMAPS • FB • TRANG VÀNG • CỔNG DN)</span>
+          <span class="hidden sm:inline tracking-wide whitespace-nowrap uppercase">BẮT ĐẦU CÀO DATA ĐA NGUỒN (GOONG MAPS • FB • TRANG VÀNG • CỔNG DN)</span>
         </button>
 
         <!-- DÃY NÚT PHỤ -->
@@ -1079,7 +1079,7 @@
                 <span>HỆ THỐNG ĐANG CÀO ĐA NGUỒN & KIỂM TRA TRẠNG THÁI ZALO (ACTIVE / NOT FOUND)</span>
                 <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
               </div>
-              <div id="scanStatusText" class="text-xs text-slate-300 font-medium">Đang kết nối Google Maps Places, Trang Vàng, Fanpage & Cổng DN Quốc Gia...</div>
+              <div id="scanStatusText" class="text-xs text-slate-300 font-medium">Đang kết nối Goong Maps API (goong.io), Trang Vàng, Fanpage & Cổng DN Quốc Gia...</div>
             </div>
           </div>
           <div class="text-right">
@@ -1201,6 +1201,7 @@
     let allIndustriesList = [];
     let allDistrictsMap = {};
     let currentDistrictsList = [];
+    let currentDistrictCounts = {};
     let selectedCity = 'all';
     let selectedDistrict = 'all';
     let selectedIndustry = 'all';
@@ -1515,10 +1516,17 @@
         districts.forEach(d => {
           const isSelected = (selectedDistrict === d);
           const safeD = d.replace(/'/g, "\\'");
+          const scrapedCount = (currentDistrictCounts && currentDistrictCounts[d]) || 0;
+          const countPill = scrapedCount > 0
+            ? `<span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded-md font-bold shrink-0 ml-1">${scrapedCount} đã cào</span>`
+            : `<span class="text-[10px] text-slate-400 font-normal shrink-0 ml-1">0</span>`;
           html += `
             <div onclick="selectCustomDistrict('${safeD}', '📍 ${safeD}')" class="district-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${isSelected ? 'bg-blue-50 text-blue-700 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold'} text-xs transition-all">
-              <span>📍 ${d}</span>
-              ${isSelected ? '<i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i>' : ''}
+              <span class="truncate">📍 ${d}</span>
+              <div class="flex items-center gap-1 shrink-0">
+                ${countPill}
+                ${isSelected ? '<i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i>' : ''}
+              </div>
             </div>
           `;
         });
@@ -2016,6 +2024,10 @@
           }
 
           currentLeads = data.leads;
+          if (data.districtCounts) {
+            currentDistrictCounts = data.districtCounts;
+            renderDistrictDropdownItems(currentDistrictsList);
+          }
           if (!hasActiveFilters() && currentLeads.length > 0) {
             saveLocalLeadCache(key, currentLeads);
           }
@@ -2032,8 +2044,8 @@
 
     function renderSourceBadge(source = '', sourceUrl = '') {
       const s = (source + ' ' + sourceUrl).toLowerCase();
-      if (s.includes('google') || s.includes('maps')) {
-        return `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">📍 Google Maps</span>`;
+      if (s.includes('goong') || s.includes('google') || s.includes('maps')) {
+        return `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">📍 Goong Maps VN</span>`;
       }
       if (s.includes('facebook')) {
         return `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">📘 Facebook Fanpage</span>`;
