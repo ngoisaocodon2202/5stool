@@ -141,23 +141,32 @@
     #btnDropdownCity,
     #btnDropdownDistrict,
     #btnDropdownIndustry,
+    #filterCustomKeyword,
     #btnDropdownLimit,
+    #filterSearch,
     #btnDropdownZaloStatus,
     #btnDropdownCarrier,
-    #btnDropdownCrmStatus {
-      min-height: 40px;
+    #btnDropdownCrmStatus,
+    #boxPhoneFilterOptions {
+      height: 40px !important;
+      min-height: 40px !important;
+      max-height: 40px !important;
       border-radius: 0.85rem !important;
       border-width: 1.5px !important;
       transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-sizing: border-box !important;
     }
     #btnDropdownSource:hover,
     #btnDropdownCity:hover,
     #btnDropdownDistrict:hover,
     #btnDropdownIndustry:hover,
+    #filterCustomKeyword:hover,
     #btnDropdownLimit:hover,
+    #filterSearch:hover,
     #btnDropdownZaloStatus:hover,
     #btnDropdownCarrier:hover,
-    #btnDropdownCrmStatus:hover {
+    #btnDropdownCrmStatus:hover,
+    #boxPhoneFilterOptions:hover {
       background-color: #f8faff !important;
       transform: translateY(-0.5px);
     }
@@ -596,7 +605,7 @@
         <span class="text-slate-300">•</span>
         <span id="pillPlanType" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-600 text-white uppercase">Vĩnh Viễn</span>
         <span class="text-slate-300">•</span>
-        <span class="text-slate-600 font-medium">Hạn mức hôm nay: <b id="pillRemaining" class="text-emerald-600">500</b> leads</span>
+        <span class="text-slate-600 font-medium">Hạn mức: <b id="pillRemaining" class="text-emerald-600">Không giới hạn ∞</b></span>
       </div>
 
       <!-- Right: Actions & Admin Portal -->
@@ -628,7 +637,7 @@
       <span id="pillPlanTypeMobile" class="px-1.5 py-0.5 rounded text-[9px] font-black bg-indigo-500 text-white uppercase shrink-0">VIP</span>
     </div>
     <div class="text-[10px] text-slate-300 shrink-0 font-medium">
-      Hạn mức: <b id="pillRemainingMobile" class="text-cyan-400 font-bold">500</b> leads
+      Hạn mức: <b id="pillRemainingMobile" class="text-cyan-400 font-bold">Không giới hạn ∞</b>
     </div>
   </div>
 
@@ -974,49 +983,62 @@
               <span class="whitespace-nowrap truncate min-w-0">👑 200 Khách Hàng</span>
               <span class="text-[10px] bg-amber-500 text-white px-1.5 py-0.5 rounded font-sans whitespace-nowrap shrink-0">Tối Đa 200</span>
             </div>
-            <div onclick="closeAllHeaderDropdowns(); openUpgradeKeyModal({ reason: 'limit_select' });" class="cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 text-amber-900 font-bold text-xs font-mono border border-amber-200 transition-all overflow-hidden">
+            <div onclick="handleHighLimitSelect('500', '🚀 500 Khách Hàng (VIP)')" data-val="500" class="limit-item cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 text-amber-900 font-bold text-xs font-mono border border-amber-200 transition-all overflow-hidden">
               <span class="whitespace-nowrap truncate min-w-0">🚀 500 - 10.000+ KH</span>
-              <span class="text-[10px] bg-gradient-to-r from-amber-600 to-orange-600 text-white px-1.5 py-0.5 rounded font-sans whitespace-nowrap shrink-0">Nâng Cấp Key</span>
+              <span id="badgeHighLimitOption" class="text-[10px] bg-gradient-to-r from-amber-600 to-orange-600 text-white px-1.5 py-0.5 rounded font-sans whitespace-nowrap shrink-0">VIP / Admin</span>
             </div>
           </div>
         </div>
 
       </div>
 
-      <!-- BANNER BÁO DỮ LIỆU KHU VỰC (5.000 - 10.000+ LEADS > GIỚI HẠN 200 LEADS) - 100% SINGLE LINE TRÊN MOBILE -->
-      <div id="locationPotentialBanner" onclick="openUpgradeKeyModal({ reason: 'banner_click' })" class="cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50/90 via-orange-50/70 to-indigo-50/80 border border-amber-200/90 hover:border-amber-400 transition-all min-w-0 overflow-hidden">
+      <!-- BANNER BÁO DỮ LIỆU KHU VỰC & NHẬN DIỆN CHÍNH XÁC KEY ĐANG DÙNG - 100% SINGLE LINE -->
+      <div id="locationPotentialBanner" onclick="handleBannerUpgradeClick()" class="cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50/90 via-orange-50/70 to-indigo-50/80 border border-amber-200/90 hover:border-amber-400 transition-all min-w-0 overflow-hidden">
         <div class="flex items-center gap-1.5 min-w-0 overflow-hidden">
-          <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0"></span>
+          <span id="locationPotentialDot" class="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0"></span>
           <span id="locationPotentialBannerText" class="text-[11px] sm:text-xs font-bold text-slate-800 whitespace-nowrap truncate min-w-0">
-            📍 Khu vực <b class="text-indigo-700">Toàn Quốc</b> có <b class="text-emerald-700">~8.650+ Leads</b> (Giới hạn gói: <b class="text-rose-600">200 Leads</b>)
+            📍 Điểm <b class="text-indigo-700">Toàn Quốc</b> có <b class="text-emerald-700">~7.456+ Leads</b> • Đang kiểm tra Key...
           </span>
         </div>
-        <button type="button" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-[10px] sm:text-[11px] font-extrabold whitespace-nowrap shrink-0 shadow-2xs flex items-center gap-1">
+        <button id="locationPotentialBannerBtn" type="button" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-[10px] sm:text-[11px] font-extrabold whitespace-nowrap shrink-0 shadow-2xs flex items-center gap-1">
           <i data-lucide="crown" class="w-3 h-3 shrink-0"></i>
           <span>Nâng Cấp Key</span>
         </button>
       </div>
 
-      <!-- HÀNG 2: BỘ LỌC DỮ LIỆU ĐÃ CÀO & PHÂN LOẠI LEAD (5 CỘT TRÊN DESKTOP: TÌM KHO | ZALO | NHÀ MẠNG | CRM | TÙY CHỌN SĐT) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 pt-2 border-t border-slate-100">
+      <!-- HÀNG 2: BỘ LỌC DỮ LIỆU ĐÃ CÀO & PHÂN LOẠI LEAD (5 CỘT ĐỒNG BỘ CHIỀU CAO 40PX & NHÃN TIÊU ĐỀ NGANG BẰNG NHAU 100%) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 pt-2 border-t border-slate-100 items-end">
         
         <!-- 1. Tìm kiếm trong kho -->
-        <div>
-          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Tìm kiếm trong kho</label>
+        <div class="relative">
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between whitespace-nowrap">
+            <span class="flex items-center gap-1">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <span>Tìm Kiếm Trong Kho</span>
+            </span>
+            <span class="text-[10px] text-indigo-600 font-bold">Tức Thời</span>
+          </label>
           <div class="relative">
             <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
             <input 
               id="filterSearch" 
               type="text" 
               placeholder="Tên công ty, SĐT, MST, ghi chú..." 
-              class="w-full pl-9 pr-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-2xs"
+              class="w-full pl-9 pr-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-xl hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-2xs"
               oninput="debounceSearch()"
             />
           </div>
         </div>
         
-        <!-- 1. Lọc Trạng Thái Zalo (Active vs Not Found) -->
+        <!-- 2. Lọc Trạng Thái Zalo (Active vs Not Found) -->
         <div class="relative">
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between whitespace-nowrap">
+            <span class="flex items-center gap-1">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
+              <span>Trạng Thái Zalo</span>
+            </span>
+            <span class="text-[10px] text-emerald-600 font-bold">Đối Soát</span>
+          </label>
           <input type="hidden" id="filterZaloStatus" value="all" />
           <button 
             type="button" 
@@ -1047,8 +1069,15 @@
           </div>
         </div>
 
-        <!-- 2. Lọc Nhà Mạng Viễn Thông -->
+        <!-- 3. Lọc Nhà Mạng Viễn Thông -->
         <div class="relative">
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between whitespace-nowrap">
+            <span class="flex items-center gap-1">
+              <i data-lucide="radio" class="w-3.5 h-3.5 text-indigo-500"></i>
+              <span>Nhà Mạng Viễn Thông</span>
+            </span>
+            <span class="text-[10px] text-indigo-600 font-bold">3 Mạng</span>
+          </label>
           <input type="hidden" id="filterCarrier" value="all" />
           <button 
             type="button" 
@@ -1083,8 +1112,15 @@
           </div>
         </div>
 
-        <!-- 3. Lọc Trạng Thái Chăm Sóc Mini-CRM -->
+        <!-- 4. Lọc Trạng Thái Chăm Sóc Mini-CRM -->
         <div class="relative">
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between whitespace-nowrap">
+            <span class="flex items-center gap-1">
+              <i data-lucide="clipboard-check" class="w-3.5 h-3.5 text-cyan-600"></i>
+              <span>Tiến Độ Sale (CRM)</span>
+            </span>
+            <span class="text-[10px] text-cyan-600 font-bold">Mini-CRM</span>
+          </label>
           <input type="hidden" id="filterCrmStatus" value="all" />
           <button 
             type="button" 
@@ -1125,17 +1161,26 @@
           </div>
         </div>
 
-        <!-- 4. Tùy chọn Chỉ SĐT Di Động & Bỏ trùng -->
-        <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs shadow-2xs">
-          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none min-w-0" title="Loại bỏ toàn bộ số điện thoại bàn cố định (024, 028...)">
-            <input id="chkMobileOnly" type="checkbox" onchange="fetchLeads()" class="w-4 h-4 rounded text-indigo-600 cursor-pointer shrink-0" />
-            <span class="font-bold text-slate-700 whitespace-nowrap truncate">📱 Chỉ SĐT Di Động (Ẩn 02x)</span>
+        <!-- 5. Tùy chọn Chỉ SĐT Di Động & Bỏ trùng -->
+        <div class="relative">
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1 flex items-center justify-between whitespace-nowrap">
+            <span class="flex items-center gap-1">
+              <i data-lucide="smartphone" class="w-3.5 h-3.5 text-purple-600"></i>
+              <span>Bộ Lọc Số & Chống Trùng</span>
+            </span>
+            <span class="text-[10px] text-purple-600 font-bold">Tự Động</span>
           </label>
-          <span class="text-slate-300 shrink-0">|</span>
-          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none shrink-0" title="Bỏ qua các số đã có trong kho khi cào mới">
-            <input id="chkSkipExisting" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 cursor-pointer shrink-0" />
-            <span class="font-bold text-slate-700 whitespace-nowrap">Lọc trùng</span>
-          </label>
+          <div id="boxPhoneFilterOptions" class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs shadow-2xs overflow-hidden">
+            <label class="inline-flex items-center gap-1.5 cursor-pointer select-none min-w-0" title="Loại bỏ toàn bộ số điện thoại bàn cố định (024, 028...)">
+              <input id="chkMobileOnly" type="checkbox" onchange="fetchLeads()" class="w-4 h-4 rounded text-indigo-600 cursor-pointer shrink-0" />
+              <span class="font-bold text-slate-700 whitespace-nowrap truncate">📱 Chỉ SĐT Di Động</span>
+            </label>
+            <span class="text-slate-300 shrink-0">|</span>
+            <label class="inline-flex items-center gap-1.5 cursor-pointer select-none shrink-0" title="Bỏ qua các số đã có trong kho khi cào mới">
+              <input id="chkSkipExisting" type="checkbox" checked class="w-4 h-4 rounded text-indigo-600 cursor-pointer shrink-0" />
+              <span class="font-bold text-slate-700 whitespace-nowrap">Lọc trùng</span>
+            </label>
+          </div>
         </div>
 
       </div>
@@ -1607,6 +1652,98 @@
       }
     }
 
+    let currentLicenseInfo = null;
+
+    function getClientKeyMeta(lic = currentLicenseInfo) {
+      const activeKey = getActiveKey();
+      const isMaster = Boolean(
+        (lic && lic.isMultiDevice) ||
+        activeKey === 'ADMIN5S' ||
+        activeKey === 'ADMIN-DEV5S-2026' ||
+        activeKey === 'DEV5S-2026'
+      );
+
+      if (isMaster) {
+        return {
+          planType: 'admin',
+          planLabel: 'Admin Toàn Quyền',
+          shortLabel: 'ADMIN VIP',
+          quotaBadge: 'Không giới hạn cào ∞',
+          isUnlimited: true,
+          maxQuota: 999999,
+          remainingQuota: 999999
+        };
+      }
+
+      const planType = (lic && lic.planType) ? lic.planType : (
+        activeKey.startsWith('LEAD-1D-') ? 'trial_1d' :
+        activeKey.startsWith('LEAD-30D-') ? 'month_1m' :
+        activeKey.startsWith('LEAD-90D-') ? 'month_3m' :
+        activeKey.startsWith('LEAD-365D-') ? 'year_1y' :
+        activeKey.startsWith('LEAD-3Y-') ? 'year_3y' :
+        (activeKey.startsWith('LEAD-LIFE-') || activeKey.startsWith('LEAD-VIP-')) ? 'lifetime' : 'trial_1d'
+      );
+
+      const defaultQuotaByPlan = {
+        trial_1d: 200,
+        month_1m: 6000,
+        month_3m: 18000,
+        year_1y: 73000,
+        year_3y: 146000,
+        lifetime: 999999
+      };
+
+      const maxQuota = (lic && Number(lic.maxDailyScrapes) > 0)
+        ? Number(lic.maxDailyScrapes)
+        : (defaultQuotaByPlan[planType] || 200);
+
+      const isUnlimited = Boolean(
+        (lic && lic.isUnlimited) ||
+        planType === 'lifetime' ||
+        maxQuota >= 999999
+      );
+
+      if (isUnlimited) {
+        return {
+          planType: 'lifetime',
+          planLabel: 'Key Vĩnh Viễn (Lifetime)',
+          shortLabel: 'Vĩnh Viễn',
+          quotaBadge: 'Không giới hạn cào ∞',
+          isUnlimited: true,
+          maxQuota: 999999,
+          remainingQuota: 999999
+        };
+      }
+
+      const remainingQuota = (lic && lic.remainingToday !== undefined)
+        ? Math.max(0, Number(lic.remainingToday))
+        : maxQuota;
+
+      const planNameMap = {
+        trial_1d: { planLabel: 'Key 1 Ngày (24h)', shortLabel: 'Gói 1 Ngày', unit: 'Ngày' },
+        month_1m: { planLabel: 'Key 1 Tháng (30 Ngày)', shortLabel: 'Gói 1 Tháng', unit: 'Tháng' },
+        month_3m: { planLabel: 'Key 3 Tháng (90 Ngày)', shortLabel: 'Gói 3 Tháng', unit: '3 Tháng' },
+        year_1y: { planLabel: 'Key VIP 1 Năm (365 Ngày)', shortLabel: 'VIP 1 Năm', unit: 'Năm' },
+        year_3y: { planLabel: 'Key Super VIP 3 Năm', shortLabel: 'VIP 3 Năm', unit: '3 Năm' }
+      };
+
+      const meta = planNameMap[planType] || {
+        planLabel: (lic && lic.planLabel) || `Key Bản Quyền (${planType})`,
+        shortLabel: (lic && lic.shortLabel) || planType,
+        unit: 'Gói'
+      };
+
+      return {
+        planType,
+        planLabel: meta.planLabel,
+        shortLabel: meta.shortLabel,
+        quotaBadge: `${maxQuota.toLocaleString('vi-VN')} Leads / ${meta.unit}`,
+        isUnlimited: false,
+        maxQuota,
+        remainingQuota
+      };
+    }
+
     function estimateClientLocationPool(cityVal = selectedCity, districtVal = selectedDistrict) {
       const cleanCity = (cityVal && cityVal !== 'all' && cityVal !== 'Toàn quốc' && cityVal !== 'Mọi Tỉnh Thành') ? cityVal.trim() : 'Toàn Quốc';
       const cleanDistrict = (districtVal && districtVal !== 'all' && districtVal !== 'Tất cả Quận / Huyện' && districtVal !== 'Tất cả Quận/Huyện') ? districtVal.trim() : '';
@@ -1621,17 +1758,80 @@
       const minPool = cleanDistrict ? 5150 : 6400;
       const rangePool = cleanDistrict ? 2740 : 3450;
       const estimatedTotal = minPool + (absHash % rangePool);
-      const keyLimit = 200;
-      const remainingCount = Math.max(0, estimatedTotal - keyLimit);
-      return { locationLabel, estimatedTotal, keyLimit, remainingCount };
+      const keyMeta = getClientKeyMeta();
+      const keyLimit = keyMeta.isUnlimited ? 999999 : keyMeta.remainingQuota;
+      const remainingCount = keyMeta.isUnlimited ? 0 : Math.max(0, estimatedTotal - keyLimit);
+      const isExceedingKey = !keyMeta.isUnlimited && (estimatedTotal > keyMeta.maxQuota || estimatedTotal > keyMeta.remainingQuota);
+      return {
+        locationLabel,
+        estimatedTotal,
+        keyLimit,
+        maxQuota: keyMeta.maxQuota,
+        remainingQuota: keyMeta.remainingQuota,
+        planLabel: keyMeta.planLabel,
+        quotaBadge: keyMeta.quotaBadge,
+        isUnlimited: keyMeta.isUnlimited,
+        isExceedingKey,
+        remainingCount
+      };
     }
 
     function updateLocationPotentialBanner() {
+      const banner = document.getElementById('locationPotentialBanner');
       const bannerText = document.getElementById('locationPotentialBannerText');
-      if (!bannerText) return;
+      const bannerBtn = document.getElementById('locationPotentialBannerBtn');
+      const dot = document.getElementById('locationPotentialDot');
+      if (!bannerText || !banner) return;
+
       const info = estimateClientLocationPool(selectedCity, selectedDistrict);
       const fmtTotal = info.estimatedTotal.toLocaleString('vi-VN');
-      bannerText.innerHTML = `📍 Điểm <b class="text-indigo-700">${info.locationLabel}</b> có <b class="text-emerald-700">~${fmtTotal}+ Leads</b> (Giới hạn Key: <b class="text-rose-600">${info.keyLimit} Leads</b>)`;
+
+      if (info.isUnlimited) {
+        banner.className = 'cursor-default flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-50/90 via-teal-50/70 to-indigo-50/80 border border-emerald-200/90 transition-all min-w-0 overflow-hidden';
+        if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0';
+        bannerText.innerHTML = `👑 Điểm <b class="text-indigo-700">${info.locationLabel}</b> có <b class="text-emerald-700">~${fmtTotal}+ Leads</b> • Đang dùng: <b class="text-purple-700">${info.planLabel}</b> (<b class="text-emerald-600">Không giới hạn cào ∞</b>)`;
+        if (bannerBtn) {
+          bannerBtn.className = 'px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] sm:text-[11px] font-extrabold whitespace-nowrap shrink-0 shadow-2xs flex items-center gap-1';
+          bannerBtn.innerHTML = '<i data-lucide="shield-check" class="w-3 h-3 shrink-0"></i><span>Không Giới Hạn ∞</span>';
+        }
+      } else if (!info.isExceedingKey) {
+        banner.className = 'cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-indigo-50/90 via-cyan-50/70 to-emerald-50/80 border border-indigo-200/90 hover:border-indigo-400 transition-all min-w-0 overflow-hidden';
+        if (dot) dot.className = 'w-2 h-2 rounded-full bg-indigo-500 animate-pulse shrink-0';
+        bannerText.innerHTML = `📍 Điểm <b class="text-indigo-700">${info.locationLabel}</b> có <b class="text-emerald-700">~${fmtTotal}+ Leads</b> • Đang dùng: <b class="text-indigo-700">${info.planLabel}</b> (Còn: <b class="text-emerald-600">${info.remainingQuota.toLocaleString('vi-VN')} Leads</b> - Đủ hạn mức)`;
+        if (bannerBtn) {
+          bannerBtn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] sm:text-[11px] font-extrabold whitespace-nowrap shrink-0 shadow-2xs flex items-center gap-1';
+          bannerBtn.innerHTML = '<i data-lucide="check-circle-2" class="w-3 h-3 shrink-0"></i><span>Đủ Hạn Mức Quét</span>';
+        }
+      } else {
+        banner.className = 'cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50/90 via-orange-50/70 to-indigo-50/80 border border-amber-200/90 hover:border-amber-400 transition-all min-w-0 overflow-hidden';
+        if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0';
+        bannerText.innerHTML = `📍 Điểm <b class="text-indigo-700">${info.locationLabel}</b> có <b class="text-emerald-700">~${fmtTotal}+ Leads</b> • <b class="text-amber-900">${info.planLabel}</b> (Giới hạn: <b class="text-rose-600">${info.remainingQuota.toLocaleString('vi-VN')} Leads</b>)`;
+        if (bannerBtn) {
+          bannerBtn.className = 'px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-[10px] sm:text-[11px] font-extrabold whitespace-nowrap shrink-0 shadow-2xs flex items-center gap-1';
+          bannerBtn.innerHTML = '<i data-lucide="crown" class="w-3 h-3 shrink-0"></i><span>Nâng Cấp Key</span>';
+        }
+      }
+      if (window.lucide) lucide.createIcons({ root: banner });
+    }
+
+    function handleBannerUpgradeClick() {
+      const info = estimateClientLocationPool(selectedCity, selectedDistrict);
+      if (info.isUnlimited) {
+        showToast(`Bạn đang sử dụng ${info.planLabel} — Không giới hạn số lượng cào dữ liệu!`, 'success');
+        return;
+      }
+      openUpgradeKeyModal({ reason: 'banner_click' });
+    }
+
+    function handleHighLimitSelect(value, label) {
+      const info = estimateClientLocationPool(selectedCity, selectedDistrict);
+      if (info.isUnlimited || info.remainingQuota >= 500) {
+        selectCustomLimit(value, label);
+        showToast(`Đã chọn mức quét lớn (${value} KH) cho ${info.planLabel}!`, 'info');
+      } else {
+        closeAllHeaderDropdowns();
+        openUpgradeKeyModal({ reason: 'limit_select' });
+      }
     }
 
     function openUpgradeKeyModal(customInfo = {}) {
@@ -1639,9 +1839,16 @@
       if (!modal) return;
 
       const fallback = estimateClientLocationPool(selectedCity, selectedDistrict);
+      if (fallback.isUnlimited && customInfo.reason !== 'force') {
+        return;
+      }
+
       const locationLabel = customInfo.locationLabel || fallback.locationLabel;
       const estimatedTotal = Number(customInfo.estimatedTotal) || fallback.estimatedTotal;
-      const keyLimit = Number(customInfo.keyLimit) || 200;
+      const keyLimit = customInfo.remainingQuota !== undefined
+        ? Number(customInfo.remainingQuota)
+        : (Number(customInfo.keyLimit) || fallback.remainingQuota || 200);
+      const planLabel = customInfo.planLabel || fallback.planLabel || 'Key Hiện Tại';
       const remainingCount = Number(customInfo.remainingCount) || Math.max(0, estimatedTotal - keyLimit);
 
       const locEl = document.getElementById('upgLocationLabel');
@@ -1649,8 +1856,8 @@
       const totEl = document.getElementById('upgTotalPoolValue');
       const remEl = document.getElementById('upgRemainingValue');
 
-      if (locEl) locEl.innerText = locationLabel;
-      if (limEl) limEl.innerText = `${keyLimit} Leads`;
+      if (locEl) locEl.innerText = `${locationLabel} (${planLabel})`;
+      if (limEl) limEl.innerText = `${keyLimit.toLocaleString('vi-VN')} Leads`;
       if (totEl) totEl.innerText = `~${estimatedTotal.toLocaleString('vi-VN')}+ Leads`;
       if (remEl) remEl.innerText = `+${remainingCount.toLocaleString('vi-VN')} Leads`;
 
@@ -1689,7 +1896,8 @@
       updateLocationPotentialBanner();
       closeAllHeaderDropdowns();
       fetchLeads();
-      if (value && value !== 'all') {
+      const info = estimateClientLocationPool(selectedCity, selectedDistrict);
+      if (value && value !== 'all' && !info.isUnlimited && info.isExceedingKey) {
         openUpgradeKeyModal({ reason: 'city_select' });
       }
     }
@@ -1701,7 +1909,8 @@
       updateLocationPotentialBanner();
       closeAllHeaderDropdowns();
       fetchLeads();
-      if (value && value !== 'all') {
+      const info = estimateClientLocationPool(selectedCity, selectedDistrict);
+      if (value && value !== 'all' && !info.isUnlimited && info.isExceedingKey) {
         openUpgradeKeyModal({ reason: 'district_select' });
       }
     }
@@ -2058,27 +2267,33 @@
     }
 
     function updateClientPill(lic) {
+      if (lic) currentLicenseInfo = lic;
+      const meta = getClientKeyMeta(lic);
       const pill = document.getElementById('clientStatusPill');
       const pillMobile = document.getElementById('clientStatusPillMobile');
-      if (lic) {
+      if (lic || getActiveKey()) {
+        const quotaDisplay = meta.isUnlimited
+          ? 'Không giới hạn ∞'
+          : `${meta.remainingQuota.toLocaleString('vi-VN')} / ${meta.maxQuota.toLocaleString('vi-VN')} leads`;
         if (pill) {
           pill.classList.remove('hidden');
           pill.classList.add('hidden', 'md:flex');
-          document.getElementById('pillClientName').innerText = lic.clientName || 'Khách Hàng';
-          document.getElementById('pillPlanType').innerText = lic.isMultiDevice ? 'Admin Đa Thiết Bị' : (lic.isLifetime ? 'Vĩnh Viễn' : lic.planType);
-          document.getElementById('pillRemaining').innerText = lic.remainingToday !== undefined ? lic.remainingToday : 500;
+          document.getElementById('pillClientName').innerText = (lic && lic.clientName) ? lic.clientName : (meta.planType === 'admin' ? 'Admin Quản Trị Viên' : 'Khách Hàng');
+          document.getElementById('pillPlanType').innerText = meta.planLabel;
+          document.getElementById('pillRemaining').innerText = quotaDisplay;
         }
         if (pillMobile) {
           pillMobile.classList.remove('hidden');
           pillMobile.classList.add('flex', 'md:hidden');
-          let displayName = lic.clientName || 'Khách Hàng';
-          if (lic.isMultiDevice) displayName = 'Admin VIP';
+          let displayName = (lic && lic.clientName) ? lic.clientName : 'Khách Hàng';
+          if (meta.planType === 'admin' || (lic && lic.isMultiDevice)) displayName = 'Admin VIP';
           document.getElementById('pillClientNameMobile').innerText = displayName;
-          document.getElementById('pillPlanTypeMobile').innerText = lic.isMultiDevice ? 'ADMIN' : (lic.isLifetime ? 'Vĩnh Viễn' : lic.planType);
-          document.getElementById('pillRemainingMobile').innerText = lic.remainingToday !== undefined ? lic.remainingToday : 500;
+          document.getElementById('pillPlanTypeMobile').innerText = meta.shortLabel;
+          document.getElementById('pillRemainingMobile').innerText = meta.isUnlimited ? 'Không giới hạn ∞' : `${meta.remainingQuota.toLocaleString('vi-VN')} leads`;
           if (window.lucide) lucide.createIcons();
         }
       }
+      updateLocationPotentialBanner();
     }
 
     function openLicenseGateModal(isSwitch = false, errorData = null) {

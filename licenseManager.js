@@ -227,10 +227,97 @@ class LicenseManager {
     return this.getLicense(key);
   }
 
+  getPlanMeta(planType, maxDailyScrapes = 200, isAdminMaster = false) {
+    const maxQuota = Number(maxDailyScrapes) || 200;
+    if (isAdminMaster) {
+      return {
+        planLabel: 'Admin Toàn Quyền',
+        shortLabel: 'Admin VIP',
+        quotaBadge: 'Không giới hạn ∞',
+        isUnlimited: true
+      };
+    }
+    if (planType === 'lifetime' || maxQuota >= 999999) {
+      return {
+        planLabel: 'Key Vĩnh Viễn (Lifetime)',
+        shortLabel: 'Vĩnh Viễn',
+        quotaBadge: 'Không giới hạn ∞',
+        isUnlimited: true
+      };
+    }
+    switch (planType) {
+      case 'trial_1d':
+        return {
+          planLabel: 'Key 1 Ngày (24h)',
+          shortLabel: 'Gói 1 Ngày',
+          quotaBadge: `${maxQuota.toLocaleString('vi-VN')} Leads / Ngày`,
+          isUnlimited: false
+        };
+      case 'month_1m':
+        return {
+          planLabel: 'Key 1 Tháng (30 Ngày)',
+          shortLabel: 'Gói 1 Tháng',
+          quotaBadge: `${maxQuota.toLocaleString('vi-VN')} Leads / Tháng`,
+          isUnlimited: false
+        };
+      case 'month_3m':
+        return {
+          planLabel: 'Key 3 Tháng (90 Ngày)',
+          shortLabel: 'Gói 3 Tháng',
+          quotaBadge: `${maxQuota.toLocaleString('vi-VN')} Leads / 3 Tháng`,
+          isUnlimited: false
+        };
+      case 'year_1y':
+        return {
+          planLabel: 'Key VIP 1 Năm (365 Ngày)',
+          shortLabel: 'VIP 1 Năm',
+          quotaBadge: `${maxQuota.toLocaleString('vi-VN')} Leads / Năm`,
+          isUnlimited: false
+        };
+      case 'year_3y':
+        return {
+          planLabel: 'Key Super VIP 3 Năm',
+          shortLabel: 'VIP 3 Năm',
+          quotaBadge: `${maxQuota.toLocaleString('vi-VN')} Leads / 3 Năm`,
+          isUnlimited: false
+        };
+      default:
+        return {
+          planLabel: `Key Bản Quyền (${planType || 'Standard'})`,
+          shortLabel: planType || 'Standard',
+          quotaBadge: `${maxQuota.toLocaleString('vi-VN')} Leads`,
+          isUnlimited: false
+        };
+    }
+  }
+
+  enrichLicenseRow(row) {
+    if (!row) return null;
+    const isAdminMaster = this.isMasterKey(row.key);
+    const meta = this.getPlanMeta(row.planType, row.maxDailyScrapes, isAdminMaster);
+    const maxQuota = meta.isUnlimited ? 999999 : (Number(row.maxDailyScrapes) || 200);
+    const used = Number(row.usedToday) || 0;
+    const remaining = meta.isUnlimited ? 999999 : Math.max(0, maxQuota - used);
+
+    return {
+      ...row,
+      maxDailyScrapes: maxQuota,
+      usedToday: used,
+      remainingToday: remaining,
+      isLifetime: !row.expiresAt || row.planType === 'lifetime' || isAdminMaster,
+      isMultiDevice: isAdminMaster,
+      isUnlimited: meta.isUnlimited,
+      planLabel: meta.planLabel,
+      shortLabel: meta.shortLabel,
+      quotaBadge: meta.quotaBadge
+    };
+  }
+
   getLicense(key) {
     if (!key) return null;
     const stmt = this.db.prepare('SELECT * FROM licenses WHERE key = ?');
-    return stmt.get(key.trim().toUpperCase());
+    const row = stmt.get(key.trim().toUpperCase());
+    return this.enrichLicenseRow(row);
   }
 
   // Auto-recover valid LEAD-* keys if Serverless instance cold-started
@@ -400,36 +487,18 @@ class LicenseManager {
       touchAdmin.run(cleanKey);
     }
 
-    // Reset daily quota if new day
+    // Reset daily quota if new day (for daily/trial keys)
     const todayStr = new Date().toISOString().split('T')[0];
-    if (license.lastScrapeDate !== todayStr) {
+    if (license.lastScrapeDate !== todayStr && (license.planType === 'trial_1d' || Number(license.maxDailyScrapes) <= 500)) {
       const resetStmt = this.db.prepare('UPDATE licenses SET usedToday = 0, lastScrapeDate = ?, lastAccessedAt = CURRENT_TIMESTAMP WHERE key = ?');
       resetStmt.run(todayStr, cleanKey);
       license.usedToday = 0;
       license.lastScrapeDate = todayStr;
     }
 
-    const remaining = Math.max(0, license.maxDailyScrapes - license.usedToday);
-
     return {
       valid: true,
-      license: {
-        key: license.key,
-        clientName: license.clientName,
-        clientPhone: license.clientPhone || '',
-        planType: license.planType,
-        expiresAt: license.expiresAt,
-        maxDailyScrapes: license.maxDailyScrapes,
-        usedToday: license.usedToday,
-        remainingToday: remaining,
-        isLifetime: !license.expiresAt || license.planType === 'lifetime',
-        isMultiDevice: isAdminMaster,
-        deviceId: license.deviceId,
-        deviceInfo: license.deviceInfo,
-        deviceIp: license.deviceIp,
-        firstActivatedAt: license.firstActivatedAt,
-        lastAccessedAt: license.lastAccessedAt
-      }
+      license: this.enrichLicenseRow(license)
     };
   }
 

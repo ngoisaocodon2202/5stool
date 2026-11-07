@@ -263,9 +263,9 @@ function estimateLocationTotalLeads(city = '', district = '', industry = '', cus
 app.post('/api/leads/scan', requireLicense, async (req, res) => {
   try {
     const { city, district = 'all', industry, customKeyword = '', sourceType = 'all', targetGoal = 50, skipExisting = true } = req.body;
-    const goalNumber = Math.min(Math.max(parseInt(targetGoal) || 50, 5), 200);
+    const goalNumber = Math.min(Math.max(parseInt(targetGoal) || 50, 5), 1000);
     const tenantKey = req.license.key;
-    const isAdminMaster = db.licenseManager.isMasterKey(tenantKey);
+    const isUnlimitedKey = Boolean(req.license.isUnlimited || db.licenseManager.isMasterKey(tenantKey) || req.license.planType === 'lifetime' || Number(req.license.maxDailyScrapes) >= 999999);
 
     const { locationLabel, estimatedTotal } = estimateLocationTotalLeads(city, district, industry, customKeyword);
     const settings = db.licenseManager.getAllSettings();
@@ -277,12 +277,12 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
       zaloSupport: settings.zaloSupport || 'https://zalo.me/0862034101'
     };
 
-    const maxDaily = Number(req.license.maxDailyScrapes) || 200;
+    const maxQuota = isUnlimitedKey ? 999999 : (Number(req.license.maxDailyScrapes) || 200);
     const usedToday = Number(req.license.usedToday) || 0;
-    const remainingBefore = Math.max(0, maxDaily - usedToday);
+    const remainingBefore = isUnlimitedKey ? 999999 : Math.max(0, maxQuota - usedToday);
 
-    // If a limited Key (e.g. 200 leads) has already reached its quota at this location
-    if (!isAdminMaster && remainingBefore <= 0) {
+    // If a limited Key (e.g. 1 Ngày: 200, 1 Tháng: 6000, etc.) has reached its quota
+    if (!isUnlimitedKey && remainingBefore <= 0) {
       return res.status(403).json({
         success: false,
         isQuotaError: true,
@@ -292,7 +292,11 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
           locationLabel,
           estimatedTotal,
           extractedCount: 0,
-          keyLimit: Math.min(maxDaily, 200),
+          keyLimit: maxQuota,
+          remainingQuota: 0,
+          planLabel: req.license.planLabel || 'Key Hiện Tại',
+          quotaBadge: req.license.quotaBadge || `${maxQuota} Leads`,
+          isUnlimited: false,
           remainingCount: Math.max(0, estimatedTotal - usedToday),
           showUpgradePopup: true
         },
@@ -300,9 +304,9 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
       });
     }
 
-    const effectiveGoal = !isAdminMaster ? Math.min(goalNumber, remainingBefore, 200) : Math.min(goalNumber, 200);
+    const effectiveGoal = !isUnlimitedKey ? Math.min(goalNumber, remainingBefore) : goalNumber;
 
-    console.log(`[API /scan] [Tenant: ${tenantKey}] Quét đa nguồn (${sourceType}): ngành="${industry}", từ khóa riêng="${customKeyword}", quận/huyện="${district}", tỉnh="${city}", số lượng=${effectiveGoal}, lọc trùng=${skipExisting}`);
+    console.log(`[API /scan] [Tenant: ${tenantKey} | ${req.license.planLabel}] Quét đa nguồn (${sourceType}): ngành="${industry}", từ khóa riêng="${customKeyword}", quận/huyện="${district}", tỉnh="${city}", số lượng=${effectiveGoal}, lọc trùng=${skipExisting}`);
 
     const rawNewLeads = await scraper.scrapeRealEnterprises({
       keyword: (industry && industry !== 'all' && industry !== 'Mọi ngành nghề' && industry !== 'Mọi Ngành Nghề') ? industry : '',
@@ -325,7 +329,8 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
     const savedTenantLeads = db.filter({ city, district, industry, customKeyword, sourceType }, tenantKey);
     const districtCounts = db.getDistrictCounts(city, tenantKey);
     const updatedLicense = db.licenseManager.getLicense(tenantKey);
-    const effectiveKeyLimit = (!isAdminMaster && maxDaily <= 200) ? maxDaily : 200;
+    const remAfter = isUnlimitedKey ? 999999 : (updatedLicense ? updatedLicense.remainingToday : Math.max(0, remainingBefore - rawNewLeads.length));
+    const shouldSuggestUpgrade = !isUnlimitedKey && (estimatedTotal > maxQuota || estimatedTotal > remAfter || remAfter <= 0);
 
     res.json({
       success: true,
@@ -340,9 +345,13 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
         locationLabel,
         estimatedTotal,
         extractedCount: rawNewLeads.length,
-        keyLimit: effectiveKeyLimit,
+        keyLimit: maxQuota,
+        remainingQuota: remAfter,
+        planLabel: updatedLicense ? updatedLicense.planLabel : (req.license.planLabel || 'Key Hiện Tại'),
+        quotaBadge: updatedLicense ? updatedLicense.quotaBadge : (req.license.quotaBadge || `${maxQuota} Leads`),
+        isUnlimited: isUnlimitedKey,
         remainingCount: Math.max(0, estimatedTotal - Math.max(rawNewLeads.length, savedTenantLeads.length)),
-        showUpgradePopup: estimatedTotal > 200
+        showUpgradePopup: shouldSuggestUpgrade
       },
       paymentInfo
     });
