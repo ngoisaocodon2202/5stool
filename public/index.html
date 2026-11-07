@@ -700,7 +700,7 @@
           <span class="text-xl sm:text-2xl font-black text-amber-600 tracking-tight whitespace-nowrap shrink-0">63 Tỉnh</span>
           <span class="text-[9px] sm:text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 whitespace-nowrap truncate">24+ Ngành Lớn</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 whitespace-nowrap truncate">Kho >5.000-10.000+ DN</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 whitespace-nowrap truncate">Quét Trực Tuyến Không Giới Hạn ∞</p>
       </div>
 
     </section>
@@ -1745,7 +1745,8 @@
     }
 
     function estimateClientLocationPool(cityVal = selectedCity, districtVal = selectedDistrict) {
-      const cleanCity = (cityVal && cityVal !== 'all' && cityVal !== 'Toàn quốc' && cityVal !== 'Mọi Tỉnh Thành') ? cityVal.trim() : 'Toàn Quốc';
+      const isAllCity = !cityVal || cityVal === 'all' || cityVal === 'Toàn quốc' || cityVal === 'Mọi Tỉnh Thành';
+      const cleanCity = !isAllCity ? cityVal.trim() : 'Toàn Quốc (63 Tỉnh)';
       const cleanDistrict = (districtVal && districtVal !== 'all' && districtVal !== 'Tất cả Quận / Huyện' && districtVal !== 'Tất cả Quận/Huyện') ? districtVal.trim() : '';
       const locationLabel = cleanDistrict ? `${cleanDistrict}, ${cleanCity}` : cleanCity;
       const seedStr = `${locationLabel}|${selectedIndustry || 'all'}`;
@@ -1755,9 +1756,14 @@
         hash |= 0;
       }
       const absHash = Math.abs(hash);
-      const minPool = cleanDistrict ? 5150 : 6400;
-      const rangePool = cleanDistrict ? 2740 : 3450;
-      const estimatedTotal = minPool + (absHash % rangePool);
+      let estimatedTotal;
+      if (isAllCity) {
+        estimatedTotal = 950000 + (absHash % 45000);
+      } else if (cleanDistrict) {
+        estimatedTotal = 5150 + (absHash % 2740);
+      } else {
+        estimatedTotal = 6800 + (absHash % 3150);
+      }
       const keyMeta = getClientKeyMeta();
       const keyLimit = keyMeta.isUnlimited ? 999999 : keyMeta.remainingQuota;
       const remainingCount = keyMeta.isUnlimited ? 0 : Math.max(0, estimatedTotal - keyLimit);
@@ -1765,6 +1771,7 @@
       return {
         locationLabel,
         estimatedTotal,
+        isNationwide: isAllCity,
         keyLimit,
         maxQuota: keyMeta.maxQuota,
         remainingQuota: keyMeta.remainingQuota,
@@ -1789,7 +1796,11 @@
       if (info.isUnlimited) {
         banner.className = 'cursor-default flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-50/90 via-teal-50/70 to-indigo-50/80 border border-emerald-200/90 transition-all min-w-0 overflow-hidden';
         if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0';
-        bannerText.innerHTML = `👑 Điểm <b class="text-indigo-700">${info.locationLabel}</b> có <b class="text-emerald-700">~${fmtTotal}+ Leads</b> • Đang dùng: <b class="text-purple-700">${info.planLabel}</b> (<b class="text-emerald-600">Không giới hạn cào ∞</b>)`;
+        if (info.isNationwide) {
+          bannerText.innerHTML = `👑 Đang dùng: <b class="text-purple-700">${info.planLabel}</b> • Quét Trực Tuyến <b class="text-emerald-700">Không Giới Hạn Số Lượng Data (950.000+ DN Toàn Quốc ∞)</b>`;
+        } else {
+          bannerText.innerHTML = `👑 Đang dùng: <b class="text-purple-700">${info.planLabel}</b> • Mở khóa 100% dữ liệu tại <b class="text-indigo-700">${info.locationLabel}</b> (<b class="text-emerald-600">Cào Không Giới Hạn ∞</b>)`;
+        }
         if (bannerBtn) {
           bannerBtn.className = 'px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] sm:text-[11px] font-extrabold whitespace-nowrap shrink-0 shadow-2xs flex items-center gap-1';
           bannerBtn.innerHTML = '<i data-lucide="shield-check" class="w-3 h-3 shrink-0"></i><span>Không Giới Hạn ∞</span>';

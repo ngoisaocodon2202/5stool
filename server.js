@@ -234,9 +234,10 @@ app.get('/api/stats', (req, res) => {
   }
 });
 
-// Helper: Estimate total available leads at a selected location (5.000 - 10.000+ leads)
+// Helper: Estimate total available leads at a selected location
 function estimateLocationTotalLeads(city = '', district = '', industry = '', customKeyword = '') {
-  const cleanCity = (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') ? city.trim() : 'Toàn Quốc';
+  const isAllCity = !city || city === 'all' || city === 'Toàn quốc' || city === 'Mọi Tỉnh Thành';
+  const cleanCity = !isAllCity ? city.trim() : 'Toàn Quốc (63 Tỉnh)';
   const cleanDistrict = (district && district !== 'all' && district !== 'Tất cả Quận / Huyện' && district !== 'Tất cả Quận/Huyện') ? district.trim() : '';
   const locationLabel = cleanDistrict ? `${cleanDistrict}, ${cleanCity}` : cleanCity;
 
@@ -248,14 +249,20 @@ function estimateLocationTotalLeads(city = '', district = '', industry = '', cus
   }
   const absHash = Math.abs(hash);
 
-  // Province/City or Nationwide: 6,400 - 9,850 leads; Specific District: 5,150 - 7,890 leads
-  const minPool = cleanDistrict ? 5150 : 6400;
-  const rangePool = cleanDistrict ? 2740 : 3450;
-  const estimatedTotal = minPool + (absHash % rangePool);
+  // Toàn Quốc: 950.000+ DN; Tỉnh/Thành hoặc Quận/Huyện theo ngành: 5.200 - 9.850+ leads
+  let estimatedTotal;
+  if (isAllCity) {
+    estimatedTotal = 950000 + (absHash % 45000);
+  } else if (cleanDistrict) {
+    estimatedTotal = 5150 + (absHash % 2740);
+  } else {
+    estimatedTotal = 6800 + (absHash % 3150);
+  }
 
   return {
     locationLabel,
-    estimatedTotal
+    estimatedTotal,
+    isNationwide: isAllCity
   };
 }
 
