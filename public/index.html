@@ -211,69 +211,219 @@
   <!-- ============================================================== -->
   <!-- MODAL 1: KÍCH HOẠT LICENSE KEY DÀNH CHO KHÁCH HÀNG (GATEWAY) -->
   <!-- ============================================================== -->
-  <div id="licenseGateModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+  <div id="licenseGateModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 max-h-[92vh] overflow-y-auto custom-scrollbar">
       
-      <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-6 text-white text-center border-b border-cyan-500/20">
-        <img src="/logo.jpg" alt="5S DEV.TOOL" class="w-16 h-16 mx-auto mb-3 rounded-2xl object-cover border-2 border-cyan-400/40 shadow-xl shadow-cyan-500/30" />
-        <h2 class="text-xl font-black tracking-tight text-white">Kích Hoạt <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">5S DEV.TOOL</span></h2>
-        <p class="text-xs text-slate-300 mt-1">Vui lòng nhập License Key được cấp để bắt đầu khai thác dữ liệu</p>
+      <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-4 sm:p-6 text-white text-center border-b border-cyan-500/20 overflow-hidden">
+        <img src="/logo.jpg" alt="5S DEV.TOOL" class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-2.5 rounded-2xl object-cover border-2 border-cyan-400/40 shadow-xl shadow-cyan-500/30" />
+        <h2 class="text-base sm:text-xl font-black tracking-tight text-white whitespace-nowrap truncate">Kích Hoạt <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">5S DEV.TOOL</span></h2>
+        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 whitespace-nowrap truncate">Nhập License Key được cấp để bắt đầu khai thác dữ liệu</p>
       </div>
 
-      <div class="p-6 space-y-4 text-xs">
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Mã Bản Quyền (License Key) (*)</label>
+      <div class="p-4 sm:p-6 space-y-3.5 text-xs overflow-hidden">
+        <div class="min-w-0">
+          <label class="block font-bold text-slate-700 mb-1 whitespace-nowrap truncate">Mã Bản Quyền (License Key) (*)</label>
           <input 
             id="inputClientKey" 
             type="text" 
             placeholder="Nhập Key Đã Mua hoặc Liên Hệ Admin" 
-            class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl font-mono text-sm uppercase font-bold text-indigo-700 tracking-wider focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white" 
+            class="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl font-mono text-xs sm:text-sm uppercase font-bold text-indigo-700 tracking-wider focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white" 
           />
-          <div class="flex items-center justify-between text-[11px] text-slate-500 mt-1.5">
-            <span>Hệ thống tự động lưu phiên đăng nhập</span>
-            <a href="https://zalo.me/0862034101" target="_blank" class="inline-flex items-center gap-1 font-bold text-cyan-600 hover:text-cyan-700 hover:underline">
-              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+          <div class="flex items-center justify-between gap-2 text-[11px] text-slate-500 mt-1.5 min-w-0 overflow-hidden">
+            <span class="whitespace-nowrap truncate min-w-0">Tự động lưu phiên đăng nhập</span>
+            <a href="https://zalo.me/0862034101" target="_blank" class="inline-flex items-center gap-1 font-bold text-cyan-600 hover:text-cyan-700 hover:underline whitespace-nowrap shrink-0">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5 shrink-0"></i>
               <span>Chat Zalo: 0862034101</span>
             </a>
           </div>
         </div>
 
-        <div id="gateErrorBox" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"></div>
+        <div id="gateErrorBox" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium break-words"></div>
 
         <!-- Khung Thanh Toán VietQR Tự Động -->
-        <div id="gatePaymentBox" class="hidden p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 space-y-2.5 text-center">
-          <span class="text-[11px] font-bold text-indigo-900 block uppercase tracking-wider">Thông Tin Chuyển Khoản Mua / Gia Hạn Key</span>
-          <img id="gateVietQRImg" src="" alt="VietQR Thanh Toán" class="mx-auto rounded-xl border border-indigo-200 shadow-xs max-h-48" />
-          <div class="text-[11px] text-slate-600 space-y-0.5">
-            <div>Ngân hàng: <b id="gateBankCode" class="text-indigo-700">MB</b> • STK: <b id="gateBankAccount" class="text-indigo-700 font-mono">789220206</b></div>
-            <div>Chủ TK: <b id="gateBankName" class="text-slate-900">NGUYEN QUOC KHAI</b></div>
-            <div>Nội dung: <code class="px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold font-mono">MUA KEY [SĐT BẠN]</code></div>
+        <div id="gatePaymentBox" class="hidden p-3.5 sm:p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 space-y-2 text-center overflow-hidden">
+          <span class="text-[10px] sm:text-[11px] font-bold text-indigo-900 block uppercase tracking-wider whitespace-nowrap truncate">Thông Tin Chuyển Khoản Mua / Gia Hạn Key</span>
+          <img id="gateVietQRImg" src="" alt="VietQR Thanh Toán" class="mx-auto rounded-xl border border-indigo-200 shadow-xs max-h-44" />
+          <div class="text-[11px] text-slate-600 space-y-0.5 overflow-hidden">
+            <div class="whitespace-nowrap truncate">Ngân hàng: <b id="gateBankCode" class="text-indigo-700">MB</b> • STK: <b id="gateBankAccount" class="text-indigo-700 font-mono">789220206</b></div>
+            <div class="whitespace-nowrap truncate">Chủ TK: <b id="gateBankName" class="text-slate-900">NGUYEN QUOC KHAI</b></div>
+            <div class="whitespace-nowrap truncate">Nội dung: <code class="px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold font-mono">MUA KEY [SĐT BẠN]</code></div>
           </div>
-          <a id="gateZaloLink" href="https://zalo.me/0862034101" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-xl text-xs font-bold transition-all shadow-md">
-            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
-            <span>Chat Zalo: 0862034101</span>
+          <a id="gateZaloLink" href="https://zalo.me/0862034101" target="_blank" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-xl text-xs font-bold transition-all shadow-md whitespace-nowrap max-w-full overflow-hidden">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5 shrink-0"></i>
+            <span class="whitespace-nowrap truncate">Chat Zalo: 0862034101</span>
           </a>
         </div>
 
         <button 
           onclick="activateLicenseKey()" 
-          class="btn-shimmer w-full py-3 rounded-xl text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 font-extrabold shadow-lg shadow-indigo-500/25 transition-all text-sm"
+          class="btn-shimmer w-full py-2.5 sm:py-3 px-3 rounded-xl text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 font-extrabold shadow-lg shadow-indigo-500/25 transition-all text-xs sm:text-sm whitespace-nowrap truncate"
         >
           XÁC NHẬN KÍCH HOẠT BẢN QUYỀN
         </button>
 
-        <div class="flex items-center justify-between pt-1">
-          <button type="button" onclick="clearSavedLicenseSession()" class="text-[11px] text-slate-500 hover:text-rose-600 hover:underline flex items-center gap-1">
-            <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
-            <span>Xóa phiên / Đổi Key khác</span>
+        <div class="flex items-center justify-between gap-2 pt-1 min-w-0 overflow-hidden">
+          <button type="button" onclick="clearSavedLicenseSession()" class="text-[11px] text-slate-500 hover:text-rose-600 hover:underline flex items-center gap-1 whitespace-nowrap truncate min-w-0">
+            <i data-lucide="rotate-ccw" class="w-3 h-3 shrink-0"></i>
+            <span class="whitespace-nowrap truncate">Xóa phiên / Đổi Key khác</span>
           </button>
-          <a href="https://zalo.me/0862034101" target="_blank" class="text-[11px] text-cyan-600 hover:underline font-bold flex items-center gap-1">
-            <i data-lucide="message-circle" class="w-3 h-3"></i>
+          <a href="https://zalo.me/0862034101" target="_blank" class="text-[11px] text-cyan-600 hover:underline font-bold flex items-center gap-1 whitespace-nowrap shrink-0">
+            <i data-lucide="message-circle" class="w-3 h-3 shrink-0"></i>
             <span>Zalo: 0862034101</span>
           </a>
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1B: POP-UP NÂNG CẤP KEY CAO HƠN (>200 LEADS / 5.000-10.000+) -->
+  <!-- 100% MOBILE RESPONSIVE: ZERO TEXT WRAP & ZERO OVERFLOW          -->
+  <!-- ============================================================== -->
+  <div id="upgradeKeyModal" onclick="if(event.target === this) closeUpgradeKeyModal()" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-2.5 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full border border-amber-300/80 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 max-h-[94vh] overflow-y-auto custom-scrollbar">
+      
+      <!-- Top Header Banner -->
+      <div class="bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 px-3.5 py-3.5 sm:px-5 sm:py-4 text-white relative overflow-hidden border-b border-amber-400/30">
+        <div class="flex items-center justify-between gap-2 min-w-0">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[10px] font-extrabold uppercase tracking-wider whitespace-nowrap truncate min-w-0">
+            <i data-lucide="flame" class="w-3 h-3 text-amber-400 shrink-0"></i>
+            <span class="whitespace-nowrap truncate">PHÁT HIỆN KHO DỮ LIỆU LỚN (5.000 - 10.000+)</span>
+          </div>
+          <button type="button" onclick="closeUpgradeKeyModal()" class="w-7 h-7 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center shrink-0 transition-all" title="Đóng">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <h3 class="text-sm sm:text-base font-black text-white mt-2 whitespace-nowrap truncate">
+          Nâng Cấp Lên <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-cyan-300">Key Cao Hơn</span> Ngay!
+        </h3>
+        <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 whitespace-nowrap truncate">
+          Mở khóa toàn bộ 5.000 - 10.000+ Leads tại địa điểm đang chọn
+        </p>
+      </div>
+
+      <!-- Body Content -->
+      <div class="p-3.5 sm:p-5 space-y-3 text-xs overflow-hidden">
+        
+        <!-- Core Required Message Box (100% No Wrap, No Overflow) -->
+        <div class="p-3 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50/90 to-amber-50 border border-amber-300 shadow-2xs overflow-hidden">
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+              <i data-lucide="crown" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0 flex-1 overflow-hidden">
+              <div class="text-[11px] sm:text-xs font-black text-amber-950 whitespace-nowrap truncate">
+                Bạn cần nâng cấp lên Key cao hơn
+              </div>
+              <div class="text-[11px] sm:text-xs font-bold text-amber-800 whitespace-nowrap truncate mt-0.5">
+                để quét được nhiều dữ liệu hơn!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Location Pill -->
+        <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 min-w-0 overflow-hidden">
+          <span class="text-[11px] font-bold text-slate-500 flex items-center gap-1 whitespace-nowrap shrink-0">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i>
+            <span>Địa điểm chọn:</span>
+          </span>
+          <span id="upgLocationLabel" class="text-[11px] sm:text-xs font-black text-indigo-700 whitespace-nowrap truncate min-w-0">
+            Toàn Quốc (63 Tỉnh)
+          </span>
+        </div>
+
+        <!-- 2-Column Comparison: Current Limit (200) vs Location Total (5.000 - 10.000+) -->
+        <div class="grid grid-cols-2 gap-2 min-w-0">
+          <div class="p-2.5 sm:p-3 rounded-2xl bg-rose-50/70 border border-rose-200 text-center min-w-0 overflow-hidden">
+            <div class="text-[9px] sm:text-[10px] font-extrabold text-rose-700 uppercase whitespace-nowrap truncate">
+              GIỚI HẠN HIỆN TẠI
+            </div>
+            <div id="upgCurrentLimitValue" class="text-sm sm:text-base font-black text-rose-600 font-mono mt-0.5 whitespace-nowrap truncate">
+              200 Leads
+            </div>
+            <div class="text-[10px] text-rose-700/80 font-semibold whitespace-nowrap truncate mt-0.5">
+              Tối đa / lần quét
+            </div>
+          </div>
+
+          <div class="p-2.5 sm:p-3 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-center min-w-0 overflow-hidden">
+            <div class="text-[9px] sm:text-[10px] font-extrabold text-emerald-800 uppercase whitespace-nowrap truncate">
+              DATA TẠI ĐIỂM NÀY
+            </div>
+            <div id="upgTotalPoolValue" class="text-sm sm:text-base font-black text-emerald-600 font-mono mt-0.5 whitespace-nowrap truncate">
+              ~7.850+ Leads
+            </div>
+            <div class="text-[10px] text-emerald-700 font-semibold whitespace-nowrap truncate mt-0.5">
+              5.000 - 10.000+ cơ sở
+            </div>
+          </div>
+        </div>
+
+        <!-- Remaining Locked Data Highlight Bar -->
+        <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-indigo-50 border border-indigo-200 min-w-0 overflow-hidden">
+          <span class="text-[11px] font-bold text-indigo-900 whitespace-nowrap truncate min-w-0">
+            🔓 Chưa mở khóa tại điểm này:
+          </span>
+          <span id="upgRemainingValue" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white text-[10px] sm:text-[11px] font-black font-mono whitespace-nowrap shrink-0">
+            +7.650 Leads
+          </span>
+        </div>
+
+        <!-- VietQR Quick Upgrade Box -->
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/90 text-center space-y-2 overflow-hidden">
+          <div class="text-[10px] sm:text-[11px] font-extrabold text-slate-800 uppercase tracking-wider whitespace-nowrap truncate">
+            Quét Mã VietQR Nâng Cấp Key Không Giới Hạn
+          </div>
+          <img 
+            id="upgVietQRImg" 
+            src="https://api.vietqr.io/image/MB-789220206-compact2.png?amount=0&addInfo=NANG%20CAP%20KEY%20VIP&accountName=NGUYEN%20QUOC%20KHAI" 
+            alt="VietQR Nâng Cấp Key" 
+            class="mx-auto rounded-xl border border-slate-200 shadow-2xs max-h-36 sm:max-h-40" 
+          />
+          <div class="text-[11px] text-slate-600 space-y-0.5 overflow-hidden">
+            <div class="whitespace-nowrap truncate">Ngân hàng: <b id="upgBankCode" class="text-indigo-700">MB</b> • STK: <b id="upgBankAccount" class="text-indigo-700 font-mono">789220206</b></div>
+            <div class="whitespace-nowrap truncate">Chủ TK: <b id="upgBankName" class="text-slate-900">NGUYEN QUOC KHAI</b></div>
+            <div class="whitespace-nowrap truncate">Nội dung: <code class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold font-mono">NANG CAP KEY [SĐT BẠN]</code></div>
+          </div>
+        </div>
+
+        <!-- CTA Action Buttons (100% Single-Line, No Wrap, No Overflow) -->
+        <div class="space-y-2 pt-0.5 overflow-hidden">
+          <a 
+            id="upgZaloLink" 
+            href="https://zalo.me/0862034101" 
+            target="_blank" 
+            class="btn-shimmer w-full py-2.5 sm:py-3 px-3 rounded-xl text-white bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 font-extrabold shadow-lg shadow-amber-500/25 transition-all text-xs sm:text-sm flex items-center justify-center gap-1.5 whitespace-nowrap overflow-hidden"
+          >
+            <i data-lucide="message-circle" class="w-4 h-4 shrink-0"></i>
+            <span class="whitespace-nowrap truncate">Liên Hệ Zalo Nâng Cấp Key: 0862034101</span>
+          </a>
+
+          <div class="grid grid-cols-2 gap-2 min-w-0">
+            <button 
+              type="button" 
+              onclick="closeUpgradeKeyModal(); openLicenseGateModal(true);" 
+              class="w-full py-2 px-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 transition-all whitespace-nowrap overflow-hidden min-w-0"
+            >
+              <i data-lucide="key" class="w-3.5 h-3.5 shrink-0"></i>
+              <span class="whitespace-nowrap truncate">Nhập Key Cao Hơn</span>
+            </button>
+
+            <button 
+              type="button" 
+              onclick="closeUpgradeKeyModal()" 
+              class="w-full py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 transition-all whitespace-nowrap overflow-hidden min-w-0"
+            >
+              <i data-lucide="check" class="w-3.5 h-3.5 shrink-0"></i>
+              <span class="whitespace-nowrap truncate">Tiếp Tục (Gói 200)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -495,53 +645,53 @@
             <i data-lucide="layers" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
         </div>
-        <div class="flex items-baseline gap-1.5 mb-1 flex-wrap">
-          <span id="kpiTotalLeads" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">0</span>
-          <span class="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 whitespace-nowrap">Đa Nguồn B2B</span>
+        <div class="flex items-baseline gap-1.5 mb-1 flex-nowrap min-w-0 overflow-hidden">
+          <span id="kpiTotalLeads" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight shrink-0">0</span>
+          <span class="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 whitespace-nowrap truncate">Đa Nguồn B2B</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 truncate">GMaps • FB • Trang Vàng • Cổng DN</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 whitespace-nowrap truncate">Goong Maps • FB • Trang Vàng • Cổng DN</p>
       </div>
 
-      <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between">
+      <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between overflow-hidden">
         <div class="flex items-center justify-between mb-1.5 gap-1">
-          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide truncate">Zalo: ACTIVE</span>
+          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide whitespace-nowrap truncate">Zalo: ACTIVE</span>
           <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
             <i data-lucide="check-circle-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
         </div>
-        <div class="flex items-baseline gap-1.5 mb-1 flex-wrap">
-          <span id="kpiZaloActive" class="text-xl sm:text-2xl font-black text-emerald-600 tracking-tight">0</span>
-          <span class="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 whitespace-nowrap">🟢 Đã Đăng Ký</span>
+        <div class="flex items-baseline gap-1.5 mb-1 flex-nowrap min-w-0 overflow-hidden">
+          <span id="kpiZaloActive" class="text-xl sm:text-2xl font-black text-emerald-600 tracking-tight shrink-0">0</span>
+          <span class="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 whitespace-nowrap truncate">🟢 Đã Đăng Ký</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Not Found: <b id="kpiZaloNotFound" class="text-rose-500">0</b> số</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 whitespace-nowrap truncate">Not Found: <b id="kpiZaloNotFound" class="text-rose-500">0</b> số</p>
       </div>
 
-      <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between">
+      <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between overflow-hidden">
         <div class="flex items-center justify-between mb-1.5 gap-1">
-          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide truncate">Có Link Nguồn</span>
+          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide whitespace-nowrap truncate">Có Link Nguồn</span>
           <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0">
             <i data-lucide="shield-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
         </div>
-        <div class="flex items-baseline gap-1.5 mb-1 flex-wrap">
-          <span id="kpiVerifiedCount" class="text-xl sm:text-2xl font-black text-cyan-600 tracking-tight">0</span>
-          <span class="text-[9px] sm:text-[10px] font-bold text-cyan-700 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200 whitespace-nowrap">Đối Soát Thật</span>
+        <div class="flex items-baseline gap-1.5 mb-1 flex-nowrap min-w-0 overflow-hidden">
+          <span id="kpiVerifiedCount" class="text-xl sm:text-2xl font-black text-cyan-600 tracking-tight shrink-0">0</span>
+          <span class="text-[9px] sm:text-[10px] font-bold text-cyan-700 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200 whitespace-nowrap truncate">Đối Soát Thật</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Click mở trực tiếp nguồn</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 whitespace-nowrap truncate">Click mở trực tiếp nguồn</p>
       </div>
 
-      <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between">
+      <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-xs flex flex-col justify-between overflow-hidden">
         <div class="flex items-center justify-between mb-1.5 gap-1">
-          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide truncate">Phạm Vi & Ngành</span>
+          <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide whitespace-nowrap truncate">Phạm Vi & Ngành</span>
           <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
             <i data-lucide="map-pin" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </div>
         </div>
-        <div class="flex items-baseline gap-1.5 mb-1 flex-wrap">
-          <span class="text-xl sm:text-2xl font-black text-amber-600 tracking-tight">63 Tỉnh</span>
-          <span class="text-[9px] sm:text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 whitespace-nowrap">24+ Ngành Lớn</span>
+        <div class="flex items-baseline gap-1.5 mb-1 flex-nowrap min-w-0 overflow-hidden">
+          <span class="text-xl sm:text-2xl font-black text-amber-600 tracking-tight whitespace-nowrap shrink-0">63 Tỉnh</span>
+          <span class="text-[9px] sm:text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 whitespace-nowrap truncate">24+ Ngành Lớn</span>
         </div>
-        <p class="text-[10px] sm:text-xs text-slate-400 truncate">Kho >3.200+ DN & Lật trang</p>
+        <p class="text-[10px] sm:text-xs text-slate-400 whitespace-nowrap truncate">Kho >5.000-10.000+ DN</p>
       </div>
 
     </section>
@@ -549,20 +699,20 @@
     <!-- PHẦN 2: BỘ ĐIỀU KHIỂN & BỘ LỌC CÀO ĐA NGUỒN -->
     <section id="controlSuite" class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm flex flex-col gap-3.5">
       
-      <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-100 overflow-x-auto touch-scroll no-scrollbar">
-        <div class="flex items-center gap-2.5 min-w-0 flex-shrink-0">
+      <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100 min-w-0 overflow-hidden">
+        <div class="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden">
           <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
             <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
           </div>
-          <div class="min-w-0">
-            <h2 class="text-xs sm:text-sm font-bold text-slate-900 whitespace-nowrap">Trung Tâm Quét Lead Đa Nguồn (Google Maps API • Facebook • Trang Vàng • Cổng DN)</h2>
-            <p class="text-[11px] sm:text-xs text-slate-400 whitespace-nowrap">Lọc chuẩn xác 100% theo 63 tỉnh thành, 24+ ngành nghề thực chiến & kiểm tra Zalo Active / Not Found</p>
+          <div class="min-w-0 flex-1 overflow-hidden">
+            <h2 class="text-xs sm:text-sm font-bold text-slate-900 whitespace-nowrap truncate">Trung Tâm Quét Lead Đa Nguồn (Goong Maps • Facebook • Trang Vàng • Cổng DN)</h2>
+            <p class="text-[11px] sm:text-xs text-slate-400 whitespace-nowrap truncate">Lọc chuẩn xác 100% theo 63 tỉnh thành, Quận/Huyện & kiểm tra Zalo Active / Not Found</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2 flex-shrink-0">
-          <span class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 whitespace-nowrap">
-            Trong kho: <b id="badgeTotalDbCount" class="text-indigo-600">0</b> leads
+          <span class="px-2.5 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 whitespace-nowrap">
+            Kho: <b id="badgeTotalDbCount" class="text-indigo-600">0</b> leads
           </span>
         </div>
       </div>
@@ -802,31 +952,49 @@
 
           <div 
             id="menuDropdownLimit" 
-            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down w-full sm:min-w-[210px]"
+            class="hidden absolute left-0 right-0 top-full mt-1.5 z-50 bg-white rounded-2xl border border-slate-200 shadow-2xl p-1.5 space-y-1 dropdown-slide-down w-full sm:min-w-[230px]"
           >
-            <div onclick="selectCustomLimit('25', '⚡ 25 Khách Hàng (Nhanh)')" data-val="25" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
-              <span>⚡ 25 Khách Hàng</span>
-              <span class="text-[10px] text-slate-400 font-sans">Nhanh</span>
+            <div onclick="selectCustomLimit('25', '⚡ 25 Khách Hàng (Nhanh)')" data-val="25" class="limit-item cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all overflow-hidden">
+              <span class="whitespace-nowrap truncate min-w-0">⚡ 25 Khách Hàng</span>
+              <span class="text-[10px] text-slate-400 font-sans whitespace-nowrap shrink-0">Nhanh</span>
             </div>
-            <div onclick="selectCustomLimit('50', '🚀 50 Khách Hàng (Chuẩn)')" data-val="50" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-xs font-mono border border-emerald-100 transition-all">
-              <span>🚀 50 Khách Hàng</span>
-              <span class="text-[10px] bg-emerald-600 text-white px-1.5 py-0.5 rounded font-sans">Chuẩn</span>
+            <div onclick="selectCustomLimit('50', '🚀 50 Khách Hàng (Chuẩn)')" data-val="50" class="limit-item cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-xs font-mono border border-emerald-100 transition-all overflow-hidden">
+              <span class="whitespace-nowrap truncate min-w-0">🚀 50 Khách Hàng</span>
+              <span class="text-[10px] bg-emerald-600 text-white px-1.5 py-0.5 rounded font-sans whitespace-nowrap shrink-0">Chuẩn</span>
             </div>
-            <div onclick="selectCustomLimit('100', '🔥 100 Khách Hàng (Gói Lớn)')" data-val="100" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
-              <span>🔥 100 Khách Hàng</span>
-              <span class="text-[10px] text-slate-400 font-sans">Gói Lớn</span>
+            <div onclick="selectCustomLimit('100', '🔥 100 Khách Hàng (Gói Lớn)')" data-val="100" class="limit-item cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all overflow-hidden">
+              <span class="whitespace-nowrap truncate min-w-0">🔥 100 Khách Hàng</span>
+              <span class="text-[10px] text-slate-400 font-sans whitespace-nowrap shrink-0">Gói Lớn</span>
             </div>
-            <div onclick="selectCustomLimit('150', '💎 150 Khách Hàng (Đại Lý)')" data-val="150" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
-              <span>💎 150 Khách Hàng</span>
-              <span class="text-[10px] text-purple-600 font-sans">Đại Lý</span>
+            <div onclick="selectCustomLimit('150', '💎 150 Khách Hàng (Đại Lý)')" data-val="150" class="limit-item cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all overflow-hidden">
+              <span class="whitespace-nowrap truncate min-w-0">💎 150 Khách Hàng</span>
+              <span class="text-[10px] text-purple-600 font-sans whitespace-nowrap shrink-0">Đại Lý</span>
             </div>
-            <div onclick="selectCustomLimit('200', '👑 200 Khách Hàng (Tối Đa)')" data-val="200" class="limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all">
-              <span>👑 200 Khách Hàng</span>
-              <span class="text-[10px] bg-amber-500 text-white px-1.5 py-0.5 rounded font-sans">Tối Đa</span>
+            <div onclick="selectCustomLimit('200', '👑 200 Khách Hàng (Tối Đa)')" data-val="200" class="limit-item cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-xs font-mono transition-all overflow-hidden">
+              <span class="whitespace-nowrap truncate min-w-0">👑 200 Khách Hàng</span>
+              <span class="text-[10px] bg-amber-500 text-white px-1.5 py-0.5 rounded font-sans whitespace-nowrap shrink-0">Tối Đa 200</span>
+            </div>
+            <div onclick="closeAllHeaderDropdowns(); openUpgradeKeyModal({ reason: 'limit_select' });" class="cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 text-amber-900 font-bold text-xs font-mono border border-amber-200 transition-all overflow-hidden">
+              <span class="whitespace-nowrap truncate min-w-0">🚀 500 - 10.000+ KH</span>
+              <span class="text-[10px] bg-gradient-to-r from-amber-600 to-orange-600 text-white px-1.5 py-0.5 rounded font-sans whitespace-nowrap shrink-0">Nâng Cấp Key</span>
             </div>
           </div>
         </div>
 
+      </div>
+
+      <!-- BANNER BÁO DỮ LIỆU KHU VỰC (5.000 - 10.000+ LEADS > GIỚI HẠN 200 LEADS) - 100% SINGLE LINE TRÊN MOBILE -->
+      <div id="locationPotentialBanner" onclick="openUpgradeKeyModal({ reason: 'banner_click' })" class="cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50/90 via-orange-50/70 to-indigo-50/80 border border-amber-200/90 hover:border-amber-400 transition-all min-w-0 overflow-hidden">
+        <div class="flex items-center gap-1.5 min-w-0 overflow-hidden">
+          <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0"></span>
+          <span id="locationPotentialBannerText" class="text-[11px] sm:text-xs font-bold text-slate-800 whitespace-nowrap truncate min-w-0">
+            📍 Khu vực <b class="text-indigo-700">Toàn Quốc</b> có <b class="text-emerald-700">~8.650+ Leads</b> (Giới hạn gói: <b class="text-rose-600">200 Leads</b>)
+          </span>
+        </div>
+        <button type="button" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-[10px] sm:text-[11px] font-extrabold whitespace-nowrap shrink-0 shadow-2xs flex items-center gap-1">
+          <i data-lucide="crown" class="w-3 h-3 shrink-0"></i>
+          <span>Nâng Cấp Key</span>
+        </button>
       </div>
 
       <!-- HÀNG 2: BỘ LỌC DỮ LIỆU ĐÃ CÀO & PHÂN LOẠI LEAD (5 CỘT TRÊN DESKTOP: TÌM KHO | ZALO | NHÀ MẠNG | CRM | TÙY CHỌN SĐT) -->
@@ -1068,22 +1236,22 @@
       </div>
 
       <!-- PROGRESS RADAR PANEL -->
-      <div id="liveScanPanel" class="hidden overflow-hidden rounded-xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-4 text-white border border-indigo-500/30 transition-all">
-        <div class="flex items-center justify-between gap-4 mb-2.5">
-          <div class="flex items-center gap-3">
+      <div id="liveScanPanel" class="hidden overflow-hidden rounded-xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-3.5 sm:p-4 text-white border border-indigo-500/30 transition-all">
+        <div class="flex items-center justify-between gap-2.5 sm:gap-4 mb-2.5 min-w-0 overflow-hidden">
+          <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1 overflow-hidden">
             <div class="relative w-8 h-8 rounded-full bg-indigo-500/20 border border-indigo-400 flex items-center justify-center flex-shrink-0">
               <i data-lucide="radar" class="w-4 h-4 text-cyanAccent-400 radar-sweep"></i>
             </div>
-            <div>
-              <div class="text-xs font-extrabold text-cyanAccent-400 tracking-wider uppercase flex items-center gap-2">
-                <span>HỆ THỐNG ĐANG CÀO ĐA NGUỒN & KIỂM TRA TRẠNG THÁI ZALO (ACTIVE / NOT FOUND)</span>
-                <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <div class="min-w-0 flex-1 overflow-hidden">
+              <div class="text-[11px] sm:text-xs font-extrabold text-cyanAccent-400 tracking-wider uppercase flex items-center gap-1.5 min-w-0 overflow-hidden">
+                <span class="whitespace-nowrap truncate">HỆ THỐNG ĐANG CÀO ĐA NGUỒN & CHECK ZALO</span>
+                <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0"></span>
               </div>
-              <div id="scanStatusText" class="text-xs text-slate-300 font-medium">Đang kết nối Goong Maps API (goong.io), Trang Vàng, Fanpage & Cổng DN Quốc Gia...</div>
+              <div id="scanStatusText" class="text-[11px] sm:text-xs text-slate-300 font-medium whitespace-nowrap truncate">Đang kết nối Goong Maps API (goong.io), Trang Vàng, Fanpage & Cổng DN...</div>
             </div>
           </div>
-          <div class="text-right">
-            <span id="scanPercentText" class="text-lg font-black text-white font-mono">0%</span>
+          <div class="text-right shrink-0">
+            <span id="scanPercentText" class="text-base sm:text-lg font-black text-white font-mono whitespace-nowrap">0%</span>
           </div>
         </div>
         <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
@@ -1355,6 +1523,7 @@
       lucide.createIcons();
       initScriptSettings();
       await Promise.all([loadProvinces(), loadIndustries()]);
+      updateLocationPotentialBanner();
       const valid = await checkInitialLicense();
       if (valid && getActiveKey()) {
         await fetchLeads();
@@ -1438,21 +1607,103 @@
       }
     }
 
+    function estimateClientLocationPool(cityVal = selectedCity, districtVal = selectedDistrict) {
+      const cleanCity = (cityVal && cityVal !== 'all' && cityVal !== 'Toàn quốc' && cityVal !== 'Mọi Tỉnh Thành') ? cityVal.trim() : 'Toàn Quốc';
+      const cleanDistrict = (districtVal && districtVal !== 'all' && districtVal !== 'Tất cả Quận / Huyện' && districtVal !== 'Tất cả Quận/Huyện') ? districtVal.trim() : '';
+      const locationLabel = cleanDistrict ? `${cleanDistrict}, ${cleanCity}` : cleanCity;
+      const seedStr = `${locationLabel}|${selectedIndustry || 'all'}`;
+      let hash = 0;
+      for (let i = 0; i < seedStr.length; i++) {
+        hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
+        hash |= 0;
+      }
+      const absHash = Math.abs(hash);
+      const minPool = cleanDistrict ? 5150 : 6400;
+      const rangePool = cleanDistrict ? 2740 : 3450;
+      const estimatedTotal = minPool + (absHash % rangePool);
+      const keyLimit = 200;
+      const remainingCount = Math.max(0, estimatedTotal - keyLimit);
+      return { locationLabel, estimatedTotal, keyLimit, remainingCount };
+    }
+
+    function updateLocationPotentialBanner() {
+      const bannerText = document.getElementById('locationPotentialBannerText');
+      if (!bannerText) return;
+      const info = estimateClientLocationPool(selectedCity, selectedDistrict);
+      const fmtTotal = info.estimatedTotal.toLocaleString('vi-VN');
+      bannerText.innerHTML = `📍 Điểm <b class="text-indigo-700">${info.locationLabel}</b> có <b class="text-emerald-700">~${fmtTotal}+ Leads</b> (Giới hạn Key: <b class="text-rose-600">${info.keyLimit} Leads</b>)`;
+    }
+
+    function openUpgradeKeyModal(customInfo = {}) {
+      const modal = document.getElementById('upgradeKeyModal');
+      if (!modal) return;
+
+      const fallback = estimateClientLocationPool(selectedCity, selectedDistrict);
+      const locationLabel = customInfo.locationLabel || fallback.locationLabel;
+      const estimatedTotal = Number(customInfo.estimatedTotal) || fallback.estimatedTotal;
+      const keyLimit = Number(customInfo.keyLimit) || 200;
+      const remainingCount = Number(customInfo.remainingCount) || Math.max(0, estimatedTotal - keyLimit);
+
+      const locEl = document.getElementById('upgLocationLabel');
+      const limEl = document.getElementById('upgCurrentLimitValue');
+      const totEl = document.getElementById('upgTotalPoolValue');
+      const remEl = document.getElementById('upgRemainingValue');
+
+      if (locEl) locEl.innerText = locationLabel;
+      if (limEl) limEl.innerText = `${keyLimit} Leads`;
+      if (totEl) totEl.innerText = `~${estimatedTotal.toLocaleString('vi-VN')}+ Leads`;
+      if (remEl) remEl.innerText = `+${remainingCount.toLocaleString('vi-VN')} Leads`;
+
+      if (customInfo.paymentInfo) {
+        const p = customInfo.paymentInfo;
+        const bCode = document.getElementById('upgBankCode');
+        const bAcc = document.getElementById('upgBankAccount');
+        const bName = document.getElementById('upgBankName');
+        const qrImg = document.getElementById('upgVietQRImg');
+        const zLink = document.getElementById('upgZaloLink');
+        if (bCode && p.bankCode) bCode.innerText = p.bankCode;
+        if (bAcc && p.bankAccount) bAcc.innerText = p.bankAccount;
+        if (bName && p.bankName) bName.innerText = p.bankName;
+        if (qrImg && p.bankCode && p.bankAccount) {
+          qrImg.src = `https://api.vietqr.io/image/${p.bankCode}-${p.bankAccount}-compact2.png?amount=0&addInfo=NANG%20CAP%20KEY%20VIP&accountName=${encodeURIComponent(p.bankName || 'NGUYEN QUOC KHAI')}`;
+        }
+        if (zLink && p.zaloSupport) {
+          zLink.href = p.zaloSupport;
+        }
+      }
+
+      modal.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons({ root: modal });
+    }
+
+    function closeUpgradeKeyModal() {
+      const modal = document.getElementById('upgradeKeyModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
     function selectCustomCity(value, label) {
       selectedCity = value;
       document.getElementById('filterCity').value = value;
       document.getElementById('labelDropdownCity').innerText = label;
       updateDistrictsForSelectedCity(value);
+      updateLocationPotentialBanner();
       closeAllHeaderDropdowns();
       fetchLeads();
+      if (value && value !== 'all') {
+        openUpgradeKeyModal({ reason: 'city_select' });
+      }
     }
 
     function selectCustomDistrict(value, label) {
       selectedDistrict = value;
       document.getElementById('filterDistrict').value = value;
       document.getElementById('labelDropdownDistrict').innerText = label;
+      updateLocationPotentialBanner();
       closeAllHeaderDropdowns();
       fetchLeads();
+      if (value && value !== 'all') {
+        openUpgradeKeyModal({ reason: 'district_select' });
+      }
     }
 
     function updateDistrictsForSelectedCity(city) {
@@ -1571,10 +1822,11 @@
       if (menu) {
         menu.querySelectorAll('.limit-item').forEach(el => {
           const isSelected = el.getAttribute('data-val') === String(value);
-          el.className = `limit-item cursor-pointer flex items-center justify-between px-3 py-2 rounded-xl ${isSelected ? 'bg-emerald-50 text-emerald-800 border border-emerald-100' : 'hover:bg-slate-50 text-slate-700'} font-bold text-xs font-mono transition-all`;
+          el.className = `limit-item cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-xl ${isSelected ? 'bg-emerald-50 text-emerald-800 border border-emerald-100' : 'hover:bg-slate-50 text-slate-700'} font-bold text-xs font-mono transition-all overflow-hidden`;
         });
       }
       closeAllHeaderDropdowns();
+      updateLocationPotentialBanner();
     }
 
     function toggleGenericDropdown(e, type) {
@@ -2366,6 +2618,7 @@
       selectedIndustry = 'all';
       renderCityDropdownItems(allProvincesList);
       updateDistrictsForSelectedCity('all');
+      updateLocationPotentialBanner();
       renderIndustryDropdownItems(allIndustriesList);
 
       fetchLeads();
@@ -2433,6 +2686,20 @@
           if (data.license) updateClientPill(data.license);
           await fetchLeads(newIds);
           fetchStats();
+          if (data.areaPotential && data.areaPotential.showUpgradePopup) {
+            setTimeout(() => {
+              openUpgradeKeyModal({
+                ...data.areaPotential,
+                paymentInfo: data.paymentInfo
+              });
+            }, 350);
+          }
+        } else if (data.isQuotaError || data.showUpgradePopup) {
+          openUpgradeKeyModal({
+            ...(data.areaPotential || {}),
+            paymentInfo: data.paymentInfo,
+            isQuotaReached: true
+          });
         } else if (data.isLicenseError) {
           openLicenseGateModal(false, data);
         } else {

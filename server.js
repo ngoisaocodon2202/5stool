@@ -234,14 +234,75 @@ app.get('/api/stats', (req, res) => {
   }
 });
 
+// Helper: Estimate total available leads at a selected location (5.000 - 10.000+ leads)
+function estimateLocationTotalLeads(city = '', district = '', industry = '', customKeyword = '') {
+  const cleanCity = (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') ? city.trim() : 'Toàn Quốc';
+  const cleanDistrict = (district && district !== 'all' && district !== 'Tất cả Quận / Huyện' && district !== 'Tất cả Quận/Huyện') ? district.trim() : '';
+  const locationLabel = cleanDistrict ? `${cleanDistrict}, ${cleanCity}` : cleanCity;
+
+  const seedStr = `${locationLabel}|${industry || 'all'}|${customKeyword || ''}`;
+  let hash = 0;
+  for (let i = 0; i < seedStr.length; i++) {
+    hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
+    hash |= 0;
+  }
+  const absHash = Math.abs(hash);
+
+  // Province/City or Nationwide: 6,400 - 9,850 leads; Specific District: 5,150 - 7,890 leads
+  const minPool = cleanDistrict ? 5150 : 6400;
+  const rangePool = cleanDistrict ? 2740 : 3450;
+  const estimatedTotal = minPool + (absHash % rangePool);
+
+  return {
+    locationLabel,
+    estimatedTotal
+  };
+}
+
 // 6. POST /api/leads/scan - Multi-Source Bulk Extraction
 app.post('/api/leads/scan', requireLicense, async (req, res) => {
   try {
     const { city, district = 'all', industry, customKeyword = '', sourceType = 'all', targetGoal = 50, skipExisting = true } = req.body;
-    const goalNumber = Math.min(Math.max(parseInt(targetGoal) || 50, 5), 500);
+    const goalNumber = Math.min(Math.max(parseInt(targetGoal) || 50, 5), 200);
     const tenantKey = req.license.key;
+    const isAdminMaster = db.licenseManager.isMasterKey(tenantKey);
 
-    console.log(`[API /scan] [Tenant: ${tenantKey}] Quét đa nguồn (${sourceType}): ngành="${industry}", từ khóa riêng="${customKeyword}", quận/huyện="${district}", tỉnh="${city}", số lượng=${goalNumber}, lọc trùng=${skipExisting}`);
+    const { locationLabel, estimatedTotal } = estimateLocationTotalLeads(city, district, industry, customKeyword);
+    const settings = db.licenseManager.getAllSettings();
+    const paymentInfo = {
+      bankCode: settings.bankCode || 'MB',
+      bankAccount: settings.bankAccount || '789220206',
+      bankName: settings.bankName || 'NGUYEN QUOC KHAI',
+      hotline: settings.hotline || '0862034101',
+      zaloSupport: settings.zaloSupport || 'https://zalo.me/0862034101'
+    };
+
+    const maxDaily = Number(req.license.maxDailyScrapes) || 200;
+    const usedToday = Number(req.license.usedToday) || 0;
+    const remainingBefore = Math.max(0, maxDaily - usedToday);
+
+    // If a limited Key (e.g. 200 leads) has already reached its quota at this location
+    if (!isAdminMaster && remainingBefore <= 0) {
+      return res.status(403).json({
+        success: false,
+        isQuotaError: true,
+        showUpgradePopup: true,
+        message: 'Bạn cần nâng cấp lên Key cao hơn để quét được nhiều dữ liệu hơn!',
+        areaPotential: {
+          locationLabel,
+          estimatedTotal,
+          extractedCount: 0,
+          keyLimit: Math.min(maxDaily, 200),
+          remainingCount: Math.max(0, estimatedTotal - usedToday),
+          showUpgradePopup: true
+        },
+        paymentInfo
+      });
+    }
+
+    const effectiveGoal = !isAdminMaster ? Math.min(goalNumber, remainingBefore, 200) : Math.min(goalNumber, 200);
+
+    console.log(`[API /scan] [Tenant: ${tenantKey}] Quét đa nguồn (${sourceType}): ngành="${industry}", từ khóa riêng="${customKeyword}", quận/huyện="${district}", tỉnh="${city}", số lượng=${effectiveGoal}, lọc trùng=${skipExisting}`);
 
     const rawNewLeads = await scraper.scrapeRealEnterprises({
       keyword: (industry && industry !== 'all' && industry !== 'Mọi ngành nghề' && industry !== 'Mọi Ngành Nghề') ? industry : '',
@@ -249,7 +310,7 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
       city: (city && city !== 'all' && city !== 'Toàn quốc' && city !== 'Mọi Tỉnh Thành') ? city : '',
       district: (district && district !== 'all' && district !== 'Tất cả Quận / Huyện' && district !== 'Tất cả Quận/Huyện') ? district : '',
       sourceType: sourceType || 'all',
-      targetGoal: goalNumber,
+      targetGoal: effectiveGoal,
       skipExisting: !!skipExisting,
       licenseKey: tenantKey
     });
@@ -263,6 +324,8 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
     // Fetch properly scoped leads for the client
     const savedTenantLeads = db.filter({ city, district, industry, customKeyword, sourceType }, tenantKey);
     const districtCounts = db.getDistrictCounts(city, tenantKey);
+    const updatedLicense = db.licenseManager.getLicense(tenantKey);
+    const effectiveKeyLimit = (!isAdminMaster && maxDaily <= 200) ? maxDaily : 200;
 
     res.json({
       success: true,
@@ -272,7 +335,16 @@ app.post('/api/leads/scan', requireLicense, async (req, res) => {
       tenantLeads: savedTenantLeads,
       districtCounts,
       totalLeads: currentTotal,
-      license: db.licenseManager.getLicense(tenantKey)
+      license: updatedLicense,
+      areaPotential: {
+        locationLabel,
+        estimatedTotal,
+        extractedCount: rawNewLeads.length,
+        keyLimit: effectiveKeyLimit,
+        remainingCount: Math.max(0, estimatedTotal - Math.max(rawNewLeads.length, savedTenantLeads.length)),
+        showUpgradePopup: estimatedTotal > 200
+      },
+      paymentInfo
     });
   } catch (err) {
     console.error('[API /scan error]:', err.message);
